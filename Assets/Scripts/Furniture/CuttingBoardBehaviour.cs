@@ -11,4 +11,8 @@ public class CuttingBoardBehaviour : InteractiveAppliance
     {
         progressBar = GetComponent<ProgressSliderBehaviour>();
     }
+
+    public override void OnInteract()
+    {
+    }
 }

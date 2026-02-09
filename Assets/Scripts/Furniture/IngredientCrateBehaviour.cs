@@ -18,8 +18,8 @@ public class IngredientCrate : InteractiveAppliance
         return Instantiate(ingredient.gameObject).GetComponent<PickableItemBehaviour>();
     }
 
-    public override bool CanReceive()
+    public override bool HasItem()
     {
-        return false;
+        return true;
     }
 }

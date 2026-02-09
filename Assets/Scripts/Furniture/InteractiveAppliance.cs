@@ -7,10 +7,10 @@ public class InteractiveAppliance : MonoBehaviour
     [SerializeField] protected GameObject placeArea;
     [SerializeField] private PickableItemBehaviour _placedItem;
 
-    protected PickableItemBehaviour PlacedItem
+    public PickableItemBehaviour PlacedItem
     {
         get { return _placedItem; }
-        set
+        protected set
         {
             if (_placedItem == value) return;
 
@@ -72,8 +72,8 @@ public class InteractiveAppliance : MonoBehaviour
     {
     }
 
-    public virtual bool CanReceive()
+    public virtual bool HasItem()
     {
-        return PlacedItem == null;
+        return PlacedItem != null;
     }
 }

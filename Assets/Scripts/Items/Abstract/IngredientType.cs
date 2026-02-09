@@ -2,9 +2,9 @@
 {
     None,
     Tomato,
-    Steak,
-    // TO IMPLEMENT
-    Pasta,
+    Meat,
+    // TODO: TO IMPLEMENT IngredientType
+    Spaghetti,
 	Lettuce,
     Onion,
     Cheese,

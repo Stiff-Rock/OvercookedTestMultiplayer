@@ -5,16 +5,18 @@ public class IngredientBehaviour : PickableItemBehaviour
     // References
     private Renderer objRenderer;
 
-    // Colors
-    [SerializeField] private Color cookedColor;
-    [SerializeField] private Color burntColor;
-
     // Cooking parameters
-    [Header("COOKING PARAMTERS")]
-    [SerializeField] private IngredientType ingredientType;
+    [field: Header("Type")]
+    [field: SerializeField] public IngredientType IngredientType { get; private set; }
+
+    [Header("Attributes")]
     [SerializeField] private float requiredCookingTime = 2.0f;
     [SerializeField] private float requiredBurnTime = 3.0f;
     [SerializeField] private float cookedTime = 0f;
+
+    [Header("Visual")]
+    [SerializeField] private Color cookedColor;
+    [SerializeField] private Color burntColor;
 
     // Flags
     private bool isCooked;
@@ -49,11 +51,6 @@ public class IngredientBehaviour : PickableItemBehaviour
     }
 
     #region Getters and Setters
-
-    public IngredientType GetIngredientType()
-    {
-        return ingredientType;
-    }
 
     public float GetRemainingTime()
     {

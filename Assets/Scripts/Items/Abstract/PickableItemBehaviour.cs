@@ -1,19 +1,22 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 [ExecuteInEditMode]
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class PickableItemBehaviour : MonoBehaviour
 {
-    [SerializeField] private Collider physicsCollider;
-    [SerializeField] private Collider triggerCollider;
+    private Collider triggerCollider;
+    private Collider physicsCollider;
     private Rigidbody rb;
 
     protected virtual void Awake()
     {
+        triggerCollider = GetComponent<Collider>();
+        physicsCollider = transform.GetChild(0).gameObject.GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         ToggleColliders(transform.parent == null);
     }
