@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4694417284427790888}
   - component: {fileID: 4083560993229518400}
   m_Layer: 0
-  m_Name: Launcher
+  m_Name: NetworkManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
