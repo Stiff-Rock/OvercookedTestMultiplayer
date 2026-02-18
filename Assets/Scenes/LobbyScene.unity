@@ -1326,6 +1326,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6444933702419646008, guid: 62e4b4b7385726b4d91598bb34acfa71, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6444933702419646008, guid: 62e4b4b7385726b4d91598bb34acfa71, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6444933702419646008, guid: 62e4b4b7385726b4d91598bb34acfa71, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6444933702419646008, guid: 62e4b4b7385726b4d91598bb34acfa71, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6452356285779219332, guid: 62e4b4b7385726b4d91598bb34acfa71, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1412,6 +1428,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6932213206182545600, guid: 62e4b4b7385726b4d91598bb34acfa71, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520777129257309970, guid: 62e4b4b7385726b4d91598bb34acfa71, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520777129257309970, guid: 62e4b4b7385726b4d91598bb34acfa71, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520777129257309970, guid: 62e4b4b7385726b4d91598bb34acfa71, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520777129257309970, guid: 62e4b4b7385726b4d91598bb34acfa71, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2173,6 +2205,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4083560993229518400, guid: b23b919306b01b5479de57fdefcf8d91, type: 3}
+      propertyPath: gameSceneName
+      value: MainScene
+      objectReference: {fileID: 0}
     - target: {fileID: 4775318218762211768, guid: b23b919306b01b5479de57fdefcf8d91, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2213,6 +2249,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7058857121944484266, guid: b23b919306b01b5479de57fdefcf8d91, type: 3}
+      propertyPath: NetworkConfig.PlayerPrefab
+      value: 
+      objectReference: {fileID: 3509376995594070019, guid: f74ea01c2bc008f47abdeb2ead0d3081, type: 3}
     - target: {fileID: 8210859041043666573, guid: b23b919306b01b5479de57fdefcf8d91, type: 3}
       propertyPath: m_Name
       value: Launcher
