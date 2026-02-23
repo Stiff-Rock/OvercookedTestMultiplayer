@@ -1,8 +1,12 @@
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(NetworkObject))]
+[RequireComponent(typeof(NetworkTransform))]
+[RequireComponent(typeof(ClientNetworkAnimator))]
 public class PlayerController : NetworkBehaviour
 {
     // References
@@ -25,7 +29,6 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private Key backwardKey;
     [SerializeField] private Key rightKey;
 
-
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
@@ -34,7 +37,6 @@ public class PlayerController : NetworkBehaviour
         animator = GetComponentInChildren<Animator>();
         active = true;
     }
-
 
     private void Update()
     {

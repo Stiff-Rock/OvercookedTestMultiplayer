@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: SYNC UtensilBehaviour
 public class UtensilBehaviour : PickableItemBehaviour
 {
     [field: SerializeField] public UtensilType UtensilType { get; private set; }

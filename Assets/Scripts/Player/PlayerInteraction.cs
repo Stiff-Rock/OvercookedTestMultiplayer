@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInteraction : MonoBehaviour
+public class PlayerInteraction : NetworkBehaviour
 {
     // References
     [Header("REFERENCES")]
@@ -22,15 +23,19 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float heightOffset;
     private Vector3 yOffset;
 
-    // State
     [Header("STATE (readonly)")]
-    [SerializeField] private InteractiveAppliance nearbyAppliance;
-    [SerializeField] private PickableItemBehaviour nearbyItem;
+    // Synched
+    public NetworkVariable<NetworkObjectReference> pickedItemNet = new();
+    [SerializeField] private PickableItemBehaviour ownPickedItem;
 
-    [SerializeField] private PickableItemBehaviour pickedItem;
+    // Local
+    [SerializeField] private PickableItemBehaviour ownNearbyItem;
+    [SerializeField] private InteractiveAppliance ownNearbyAppliance;
 
-    private void Awake()
+    public override void OnNetworkSpawn()
     {
+        if (!IsOwner) return;
+
         playerController = GetComponent<PlayerController>();
         yOffset = Vector3.up * heightOffset;
         halfExtents = interactionBox / 2;
@@ -38,14 +43,16 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner) return;
+
         InteractionCast();
         CheckInputs();
     }
 
     private void InteractionCast()
     {
-        nearbyAppliance = null;
-        nearbyItem = null;
+        ownNearbyAppliance = null;
+        ownNearbyItem = null;
 
         Vector3 center = transform.position + yOffset;
 
@@ -66,12 +73,12 @@ public class PlayerInteraction : MonoBehaviour
             // Check if its an appliance
             if (hitObject.TryGetComponent(out InteractiveAppliance appliance))
             {
-                nearbyAppliance = appliance;
+                ownNearbyAppliance = appliance;
             }
             // Check if its a pickable item
             else if (hitObject.TryGetComponent(out PickableItemBehaviour item))
             {
-                nearbyItem = item;
+                ownNearbyItem = item;
             }
         }
     }
@@ -79,21 +86,42 @@ public class PlayerInteraction : MonoBehaviour
     private void CheckInputs()
     {
         // Check Interact
-        if (Keyboard.current[interactKey].wasPressedThisFrame && nearbyAppliance)
-            if (pickedItem && nearbyAppliance.HasItem())
-                TryMerge();
-            else if (!pickedItem)
-                nearbyAppliance.OnInteract(playerController);
+        if (Keyboard.current[interactKey].wasPressedThisFrame && ownNearbyAppliance)
+            if (ownPickedItem && ownNearbyAppliance.HasItem())
+            {
+                TryMerge_ServerRpc(ownPickedItem.NetworkObjectId, ownNearbyAppliance.NetworkObjectId);
+            }
+            else if (!ownPickedItem)
+                ownNearbyAppliance.OnInteract(playerController);
 
         // Check Pick/Drop
         if (Keyboard.current[pickDropKey].wasPressedThisFrame)
-            PickOrDrop();
+        {
+            PickOrDrop_ServerRpc(
+                ownNearbyAppliance.NetworkObjectId,
+                ownNearbyItem.NetworkObjectId,
+                ownPickedItem.NetworkObjectId
+            );
+        }
     }
 
-    private void TryMerge()
+    [ServerRpc]
+    private void TryMerge_ServerRpc(ulong pickedItemId, ulong nearbyApplianceId)
     {
-        PickableItemBehaviour held = pickedItem;
-        PickableItemBehaviour placed = nearbyAppliance.PlacedItem;
+        PickableItemBehaviour held = NetHelpers.GetNetComponent<PickableItemBehaviour>(pickedItemId);
+        PickableItemBehaviour placed = NetHelpers.GetNetComponent<PickableItemBehaviour>(nearbyApplianceId);
+
+        if (held == null)
+        {
+            Debug.LogWarning($"Could not find held item with id '{pickedItemId}'");
+            return;
+        }
+
+        if (placed == null)
+        {
+            Debug.LogWarning($"Could not find placed item with id '{nearbyApplianceId}'");
+            return;
+        }
 
         UtensilBehaviour utensil;
         IngredientBehaviour ingredient;
@@ -125,7 +153,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (isIngredientOnAppliance)
         {
-            nearbyAppliance.TakeItem();
+            ownNearbyAppliance.TakeItem();
         }
         else
         {
@@ -133,86 +161,109 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void PickOrDrop()
+    [ServerRpc]
+    private void PickOrDrop_ServerRpc(ulong nearbyApplianceId, ulong nearbyItemId, ulong pickedItemId)
     {
+        InteractiveAppliance nearbyAppliance = NetHelpers.GetNetComponent<InteractiveAppliance>(nearbyApplianceId);
+
+        if (nearbyAppliance == null)
+        {
+            Debug.LogWarning($"Could not find nearbyAppliance with id '{nearbyApplianceId}'");
+            return;
+        }
+
+        PickableItemBehaviour nearbyItem = NetHelpers.GetNetComponent<PickableItemBehaviour>(nearbyItemId);
+
+        if (nearbyItem == null)
+        {
+            Debug.LogWarning($"Could not find nearbyItem with id '{nearbyItemId}'");
+            return;
+        }
+
+        PickableItemBehaviour pickedItem = NetHelpers.GetNetComponent<PickableItemBehaviour>(pickedItemId);
+
+        if (pickedItem == null)
+        {
+            Debug.LogWarning($"Could not find pickedItem with id '{pickedItemId}'");
+            return;
+        }
+
+        // TODO: TRATAR CADA CASO INDIVIDUAL DE PickOrDrop_ServerRpc
+
         // Deliver dish to delivery point
-        if (CanDeliverDish() && NearbyApplianceIsDeilveryPoint(out DeliveryPoint deliveryPoint))
+        if (CanDeliverDish(pickedItem) && NearbyApplianceIsDeilveryPoint(nearbyAppliance, out DeliveryPoint deliveryPoint))
         {
             deliveryPoint.ServeOrder(((UtensilBehaviour)pickedItem).CurrentRecipe);
             ((UtensilBehaviour)pickedItem).EmptyUtensil();
         }
         // Throw to trashcan
-        if (CanThrowToTrash())
+        if (CanThrowToTrash(pickedItem, nearbyAppliance))
         {
             nearbyAppliance.PlaceItem(pickedItem);
         }
         // Place item on appliance
-        else if (CanPlaceItemOntoAppliance())
+        else if (CanPlaceItemOntoAppliance(pickedItem, nearbyAppliance))
         {
             nearbyAppliance.PlaceItem(pickedItem);
             DropItem();
         }
         // Take item from appliance
-        else if (CanTakeItemFromAppliance())
+        else if (CanTakeItemFromAppliance(nearbyAppliance, pickedItem))
         {
-            pickedItem = nearbyAppliance.TakeItem();
+            ownPickedItem = nearbyAppliance.TakeItem();
             pickedItem.gameObject.transform.SetParent(hand.transform);
         }
         // Take nearby item
-        else if (CanTakeNearbyItem())
+        else if (CanTakeNearbyItem(nearbyItem, pickedItem))
         {
             pickedItem = nearbyItem;
-            nearbyItem = null;
+            ownNearbyItem = null;
             pickedItem.gameObject.transform.SetParent(hand.transform);
         }
         // Drop currently held item
-        else if (CanDropHeldItem())
+        else if (CanDropHeldItem(nearbyAppliance, pickedItem))
         {
             pickedItem.gameObject.transform.SetParent(null);
             DropItem();
         }
     }
 
+
     #region Helper Methods
 
-    public PickableItemBehaviour GetPickedItem()
+    private PickableItemBehaviour DropItem()
     {
-        return pickedItem;
-    }
-
-    public PickableItemBehaviour DropItem()
-    {
-        PickableItemBehaviour droppedItem = pickedItem;
-        pickedItem = null;
+        PickableItemBehaviour droppedItem = ownPickedItem;
+        ownPickedItem = null;
         return droppedItem;
     }
 
-    private bool CanThrowToTrash()
+    private bool CanThrowToTrash(PickableItemBehaviour pickedItem, InteractiveAppliance nearbyAppliance)
     {
         return pickedItem && nearbyAppliance && nearbyAppliance.GetComponent<TrashBehaviour>();
     }
 
-    private bool CanPlaceItemOntoAppliance()
+    private bool CanPlaceItemOntoAppliance(PickableItemBehaviour pickedItem, InteractiveAppliance nearbyAppliance)
     {
         return pickedItem && nearbyAppliance && !nearbyAppliance.HasItem();
     }
 
-    private bool CanTakeItemFromAppliance()
+    private bool CanTakeItemFromAppliance(InteractiveAppliance nearbyAppliance, PickableItemBehaviour pickedItem)
     {
         return nearbyAppliance && !pickedItem && nearbyAppliance.HasItem();
     }
 
-    private bool CanTakeNearbyItem()
+    private bool CanTakeNearbyItem(PickableItemBehaviour nearbyItem, PickableItemBehaviour pickedItem)
     {
         return nearbyItem && !pickedItem;
     }
 
-    private bool CanDropHeldItem()
+    private bool CanDropHeldItem(InteractiveAppliance nearbyAppliance, PickableItemBehaviour pickedItem)
     {
         return !nearbyAppliance && pickedItem;
     }
 
-    private bool CanDeliverDish()
+    private bool CanDeliverDish(PickableItemBehaviour pickedItem)
     {
         return pickedItem
             && pickedItem is UtensilBehaviour u
@@ -220,7 +271,7 @@ public class PlayerInteraction : MonoBehaviour
             && u.CurrentRecipe.GetTotalIngredients() > 0;
     }
 
-    private bool NearbyApplianceIsDeilveryPoint(out DeliveryPoint deliveryPoint)
+    private bool NearbyApplianceIsDeilveryPoint(InteractiveAppliance nearbyAppliance, out DeliveryPoint deliveryPoint)
     {
         deliveryPoint = nearbyAppliance.gameObject.GetComponent<DeliveryPoint>();
         return deliveryPoint;
@@ -243,6 +294,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         else return;
 
+        // TODO: SYNCH TryMoveIngredientBetweenUtensils
         IngredientBehaviour ingB = other.PeekIngredient();
         if (other.CanTakeIngredient() && plate.TryAddIngredient(ingB))
         {

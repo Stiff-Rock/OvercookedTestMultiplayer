@@ -1,9 +1,11 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class PickableItemBehaviour : MonoBehaviour
+[RequireComponent(typeof(NetworkObject))]
+public class PickableItemBehaviour : NetworkBehaviour
 {
     private Collider triggerCollider;
     private Collider physicsCollider;
@@ -11,6 +13,7 @@ public class PickableItemBehaviour : MonoBehaviour
 
     private Transform currentParent;
 
+    // TODO: CHANGE TO OnNetworkSpawn
     protected virtual void Awake()
     {
         triggerCollider = GetComponent<Collider>();

@@ -1,7 +1,9 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class InteractiveAppliance : MonoBehaviour
+[RequireComponent(typeof(NetworkObject))]
+public class InteractiveAppliance : NetworkBehaviour
 {
     [SerializeField] protected GameObject placeArea;
     protected PlayerController currentPlayer;
@@ -43,6 +45,7 @@ public class InteractiveAppliance : MonoBehaviour
     protected IngredientBehaviour placedIngredient;
     protected UtensilBehaviour placedUtensil;
 
+    // TODO: CHANGE TO OnNetworkSpawn
     protected virtual void Start()
     {
         PlacedItem = placeArea.GetComponentInChildren<PickableItemBehaviour>();
