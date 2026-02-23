@@ -1,8 +1,10 @@
 using System.Collections;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviour
+[RequireComponent(typeof(NetworkObject))]
+public class ScoreManager : NetworkBehaviour
 {
     public static ScoreManager Instance { get; private set; }
 
@@ -24,8 +26,10 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private int expireScorePenalty = 100;
     [SerializeField] private float pointsAnimationDuration = 1.5f;
 
-    private void Awake()
+    public override void OnNetworkSpawn()
     {
+        if (!IsServer) return;
+
         if (!Instance)
         {
             Instance = this;

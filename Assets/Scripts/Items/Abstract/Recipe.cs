@@ -31,9 +31,18 @@ public class Recipe
         extraIngredients = new();
     }
 
+    public Recipe(DishType dishType, IngredientData[] baseIngredients, IngredientData[] extraIngredients)
+    {
+        DishType = dishType;
+        this.baseIngredients = new(baseIngredients);
+        this.extraIngredients = new(extraIngredients);
+    }
+
     // For merging ingredients on a plate
     public bool TryMergeIngredient(IngredientData newIngredient)
     {
+        if (newIngredient.Type == IngredientType.None) return false;
+
         if (AlreadyContainsIngredient(newIngredient)) return false;
 
         // If the recipe is already matched and finished, check for the extra ingredients
@@ -68,6 +77,8 @@ public class Recipe
     // For adding ingredients to a pan or pot (can't hold more than one)
     public bool TryAddIngredient(IngredientData newIngredient, UtensilType uType)
     {
+        if (newIngredient.Type == IngredientType.None) return false;
+
         if (baseIngredients.Count >= 1 || AlreadyContainsIngredient(newIngredient)) return false;
 
         IngredientData[] compatibleIngredients;
@@ -96,6 +107,11 @@ public class Recipe
     public List<IngredientData> GetBaseIngredients()
     {
         return baseIngredients;
+    }
+
+    public List<IngredientData> GetExtraIngredients()
+    {
+        return extraIngredients;
     }
 
     public bool Matches(Recipe recipe)

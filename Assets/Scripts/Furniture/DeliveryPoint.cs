@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class DeliveryPoint : InteractiveAppliance
@@ -13,8 +14,10 @@ public class DeliveryPoint : InteractiveAppliance
             .GetComponent<KitchenOrdersManager>();
     }
 
-    public void ServeOrder(Recipe recipe)
+    [ServerRpc(InvokePermission = RpcInvokePermission.Everyone)]
+    public void DeliverOrder_ServerRpc(DishType type, IngredientData[] baseIngs, IngredientData[] extraIngs)
     {
+        Recipe recipe = new(type, baseIngs, extraIngs);
         ordersManager.ServeDish(recipe);
     }
 

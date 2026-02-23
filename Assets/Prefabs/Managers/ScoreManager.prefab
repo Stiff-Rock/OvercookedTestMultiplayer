@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9212070503158281947}
   - component: {fileID: 3170180928896402363}
+  - component: {fileID: 7699856617675869585}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -44,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87cbec383ebb55547a7543380efeb8c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  ShowTopMostFoldoutHeaderGroup: 1
   scoreText: {fileID: 0}
   deliveredOrdersText: {fileID: 0}
   failedOrdersText: {fileID: 0}
@@ -55,3 +57,28 @@ MonoBehaviour:
   timeScoreValue: 5
   expireScorePenalty: 100
   pointsAnimationDuration: 1.5
+--- !u!114 &7699856617675869585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4514552393820921681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 1273211572
+  InScenePlacedSourceGlobalObjectIdHash: 4162566568
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0

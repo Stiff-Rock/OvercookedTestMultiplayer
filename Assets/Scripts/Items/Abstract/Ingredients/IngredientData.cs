@@ -1,11 +1,12 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
 [Serializable]
-public class IngredientData
+public struct IngredientData : INetworkSerializable
 {
-    [field: SerializeField] public IngredientType Type { get; private set; }
-    [field: SerializeField] public IngredientState State { get; private set; }
+    public IngredientType Type;
+    public IngredientState State;
 
     public IngredientData(IngredientType Type, IngredientState State)
     {
@@ -13,17 +14,26 @@ public class IngredientData
         this.State = State;
     }
 
-    public override bool Equals(object obj)
+    public override readonly bool Equals(object obj)
     {
         if (obj is IngredientData other)
             return other.Type == Type && other.State == State;
         return false;
     }
 
-    public override int GetHashCode() => HashCode.Combine(Type, State);
+    public override readonly int GetHashCode()
+    {
+        return HashCode.Combine(Type, State);
+    }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return $"IngredientType: {Type} || IngredientState: {State}";
+    }
+
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref Type);
+        serializer.SerializeValue(ref State);
     }
 }

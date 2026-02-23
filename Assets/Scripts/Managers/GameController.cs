@@ -1,9 +1,11 @@
 using System.Linq;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameController : MonoBehaviour
+[RequireComponent(typeof(NetworkObject))]
+public class GameController : NetworkBehaviour
 {
     [Header("References")]
     [SerializeField] private TextMeshProUGUI timerText;
@@ -18,19 +20,24 @@ public class GameController : MonoBehaviour
     public UnityEvent onCreateOrder;
     public UnityEvent onGameOver;
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
+        if (!IsServer) return;
+        Debug.Log("OnNetworkSpawn");
+
         GameObject[] playerObjs = GameObject.FindGameObjectsWithTag("Player");
         players = playerObjs
-                    .Select(p => p.GetComponent<PlayerController>())
-                        .Where(p => p != null)
-                        .ToArray();
+            .Select(p => p.GetComponent<PlayerController>())
+            .Where(p => p != null)
+            .ToArray();
 
         onCreateOrder.Invoke();
     }
 
     private void Update()
     {
+        if (!IsServer) return;
+
         UpdateGameTime();
         OrderTick();
     }
@@ -62,6 +69,7 @@ public class GameController : MonoBehaviour
 
     private void OrderTick()
     {
+        Debug.Log("ORDER TICK");
         orderTimer += Time.deltaTime;
 
         if (orderTimer >= orderingRate)

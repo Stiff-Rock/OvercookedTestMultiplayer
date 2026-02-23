@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4093155448311055396}
   - component: {fileID: 6878595794586033659}
+  - component: {fileID: 7981560454199001975}
   m_Layer: 0
   m_Name: KitchenOrdersManager
   m_TagString: KitchenOrdersManager
@@ -44,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 532e6a11260c19340bc50577c814a0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  ShowTopMostFoldoutHeaderGroup: 1
   orderRowTransform: {fileID: 0}
   kitchenOrderPanelPrefab: {fileID: 1033414131763373817, guid: 4f333bbab992f984ba79ffcce729a048, type: 3}
   <IngredientVisualsSO>k__BackingField: {fileID: 11400000, guid: 2a1c703bb7676524da4b0d5ca87c9d35, type: 2}
@@ -51,3 +53,28 @@ MonoBehaviour:
   maxIngredientsLimit: 4
   orderLifespan: 180
   kitchenOrders: []
+--- !u!114 &7981560454199001975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5634373851710064811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 2245846975
+  InScenePlacedSourceGlobalObjectIdHash: 1346418060
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0

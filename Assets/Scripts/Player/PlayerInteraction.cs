@@ -193,7 +193,14 @@ public class PlayerInteraction : NetworkBehaviour
         // Deliver dish to delivery point
         if (CanDeliverDish(pickedItem) && NearbyApplianceIsDeilveryPoint(nearbyAppliance, out DeliveryPoint deliveryPoint))
         {
-            deliveryPoint.ServeOrder(((UtensilBehaviour)pickedItem).CurrentRecipe);
+            Recipe currentRecipe = ((UtensilBehaviour)pickedItem).CurrentRecipe;
+
+            deliveryPoint.DeliverOrder_ServerRpc(
+                currentRecipe.DishType,
+                currentRecipe.GetBaseIngredients().ToArray(),
+                currentRecipe.GetExtraIngredients().ToArray()
+            );
+
             ((UtensilBehaviour)pickedItem).EmptyUtensil();
         }
         // Throw to trashcan

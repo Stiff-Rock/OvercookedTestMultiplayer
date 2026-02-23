@@ -201,6 +201,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 4b6f92fb31a55ba469cf985fe97d8547, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3620972148
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 4b6f92fb31a55ba469cf985fe97d8547, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 4b6f92fb31a55ba469cf985fe97d8547, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 309381921
+      objectReference: {fileID: 0}
     - target: {fileID: 8057882493905476494, guid: 4b6f92fb31a55ba469cf985fe97d8547, type: 3}
       propertyPath: m_Name
       value: DeliveryPoint (1)
@@ -270,6 +282,18 @@ PrefabInstance:
     - target: {fileID: 4723212012744725190, guid: 1094c7d72ff4a904e8ae978645c5b49e, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6713527914007812955, guid: 1094c7d72ff4a904e8ae978645c5b49e, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2377538810
+      objectReference: {fileID: 0}
+    - target: {fileID: 6713527914007812955, guid: 1094c7d72ff4a904e8ae978645c5b49e, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6713527914007812955, guid: 1094c7d72ff4a904e8ae978645c5b49e, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1676011994
       objectReference: {fileID: 0}
     - target: {fileID: 8041510903371864738, guid: 1094c7d72ff4a904e8ae978645c5b49e, type: 3}
       propertyPath: m_Name
@@ -464,6 +488,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2544656182
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1783394397
+      objectReference: {fileID: 0}
     - target: {fileID: 8057882493905476494, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
       propertyPath: m_Name
       value: Countertop (1)
@@ -530,6 +566,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1034849894
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1783394397
+      objectReference: {fileID: 0}
     - target: {fileID: 8057882493905476494, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
       propertyPath: m_Name
       value: Countertop (3)
@@ -568,6 +616,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 13dadc8d5ef26684d9c9a40951814efc, type: 3}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2635377582
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3842959973
+      objectReference: {fileID: 0}
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
@@ -854,6 +914,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 41365b0cc05c9124988012a36d579f4b, type: 3}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3213180442
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3842959973
+      objectReference: {fileID: 0}
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
@@ -1101,6 +1173,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stove
       objectReference: {fileID: 0}
+    - target: {fileID: 7721059619129565874, guid: a820ee6705292174fa3d50383972910f, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 55678066
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721059619129565874, guid: a820ee6705292174fa3d50383972910f, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721059619129565874, guid: a820ee6705292174fa3d50383972910f, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 2585066366
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1127,6 +1211,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1664282909}
     m_Modifications:
+    - target: {fileID: 608793888259362006, guid: 4845530b9138f7d4b8dff38571e9d6ef, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1306463411
+      objectReference: {fileID: 0}
+    - target: {fileID: 608793888259362006, guid: 4845530b9138f7d4b8dff38571e9d6ef, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 608793888259362006, guid: 4845530b9138f7d4b8dff38571e9d6ef, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1560225051
+      objectReference: {fileID: 0}
     - target: {fileID: 4233611584310807855, guid: 4845530b9138f7d4b8dff38571e9d6ef, type: 3}
       propertyPath: m_Name
       value: Trashcan (1)
@@ -1196,6 +1292,18 @@ PrefabInstance:
     - target: {fileID: 4501230034551582692, guid: 0207d7b930504e0478b34930b38a7ccd, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364913091393435904, guid: 0207d7b930504e0478b34930b38a7ccd, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2732907877
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364913091393435904, guid: 0207d7b930504e0478b34930b38a7ccd, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364913091393435904, guid: 0207d7b930504e0478b34930b38a7ccd, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 999656416
       objectReference: {fileID: 0}
     - target: {fileID: 6166895970131971039, guid: 0207d7b930504e0478b34930b38a7ccd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1576,6 +1684,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: IngredientCrate (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1333794057
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3842959973
+      objectReference: {fileID: 0}
     - target: {fileID: 9186875500271789932, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.5
@@ -1718,6 +1838,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 7749d3042901d264b9b18c2ca9e1b654, type: 3}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1871607905
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3842959973
+      objectReference: {fileID: 0}
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
@@ -2123,6 +2255,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5513225226718763015, guid: ade2f366a9e4e244bbe9d71db69ee84d, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3413458326
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513225226718763015, guid: ade2f366a9e4e244bbe9d71db69ee84d, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513225226718763015, guid: ade2f366a9e4e244bbe9d71db69ee84d, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1899262978
+      objectReference: {fileID: 0}
     - target: {fileID: 9093041137651325438, guid: ade2f366a9e4e244bbe9d71db69ee84d, type: 3}
       propertyPath: m_Name
       value: Microwave (2)
@@ -2153,6 +2297,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5929ad6f3deb1e64fa4668ac141593e9, type: 3}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2629923552
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3842959973
+      objectReference: {fileID: 0}
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
@@ -2304,6 +2460,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 4b6f92fb31a55ba469cf985fe97d8547, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2002110937
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 4b6f92fb31a55ba469cf985fe97d8547, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 4b6f92fb31a55ba469cf985fe97d8547, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 309381921
+      objectReference: {fileID: 0}
     - target: {fileID: 8057882493905476494, guid: 4b6f92fb31a55ba469cf985fe97d8547, type: 3}
       propertyPath: m_Name
       value: DeliveryPoint (2)
@@ -2370,6 +2538,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2383700695
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1783394397
+      objectReference: {fileID: 0}
     - target: {fileID: 8057882493905476494, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
       propertyPath: m_Name
       value: Countertop
@@ -2411,6 +2591,10 @@ PrefabInstance:
     - target: {fileID: 4514552393820921681, guid: 7183e8578469e1540b68e5333db709d1, type: 3}
       propertyPath: m_Name
       value: ScoreManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7699856617675869585, guid: 7183e8578469e1540b68e5333db709d1, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1273211572
       objectReference: {fileID: 0}
     - target: {fileID: 9212070503158281947, guid: 7183e8578469e1540b68e5333db709d1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2611,6 +2795,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: ee8ec996ad292fc428e779b6f905db3d, type: 3}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3805079600
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3842959973
+      objectReference: {fileID: 0}
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
@@ -2721,6 +2917,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stove (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7721059619129565874, guid: a820ee6705292174fa3d50383972910f, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1292926963
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721059619129565874, guid: a820ee6705292174fa3d50383972910f, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721059619129565874, guid: a820ee6705292174fa3d50383972910f, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 2585066366
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2790,6 +2998,18 @@ PrefabInstance:
     - target: {fileID: 371519346752146345, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1942313583
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728739520203774583, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1783394397
       objectReference: {fileID: 0}
     - target: {fileID: 8057882493905476494, guid: 68a85f93f75b83b4b89745fb58ab4599, type: 3}
       propertyPath: m_Name
@@ -2869,6 +3089,10 @@ PrefabInstance:
       propertyPath: orderRowTransform
       value: 
       objectReference: {fileID: 400806737}
+    - target: {fileID: 7981560454199001975, guid: 1e3d3512d9b67504c8d22f7e0ef402ac, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2245846975
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2948,6 +3172,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5513225226718763015, guid: ade2f366a9e4e244bbe9d71db69ee84d, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2038106863
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513225226718763015, guid: ade2f366a9e4e244bbe9d71db69ee84d, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5513225226718763015, guid: ade2f366a9e4e244bbe9d71db69ee84d, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1899262978
+      objectReference: {fileID: 0}
     - target: {fileID: 9093041137651325438, guid: ade2f366a9e4e244bbe9d71db69ee84d, type: 3}
       propertyPath: m_Name
       value: Microwave (1)
@@ -3009,6 +3245,10 @@ PrefabInstance:
     - target: {fileID: 24521109831921239, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308231316554584260, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1572492385
       objectReference: {fileID: 0}
     - target: {fileID: 2049280016183653604, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
       propertyPath: m_Name
@@ -3193,6 +3433,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 3cf881d04d0478240a4d83e4653d4a37, type: 3}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1771918589
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3842959973
+      objectReference: {fileID: 0}
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
@@ -3263,6 +3515,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7437743226547474885, guid: 20c29090f78ebc04590d2a13df6de575, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 173879269
+      objectReference: {fileID: 0}
+    - target: {fileID: 7437743226547474885, guid: 20c29090f78ebc04590d2a13df6de575, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7437743226547474885, guid: 20c29090f78ebc04590d2a13df6de575, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 968289564
+      objectReference: {fileID: 0}
     - target: {fileID: 8398308864872775222, guid: 20c29090f78ebc04590d2a13df6de575, type: 3}
       propertyPath: m_Constraints
       value: 126
@@ -3329,6 +3593,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1664282909}
     m_Modifications:
+    - target: {fileID: 608793888259362006, guid: 4845530b9138f7d4b8dff38571e9d6ef, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 35323766
+      objectReference: {fileID: 0}
+    - target: {fileID: 608793888259362006, guid: 4845530b9138f7d4b8dff38571e9d6ef, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 608793888259362006, guid: 4845530b9138f7d4b8dff38571e9d6ef, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1560225051
+      objectReference: {fileID: 0}
     - target: {fileID: 4233611584310807855, guid: 4845530b9138f7d4b8dff38571e9d6ef, type: 3}
       propertyPath: m_Name
       value: Trashcan
@@ -3726,6 +4002,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6713527914007812955, guid: 1094c7d72ff4a904e8ae978645c5b49e, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 4010933682
+      objectReference: {fileID: 0}
+    - target: {fileID: 6713527914007812955, guid: 1094c7d72ff4a904e8ae978645c5b49e, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6713527914007812955, guid: 1094c7d72ff4a904e8ae978645c5b49e, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1676011994
+      objectReference: {fileID: 0}
     - target: {fileID: 8041510903371864738, guid: 1094c7d72ff4a904e8ae978645c5b49e, type: 3}
       propertyPath: m_Name
       value: CuttingBoard
@@ -3789,6 +4077,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 1edfb79bbb78a144a83f92cb73a5bb39, type: 3}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2486659956
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2826282021402736306, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3842959973
+      objectReference: {fileID: 0}
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
@@ -4257,6 +4557,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5364913091393435904, guid: 0207d7b930504e0478b34930b38a7ccd, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1344437399
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364913091393435904, guid: 0207d7b930504e0478b34930b38a7ccd, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364913091393435904, guid: 0207d7b930504e0478b34930b38a7ccd, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 999656416
+      objectReference: {fileID: 0}
     - target: {fileID: 6166895970131971039, guid: 0207d7b930504e0478b34930b38a7ccd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4323,6 +4635,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1315834394}
     m_Modifications:
+    - target: {fileID: 4369110353951983, guid: 6b3da38b50a55054a90ba94ee3a295a6, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1346465888
+      objectReference: {fileID: 0}
+    - target: {fileID: 4369110353951983, guid: 6b3da38b50a55054a90ba94ee3a295a6, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4369110353951983, guid: 6b3da38b50a55054a90ba94ee3a295a6, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 2135021598
+      objectReference: {fileID: 0}
     - target: {fileID: 1421836530725344028, guid: 6b3da38b50a55054a90ba94ee3a295a6, type: 3}
       propertyPath: m_Constraints
       value: 126

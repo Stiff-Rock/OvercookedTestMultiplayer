@@ -18,6 +18,12 @@ public class Launcher : MonoBehaviour
         NetworkManager.Singleton.OnServerStarted += OnServerStarted;
     }
 
+    private void OnDestroy()
+    {
+        NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+        NetworkManager.Singleton.OnServerStarted -= OnServerStarted;
+    }
+
     public void StartClient()
     {
         try
@@ -46,22 +52,18 @@ public class Launcher : MonoBehaviour
 
     public void ExitGame()
     {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 
     #region Callbacks
 
     private void OnClientConnected(ulong clientId)
     {
-        if (!NetworkManager.Singleton.IsServer)
-            return;
-
         Debug.Log($"Cliente conectado con Id {clientId}");
-
-        if (SceneManager.GetActiveScene().name == gameSceneName)
-        {
-            NetworkManager.Singleton.SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single);
-        }
     }
 
     private void OnServerStarted()

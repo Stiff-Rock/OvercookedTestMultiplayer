@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class KitchenOrdersManager : MonoBehaviour
+[RequireComponent(typeof(NetworkObject))]
+public class KitchenOrdersManager : NetworkBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform orderRowTransform;
@@ -17,7 +20,7 @@ public class KitchenOrdersManager : MonoBehaviour
     [SerializeField] private List<KitchenOrder> kitchenOrders;
     private List<GameObject> kitchenOrderPanels;
 
-    private void Awake()
+    public override void OnNetworkSpawn()
     {
         kitchenOrders = new();
         kitchenOrderPanels = new();
@@ -25,6 +28,7 @@ public class KitchenOrdersManager : MonoBehaviour
 
     public void CreateOrder()
     {
+        Debug.Log("CreateOrder");
         if (kitchenOrders.Count >= maxOrders) return;
 
         // Select a random recipe
@@ -55,22 +59,38 @@ public class KitchenOrdersManager : MonoBehaviour
         }
 
         // Create the KitchenOrder
-        GameObject newOrderObj = Instantiate(kitchenOrderPanelPrefab, orderRowTransform);
-        kitchenOrderPanels.Add(newOrderObj);
+        GameObject logicObj = new($"KitchenOrder-{newOrderRecipe}");
+        KitchenOrder serverOrder = logicObj.AddComponent<KitchenOrder>();
 
-        // Initialize the KitchenOrder data and listeners
-        KitchenOrder newOrder = newOrderObj.GetComponent<KitchenOrder>();
-        newOrder.OnExpire.AddListener(ScoreManager.Instance.PenalizeScore);
-        newOrder.OnExpire.AddListener(() => RemoveOrder(newOrder));
+        serverOrder.OnExpire.AddListener(ScoreManager.Instance.PenalizeScore);
+        serverOrder.OnExpire.AddListener(() => RemoveOrder(serverOrder));
 
-        newOrder.Initialize(newOrderRecipe, orderLifespan, IngredientVisualsSO);
+        serverOrder.Initialize(newOrderRecipe, orderLifespan, IngredientVisualsSO);
+        kitchenOrders.Add(serverOrder);
 
-        // Add the order to the list
-        kitchenOrders.Add(newOrder);
+        CreateyOrder_ClientRpc(
+            newOrderRecipe.DishType,
+            newOrderRecipe.GetBaseIngredients().ToArray(),
+            newOrderRecipe.GetExtraIngredients().ToArray()
+        );
+    }
+
+    [ClientRpc]
+    private void CreateyOrder_ClientRpc(DishType dishType, IngredientData[] baseTypes, IngredientData[] extraTypes)
+    {
+        Recipe newOrderRecipe = new(dishType, baseTypes, extraTypes);
+        GameObject newOrderPanel = Instantiate(kitchenOrderPanelPrefab, orderRowTransform);
+
+        KitchenOrder uiOrder = newOrderPanel.GetComponent<KitchenOrder>();
+        uiOrder.Initialize(newOrderRecipe, orderLifespan, IngredientVisualsSO);
+
+        kitchenOrderPanels.Add(newOrderPanel);
     }
 
     public void ServeDish(Recipe recipe)
     {
+        if (!IsServer) return;
+
         foreach (KitchenOrder order in kitchenOrders)
         {
             // Check if the served dish matches any placed orders
@@ -88,11 +108,22 @@ public class KitchenOrdersManager : MonoBehaviour
 
     private void RemoveOrder(KitchenOrder orderToDelete)
     {
+        if (!IsServer) return;
+
         int orderToDeleteIndex = kitchenOrders.IndexOf(orderToDelete);
         kitchenOrders.RemoveAt(orderToDeleteIndex);
 
-        GameObject orderToDeletePanel = kitchenOrderPanels[orderToDeleteIndex];
-        kitchenOrderPanels.Remove(orderToDeletePanel);
-        Destroy(orderToDeletePanel);
+        RemoveOrderPanel_ClientRpc(orderToDeleteIndex);
+    }
+
+    [ClientRpc]
+    private void RemoveOrderPanel_ClientRpc(int index)
+    {
+        if (index >= 0 && index < kitchenOrderPanels.Count)
+        {
+            GameObject panel = kitchenOrderPanels[index];
+            kitchenOrderPanels.RemoveAt(index);
+            Destroy(panel);
+        }
     }
 }
