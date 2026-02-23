@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4694417284427790888}
   - component: {fileID: 4083560993229518400}
   m_Layer: 0
-  m_Name: NetworkManager
-  m_TagString: NetworkManager
+  m_Name: Launcher
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 4694417284427790888}
-    PlayerPrefab: {fileID: 0}
+    PlayerPrefab: {fileID: 355066528099597860, guid: 1a5a4f96a4ebf234aac4851b6a173ad9, type: 3}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 6dbd1be32d2517740b972705db321401, type: 2}
@@ -101,6 +101,7 @@ MonoBehaviour:
     Address: 127.0.0.1
     Port: 7777
     ServerListenAddress: 127.0.0.1
+    ClientBindPort: 0
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0

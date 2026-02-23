@@ -1,8 +1,9 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     // References
     private CharacterController characterController;
@@ -24,16 +25,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Key backwardKey;
     [SerializeField] private Key rightKey;
 
-    private void Awake()
+
+    public override void OnNetworkSpawn()
     {
+        if (!IsOwner) return;
+
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         active = true;
     }
 
+
     private void Update()
     {
-        if (!active) return;
+        if (!IsOwner || !active) return;
 
         GatherInputs();
         ApplyMovement();

@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEditor;
@@ -11,13 +10,7 @@ using UnityEngine.SceneManagement;
 public class Launcher : MonoBehaviour
 {
     [Header("References")]
-    private UnityTransport transport;
-    [SerializeField] private SceneAsset gameScene;
-
-    private void Awake()
-    {
-        transport = GetComponent<UnityTransport>();
-    }
+    [SerializeField] private string gameSceneName;
 
     private void Start()
     {
@@ -65,16 +58,16 @@ public class Launcher : MonoBehaviour
 
         Debug.Log($"Cliente conectado con Id {clientId}");
 
-        if (SceneManager.GetActiveScene().name == gameScene.name)
+        if (SceneManager.GetActiveScene().name == gameSceneName)
         {
-            NetworkManager.Singleton.SceneManager.LoadScene(gameScene.name, LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single);
         }
     }
 
     private void OnServerStarted()
     {
         Debug.Log($"Servidor iniciado");
-        NetworkManager.Singleton.SceneManager.LoadScene(gameScene.name, LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single);
     }
 
     #endregion

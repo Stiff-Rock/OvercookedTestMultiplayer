@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(MeshRenderer))]
 public class PlayerInteraction : MonoBehaviour
 {
     // References
@@ -24,7 +23,7 @@ public class PlayerInteraction : MonoBehaviour
     private Vector3 yOffset;
 
     // State
-    [Header("STATE")]
+    [Header("STATE (readonly)")]
     [SerializeField] private InteractiveAppliance nearbyAppliance;
     [SerializeField] private PickableItemBehaviour nearbyItem;
 
