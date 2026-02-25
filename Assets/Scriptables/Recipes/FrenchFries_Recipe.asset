@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Recipes
   <DishType>k__BackingField: 1
   <RequiredIngredients>k__BackingField:
-  - <Type>k__BackingField: 8
-    <State>k__BackingField: 6
+  - Type: 8
+    State: 6
   <ExtraIngredients>k__BackingField:
-  - <Type>k__BackingField: 1
-    <State>k__BackingField: 2
+  - Type: 1
+    State: 2
   <ResultPrefab>k__BackingField: {fileID: 0}

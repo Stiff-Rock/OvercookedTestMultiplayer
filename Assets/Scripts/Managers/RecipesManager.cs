@@ -20,19 +20,12 @@ public class RecipesManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            InitializeDishDictionary();
         }
         else
         {
             Destroy(gameObject);
-            return;
         }
-
-    }
-
-    private void Start()
-    { 
-        InitializeDishDictionary();
     }
 
     private void InitializeDishDictionary()

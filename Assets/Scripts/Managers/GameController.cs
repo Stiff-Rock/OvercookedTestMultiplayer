@@ -20,7 +20,7 @@ public class GameController : NetworkBehaviour
     public UnityEvent onCreateOrder;
     public UnityEvent onGameOver;
 
-    public override void OnNetworkSpawn()
+    private void Start()
     {
         if (!IsServer) return;
 

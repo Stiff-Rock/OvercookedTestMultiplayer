@@ -20,7 +20,7 @@ public class KitchenOrdersManager : NetworkBehaviour
     [SerializeField] private List<KitchenOrder> kitchenOrders;
     private List<GameObject> kitchenOrderPanels;
 
-    public override void OnNetworkSpawn()
+    private void Awake()
     {
         kitchenOrders = new();
         kitchenOrderPanels = new();
@@ -33,6 +33,8 @@ public class KitchenOrdersManager : NetworkBehaviour
         // Select a random recipe
         int randomIndex = Random.Range(0, RecipesManager.Instance.Recipes.Length);
         RecipeScriptableObject selectedRecipe = RecipesManager.Instance.Recipes[randomIndex];
+
+        Debug.Log($"Selected recipe: {selectedRecipe.name}");
 
         // Extract recipe data
         DishType type = selectedRecipe.DishType;
