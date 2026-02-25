@@ -20,8 +20,11 @@ public class Launcher : MonoBehaviour
 
     private void OnDestroy()
     {
-        NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-        NetworkManager.Singleton.OnServerStarted -= OnServerStarted;
+        if (NetworkManager.Singleton)
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+            NetworkManager.Singleton.OnServerStarted -= OnServerStarted;
+        }
     }
 
     public void StartClient()

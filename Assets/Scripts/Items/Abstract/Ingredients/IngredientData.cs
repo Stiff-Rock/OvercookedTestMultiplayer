@@ -1,6 +1,5 @@
 using System;
 using Unity.Netcode;
-using UnityEngine;
 
 [Serializable]
 public struct IngredientData : INetworkSerializable

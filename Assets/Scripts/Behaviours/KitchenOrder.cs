@@ -21,11 +21,18 @@ public class KitchenOrder : MonoBehaviour
     [field: SerializeField] public Recipe Recipe { get; private set; }
 
     [Header("Events")]
-    public UnityEvent OnExpire;
+    public UnityEvent OnExpire = new();
+
+    // Flags
+    private bool hasUI;
 
     private void Awake()
     {
-        initialBarColor = lifetimeProgressBar.color;
+        hasUI = lifetimeProgressBar != null;
+
+        if (hasUI)
+            initialBarColor = lifetimeProgressBar.color;
+
         enabled = false;
     }
 
@@ -35,13 +42,18 @@ public class KitchenOrder : MonoBehaviour
         maxLifespan = lifespan;
         Lifespan = lifespan;
 
-        dishNameText.SetText(recipe.DishType.ToString());
-
-        foreach (IngredientType i in recipe.GetAllIngredients())
+        if (hasUI)
         {
-            Sprite ingredientSprite = ingredientVisualsSO.GetSprite(i);
-            Image tagImg = Instantiate(tagPrefab, ingredientsRow).GetComponent<Image>();
-            tagImg.sprite = ingredientSprite;
+            dishNameText.SetText(recipe.DishType.ToString());
+
+            foreach (IngredientType i in recipe.GetAllIngredients())
+            {
+                Sprite ingredientSprite = ingredientVisualsSO.GetSprite(i);
+
+                Image tagImg = Instantiate(tagPrefab, ingredientsRow).GetComponent<Image>();
+
+                tagImg.sprite = ingredientSprite;
+            }
         }
 
         enabled = true;
@@ -51,9 +63,12 @@ public class KitchenOrder : MonoBehaviour
     {
         Lifespan -= Time.deltaTime;
 
-        float progress = Mathf.Clamp01(Lifespan / maxLifespan);
-        lifetimeProgressBar.fillAmount = progress;
-        lifetimeProgressBar.color = Color.Lerp(Color.red, initialBarColor, progress);
+        if (hasUI)
+        {
+            float progress = Mathf.Clamp01(Lifespan / maxLifespan);
+            lifetimeProgressBar.fillAmount = progress;
+            lifetimeProgressBar.color = Color.Lerp(Color.red, initialBarColor, progress);
+        }
 
         if (Lifespan <= 0)
         {

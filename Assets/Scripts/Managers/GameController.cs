@@ -23,7 +23,6 @@ public class GameController : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         if (!IsServer) return;
-        Debug.Log("OnNetworkSpawn");
 
         GameObject[] playerObjs = GameObject.FindGameObjectsWithTag("Player");
         players = playerObjs
@@ -69,7 +68,6 @@ public class GameController : NetworkBehaviour
 
     private void OrderTick()
     {
-        Debug.Log("ORDER TICK");
         orderTimer += Time.deltaTime;
 
         if (orderTimer >= orderingRate)

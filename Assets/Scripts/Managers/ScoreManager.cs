@@ -26,20 +26,10 @@ public class ScoreManager : NetworkBehaviour
     [SerializeField] private int expireScorePenalty = 100;
     [SerializeField] private float pointsAnimationDuration = 1.5f;
 
-    public override void OnNetworkSpawn()
+    public void Awake()
     {
-        if (!IsServer) return;
-
-        if (!Instance)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (!Instance) Instance = this;
+        else Destroy(gameObject);
     }
 
     public void RewardScore(KitchenOrder order)

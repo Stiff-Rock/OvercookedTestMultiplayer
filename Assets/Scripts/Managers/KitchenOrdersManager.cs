@@ -28,7 +28,6 @@ public class KitchenOrdersManager : NetworkBehaviour
 
     public void CreateOrder()
     {
-        Debug.Log("CreateOrder");
         if (kitchenOrders.Count >= maxOrders) return;
 
         // Select a random recipe
@@ -39,6 +38,11 @@ public class KitchenOrdersManager : NetworkBehaviour
         DishType type = selectedRecipe.DishType;
         IngredientData[] baseIngredients = selectedRecipe.RequiredIngredients;
         List<IngredientData> possibleExtraIngredients = new(selectedRecipe.ExtraIngredients);
+
+        // BUG: ALL NONE
+        Debug.Log($"baseIngredients: {string.Join(", ", baseIngredients)}");
+        Debug.Log($"possibleExtraIngredients: {string.Join(", ", possibleExtraIngredients)}");
+
 
         // Select a random extra ingredients amount
         int limit = Mathf.Min(possibleExtraIngredients.Count, maxIngredientsLimit - baseIngredients.Length);
@@ -59,8 +63,7 @@ public class KitchenOrdersManager : NetworkBehaviour
         }
 
         // Create the KitchenOrder
-        GameObject logicObj = new($"KitchenOrder-{newOrderRecipe}");
-        KitchenOrder serverOrder = logicObj.AddComponent<KitchenOrder>();
+        KitchenOrder serverOrder = new GameObject($"KitchenOrder-{newOrderRecipe}").AddComponent<KitchenOrder>();
 
         serverOrder.OnExpire.AddListener(ScoreManager.Instance.PenalizeScore);
         serverOrder.OnExpire.AddListener(() => RemoveOrder(serverOrder));
@@ -82,6 +85,7 @@ public class KitchenOrdersManager : NetworkBehaviour
         GameObject newOrderPanel = Instantiate(kitchenOrderPanelPrefab, orderRowTransform);
 
         KitchenOrder uiOrder = newOrderPanel.GetComponent<KitchenOrder>();
+
         uiOrder.Initialize(newOrderRecipe, orderLifespan, IngredientVisualsSO);
 
         kitchenOrderPanels.Add(newOrderPanel);
