@@ -34,17 +34,10 @@ public class KitchenOrdersManager : NetworkBehaviour
         int randomIndex = Random.Range(0, RecipesManager.Instance.Recipes.Length);
         RecipeScriptableObject selectedRecipe = RecipesManager.Instance.Recipes[randomIndex];
 
-        Debug.Log($"Selected recipe: {selectedRecipe.name}");
-
         // Extract recipe data
         DishType type = selectedRecipe.DishType;
         IngredientData[] baseIngredients = selectedRecipe.RequiredIngredients;
         List<IngredientData> possibleExtraIngredients = new(selectedRecipe.ExtraIngredients);
-
-        // BUG: ALL NONE
-        Debug.Log($"baseIngredients: {string.Join(", ", baseIngredients)}");
-        Debug.Log($"possibleExtraIngredients: {string.Join(", ", possibleExtraIngredients)}");
-
 
         // Select a random extra ingredients amount
         int limit = Mathf.Min(possibleExtraIngredients.Count, maxIngredientsLimit - baseIngredients.Length);

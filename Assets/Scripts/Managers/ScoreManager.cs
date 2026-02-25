@@ -50,19 +50,39 @@ public class ScoreManager : NetworkBehaviour
     private void UpdateScoreValue(int change)
     {
         currentScore += change;
-        scoreText.SetText($"{currentScore}");
+        UpdateScoreText_ClientRpc(currentScore);
+    }
+
+    [ClientRpc]
+    private void UpdateScoreText_ClientRpc(int newScore)
+    {
+        scoreText.SetText($"{newScore}");
     }
 
     public void ShowFinalScore()
     {
-        StartCoroutine(StartPointsAnimationSequence());
+        ShowFinalScore_ClientRpc(
+            deliveredOrdersCount,
+            failedOrdersCount,
+            currentScore
+        );
     }
 
-    private IEnumerator StartPointsAnimationSequence()
+    [ClientRpc]
+    private void ShowFinalScore_ClientRpc(int deliveredOrdersCount, int failedOrdersCount, int currentScore)
     {
-        yield return StartCoroutine(AnimatePoints(deliveredOrdersText, deliveredOrdersCount));
-        yield return StartCoroutine(AnimatePoints(failedOrdersText, failedOrdersCount));
-        yield return StartCoroutine(AnimatePoints(finalScoreText, currentScore));
+        StartCoroutine(StartPointsAnimationSequence(
+            deliveredOrdersCount,
+            failedOrdersCount,
+            currentScore
+        ));
+    }
+
+    private IEnumerator StartPointsAnimationSequence(int dOC, int fOC, int cS)
+    {
+        yield return StartCoroutine(AnimatePoints(deliveredOrdersText, dOC));
+        yield return StartCoroutine(AnimatePoints(failedOrdersText, fOC));
+        yield return StartCoroutine(AnimatePoints(finalScoreText, cS));
     }
 
     private IEnumerator AnimatePoints(TextMeshProUGUI textField, int targetValue)

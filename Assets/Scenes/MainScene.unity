@@ -3259,6 +3259,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1439921128}
     - target: {fileID: 5865309798402769715, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
+      propertyPath: onGameOver.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5865309798402769715, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
       propertyPath: onGameOver.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 400806736}

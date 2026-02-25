@@ -20,6 +20,11 @@ public class GameController : NetworkBehaviour
     public UnityEvent onCreateOrder;
     public UnityEvent onGameOver;
 
+    public override void OnNetworkSpawn()
+    {
+        enabled = IsServer;
+    }
+
     private void Start()
     {
         if (!IsServer) return;
@@ -43,16 +48,29 @@ public class GameController : NetworkBehaviour
 
     private void UpdateGameTime()
     {
-        gameDuration = Mathf.Max(0, gameDuration - Time.deltaTime);
+        gameDuration -= Time.deltaTime;
 
-        int minutes = Mathf.FloorToInt(gameDuration / 60);
-        int seconds = Mathf.FloorToInt(gameDuration % 60);
-
-        timerText.SetText(string.Format("{0:D2}:{1:D2}", minutes, seconds));
+        UpdateGameTime_ClientRpc(gameDuration);
 
         if (gameDuration <= 0)
         {
+            gameDuration = 0;
             DisablePlayers();
+            ScoreManager.Instance.ShowFinalScore();
+            enabled = false;
+        }
+    }
+
+    [ClientRpc]
+    private void UpdateGameTime_ClientRpc(float remainingTime)
+    {
+        int minutes = Mathf.FloorToInt(remainingTime / 60);
+        int seconds = Mathf.FloorToInt(remainingTime % 60);
+
+        timerText.SetText(string.Format("{0:D2}:{1:D2}", minutes, seconds));
+
+        if (remainingTime <= 0)
+        {
             onGameOver.Invoke();
             enabled = false;
         }
