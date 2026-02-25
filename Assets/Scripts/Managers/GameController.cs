@@ -20,6 +20,13 @@ public class GameController : NetworkBehaviour
     public UnityEvent onCreateOrder;
     public UnityEvent onGameOver;
 
+    private float nextSyncTime;
+
+    private void Awake()
+    {
+        enabled = false;
+    }
+
     public override void OnNetworkSpawn()
     {
         enabled = IsServer;
@@ -40,8 +47,6 @@ public class GameController : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsServer) return;
-
         UpdateGameTime();
         OrderTick();
     }
@@ -50,7 +55,11 @@ public class GameController : NetworkBehaviour
     {
         gameDuration -= Time.deltaTime;
 
-        UpdateGameTime_ClientRpc(gameDuration);
+        if (Time.time >= nextSyncTime)
+        {
+            UpdateGameTime_ClientRpc(gameDuration);
+            nextSyncTime = Time.time + 1f;
+        }
 
         if (gameDuration <= 0)
         {
