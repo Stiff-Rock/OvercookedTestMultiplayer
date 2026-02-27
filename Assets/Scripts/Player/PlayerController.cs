@@ -16,11 +16,10 @@ public class PlayerController : NetworkBehaviour
 
     // Values
     [Header("VALUES")]
-    private bool active;
-    private Vector3 moveDirection;
     [SerializeField] private float movementSpeed = 5;
     [SerializeField] private float rotationSpeed = 50;
-    private bool isWalking;
+    [SerializeField] private float fixedYPos = 1.08f;
+    private Vector3 moveDirection;
 
     // Controls
     [Header("CONTROLS")]
@@ -28,6 +27,10 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private Key leftKey;
     [SerializeField] private Key backwardKey;
     [SerializeField] private Key rightKey;
+
+    // Flags
+    private bool active;
+    private bool isWalking;
 
     public override void OnNetworkSpawn()
     {
@@ -44,6 +47,11 @@ public class PlayerController : NetworkBehaviour
 
         GatherInputs();
         ApplyMovement();
+    }
+
+    private void LateUpdate()
+    {
+        SetVerticalPosition();
     }
 
     private void GatherInputs()
@@ -82,6 +90,13 @@ public class PlayerController : NetworkBehaviour
 
         // Move the player
         characterController.SimpleMove(moveDirectionNormalized * movementSpeed);
+    }
+
+    private void SetVerticalPosition()
+    {
+        Vector3 pos = transform.position;
+        pos.y = fixedYPos;
+        transform.position = pos;
     }
 
     public void ToggleActive(bool active)

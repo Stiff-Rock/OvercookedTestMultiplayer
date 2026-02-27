@@ -14,7 +14,9 @@ public class IngredientCrate : InteractiveAppliance
     public override PickableItemBehaviour TakeItem()
     {
         anim.Play();
-        return Instantiate(ingredient.gameObject).GetComponent<PickableItemBehaviour>();
+        PickableItemBehaviour pib = Instantiate(ingredient.gameObject).GetComponent<PickableItemBehaviour>();
+        pib.NetworkObject.Spawn();
+        return pib;
     }
 
     public override bool HasItem()

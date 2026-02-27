@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -10,6 +11,9 @@ public class PickableItemBehaviour : NetworkBehaviour
     private Collider triggerCollider;
     private Collider physicsCollider;
     private Rigidbody rb;
+
+    private NetworkTransform pendingParent;
+    private bool pendingWorldPositionStays;
 
     private Transform currentParent;
 
@@ -24,6 +28,39 @@ public class PickableItemBehaviour : NetworkBehaviour
     protected virtual void Start()
     {
         ToggleColliders(!IsPlaced());
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (pendingParent != null)
+        {
+            transform.SetParent(pendingParent.transform, pendingWorldPositionStays);
+            SetParent_ClientRpc(pendingParent.NetworkObjectId, pendingWorldPositionStays);
+            pendingParent = null;
+        }
+    }
+
+    public void NetworkSetParent(Transform newParent, bool worlPositionStays = true)
+    {
+        NetworkTransform newParentNetTransform = newParent.gameObject.GetComponent<NetworkTransform>();
+
+        if (IsSpawned)
+        {
+            transform.SetParent(newParent, worlPositionStays);
+            SetParent_ClientRpc(newParentNetTransform.NetworkObjectId, worlPositionStays);
+        }
+        else
+        {
+            pendingParent = newParentNetTransform;
+            pendingWorldPositionStays = worlPositionStays;
+        }
+    }
+
+    [ClientRpc]
+    private void SetParent_ClientRpc(ulong newParentNetId, bool worlPositionStays)
+    {
+        NetworkObject newParentObj = NetHelpers.GetNetObject(newParentNetId);
+        transform.SetParent(newParentObj.transform, worlPositionStays);
     }
 
     public void ToggleColliders(bool isEnabled)

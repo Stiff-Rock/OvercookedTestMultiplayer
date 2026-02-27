@@ -2300,10 +2300,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7058857121944484266, guid: b23b919306b01b5479de57fdefcf8d91, type: 3}
-      propertyPath: NetworkConfig.PlayerPrefab
-      value: 
-      objectReference: {fileID: 355066528099597860, guid: 1a5a4f96a4ebf234aac4851b6a173ad9, type: 3}
     - target: {fileID: 8210859041043666573, guid: b23b919306b01b5479de57fdefcf8d91, type: 3}
       propertyPath: m_Name
       value: NetworkManager

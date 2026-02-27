@@ -55,7 +55,14 @@ public class InteractiveAppliance : NetworkBehaviour
     {
         PickableItemBehaviour pickedItem = PlacedItem;
         PlacedItem = null;
+        TakeItem_ClientRpc();
         return pickedItem;
+    }
+
+    [ClientRpc]
+    private void TakeItem_ClientRpc()
+    {
+        PlacedItem = null;
     }
 
     public virtual void PlaceItem(PickableItemBehaviour newItem)
@@ -64,7 +71,21 @@ public class InteractiveAppliance : NetworkBehaviour
         PlacedItem = newItem;
 
         // Make it a child and put it in the place position
-        PlacedItem.gameObject.transform.SetParent(placeArea.transform);
+        PlacedItem.NetworkSetParent(placeArea.transform);
+
+        PlaceItem_ClientRpc(newItem.NetworkObjectId);
+    }
+
+    [ClientRpc]
+    private void PlaceItem_ClientRpc(ulong newItemNetId)
+    {
+        PickableItemBehaviour newItem = NetHelpers.GetNetComponent<PickableItemBehaviour>(newItemNetId);
+
+        // Store item
+        PlacedItem = newItem;
+
+        // Make it a child and put it in the place position
+        PlacedItem.NetworkSetParent(placeArea.transform);
     }
 
     // Virtual method to be overridden by child classes
