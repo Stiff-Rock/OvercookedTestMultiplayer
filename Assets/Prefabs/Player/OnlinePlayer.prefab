@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: -3631597906248200804}
   - component: {fileID: -3701447335174069227}
   - component: {fileID: -1816565430605533868}
-  - component: {fileID: -2554729555994786605}
+  - component: {fileID: 5436572957097077267}
   m_Layer: 0
   m_Name: OnlinePlayer
   m_TagString: Player
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NETPlayerController
   ShowTopMostFoldoutHeaderGroup: 1
   movementSpeed: 5
-  rotationSpeed: 50
+  rotationSpeed: 1200
   forwardKey: 37
   leftKey: 15
   backwardKey: 33
@@ -258,7 +258,7 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &-2554729555994786605
+--- !u!114 &5436572957097077267
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,10 +267,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3509376995594070019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80f2dcd600316a345b07c2248e69205e, type: 3}
+  m_Script: {fileID: 11500000, guid: f9f955fecb429de40ae0735201731021, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NETPlayerInteraction
-  ShowTopMostFoldoutHeaderGroup: 1
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   hand: {fileID: 4522977600356792351}
   interactKey: 19
   pickDropKey: 31

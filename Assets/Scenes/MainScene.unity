@@ -857,7 +857,7 @@ PrefabInstance:
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
-      objectReference: {fileID: 4592298258785157965, guid: 71a460719af25b640a1b04993766c099, type: 3}
+      objectReference: {fileID: 5253218115577513740, guid: 58e7740ab82e77f4090deb5a32098b9c, type: 3}
     - target: {fileID: 9186875500271789932, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.5
@@ -1576,6 +1576,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IngredientCrate (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      propertyPath: ingredient
+      value: 
+      objectReference: {fileID: 1320320340060076389, guid: e8901950132907b4b9d627b22ab9513f, type: 3}
     - target: {fileID: 9186875500271789932, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.5
@@ -1721,7 +1725,7 @@ PrefabInstance:
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
-      objectReference: {fileID: 4592298258785157965, guid: 22ffc52eecd4dfe4a8fa7236ea730bd7, type: 3}
+      objectReference: {fileID: 4521177859954756798, guid: c9b6af6597489544da4c51872622ad10, type: 3}
     - target: {fileID: 9186875500271789932, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.5
@@ -2200,13 +2204,46 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1552309314297509707, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 794477387}
   m_SourcePrefab: {fileID: 100100000, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
 --- !u!4 &794477385 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9186875500271789932, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
   m_PrefabInstance: {fileID: 794477384}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &794477386 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1552309314297509707, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
+  m_PrefabInstance: {fileID: 794477384}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &794477387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794477386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 1955456992
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,7 +2651,7 @@ PrefabInstance:
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
-      objectReference: {fileID: 4592298258785157965, guid: 6276abd4d65b2ba479237da2613bd7a9, type: 3}
+      objectReference: {fileID: 5743201184537375407, guid: ae5def0dd36da704c895a7fcf78731d8, type: 3}
     - target: {fileID: 9186875500271789932, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.5
@@ -3196,7 +3233,7 @@ PrefabInstance:
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
-      objectReference: {fileID: 4592298258785157965, guid: 2de8fd8ccdc4c7d42985cb33fafe9e29, type: 3}
+      objectReference: {fileID: 2910822773393510411, guid: 44c0a6fa831dd764e85bfb8ade375189, type: 3}
     - target: {fileID: 9186875500271789932, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.5
@@ -3792,7 +3829,7 @@ PrefabInstance:
     - target: {fileID: 8156179909533571863, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: ingredient
       value: 
-      objectReference: {fileID: 4592298258785157965, guid: f085512bf7f87d84f93a3aea2f068055, type: 3}
+      objectReference: {fileID: 286851751753944106, guid: 60867285cae709a49acc5cadb497179f, type: 3}
     - target: {fileID: 9186875500271789932, guid: a731aeeea69106d40917b56a6269a8a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.5

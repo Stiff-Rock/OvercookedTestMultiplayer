@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class InteractiveAppliance : MonoBehaviour
+public class InteractiveAppliance : NetworkBehaviour
 {
     [SerializeField] protected GameObject placeArea;
     protected PlayerController currentPlayer;
