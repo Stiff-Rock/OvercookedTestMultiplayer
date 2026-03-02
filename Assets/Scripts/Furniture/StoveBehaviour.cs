@@ -37,13 +37,14 @@ public class StoveBehaviour : InteractiveAppliance
 
     public override void OnPlacedItemChanged()
     {
-        if (!placedUtensil || placedUtensil.UtensilType == UtensilType.Plate) {
+        if (!placedUtensil || placedUtensil.UtensilType == UtensilType.Plate)
+        {
             ToggleActiveStove(false);
-            return; 
+            return;
         }
 
-        bool isCooking = placedUtensil.PeekIngredient() && !placedUtensil.PeekIngredient().IsBurnt;
 
+        bool isCooking = placedUtensil.PeekIngredient() && !placedUtensil.PeekIngredient().IsBurnt;
         ToggleActiveStove(isCooking);
     }
 

@@ -1,7 +1,7 @@
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
-[ExecuteInEditMode]
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NetworkObject))]
@@ -10,6 +10,10 @@ public class PickableItemBehaviour : NetworkBehaviour
     private Collider triggerCollider;
     private Collider physicsCollider;
     private Rigidbody rb;
+
+    private NetworkObject pendingParent;
+    private Vector3 pendingPosition;
+    private bool pendingWorldPositionStays;
 
     private Transform currentParent;
 
@@ -23,10 +27,46 @@ public class PickableItemBehaviour : NetworkBehaviour
 
     protected virtual void Start()
     {
-        ToggleColliders(!IsPlaced());
+        ToggleColliders_ClientRpc(!IsPlaced());
     }
 
-    public void ToggleColliders(bool isEnabled)
+    public override void OnNetworkSpawn()
+    {
+        if (pendingParent != null)
+        {
+            NetworkObject.TrySetParent(pendingParent.transform, pendingWorldPositionStays);
+            UpdateTransform(pendingParent.transform);
+            pendingParent = null;
+        }
+    }
+
+    public void NetworkSetParent(Transform newPositionTransform, bool worlPositionStays = true)
+    {
+        if (!IsServer)
+        {
+            Debug.LogWarning("Parenting can only be initiated by the Server. \n" + System.Environment.StackTrace);
+            return;
+        }
+
+        NetworkObject newParentNetTransform = newPositionTransform ?
+            newPositionTransform.parent.gameObject.GetComponent<NetworkObject>()
+            : null;
+
+        if (IsSpawned)
+        {
+            NetworkObject.TrySetParent(newParentNetTransform, worlPositionStays);
+            UpdateTransform(newPositionTransform);
+        }
+        else
+        {
+            pendingParent = newParentNetTransform;
+            pendingPosition = newPositionTransform ? newPositionTransform.position : transform.position;
+            pendingWorldPositionStays = worlPositionStays;
+        }
+    }
+
+    [ClientRpc]
+    public void ToggleColliders_ClientRpc(bool isEnabled)
     {
         if (triggerCollider) triggerCollider.enabled = isEnabled;
         if (physicsCollider) physicsCollider.enabled = isEnabled;
@@ -37,28 +77,33 @@ public class PickableItemBehaviour : NetworkBehaviour
             rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
-    private void UpdateTransform()
-    {
-        transform.position = transform.parent.position;
-        transform.localRotation = Quaternion.identity;
-    }
-
-    public void OnTransformParentChanged()
+    private void UpdateTransform(Transform newPositionTransform)
     {
         bool isPlaced = IsPlaced();
-        ToggleColliders(!isPlaced);
 
-        if (isPlaced && currentParent != transform.parent)
-            UpdateTransform();
+        Transform newParent = transform.parent;
 
-        currentParent = transform.parent;
+        if (isPlaced && currentParent != newParent)
+        {
+            transform.position = newPositionTransform.position;
+            transform.localRotation = Quaternion.identity;
+        }
+
+        currentParent = newParent;
+
+        ToggleColliders_ClientRpc(!isPlaced);
     }
 
     #region Helper Methods
 
     private bool IsPlaced()
     {
-        return transform.parent && transform.parent.gameObject.CompareTag("PlaceArea");
+        if (transform.parent == null) return false;
+
+        Transform isInPlaceArea = transform.parent.Cast<Transform>()
+            .FirstOrDefault(c => c.CompareTag("PlaceArea"));
+
+        return isInPlaceArea;
     }
 
     public bool IsIngredient()

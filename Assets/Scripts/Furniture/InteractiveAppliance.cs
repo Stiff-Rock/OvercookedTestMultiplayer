@@ -15,8 +15,6 @@ public class InteractiveAppliance : NetworkBehaviour
         get { return _placedItem; }
         protected set
         {
-            if (_placedItem == value) return;
-
             _placedItem = value;
 
             if (_placedItem)
@@ -42,20 +40,29 @@ public class InteractiveAppliance : NetworkBehaviour
         }
     }
 
-    protected IngredientBehaviour placedIngredient;
-    protected UtensilBehaviour placedUtensil;
+    [SerializeField] protected IngredientBehaviour placedIngredient;
+    [SerializeField] protected UtensilBehaviour placedUtensil;
 
-    // TODO: CHANGE TO OnNetworkSpawn
     protected virtual void Start()
     {
-        PlacedItem = placeArea.GetComponentInChildren<PickableItemBehaviour>();
+        if (!_placedItem)
+            PlacedItem = GetComponentInChildren<PickableItemBehaviour>();
+        else 
+            PlacedItem = _placedItem;
     }
 
     public virtual PickableItemBehaviour TakeItem()
     {
         PickableItemBehaviour pickedItem = PlacedItem;
         PlacedItem = null;
+        TakeItem_ClientRpc();
         return pickedItem;
+    }
+
+    [ClientRpc]
+    private void TakeItem_ClientRpc()
+    {
+        PlacedItem = null;
     }
 
     public virtual void PlaceItem(PickableItemBehaviour newItem)
@@ -64,7 +71,21 @@ public class InteractiveAppliance : NetworkBehaviour
         PlacedItem = newItem;
 
         // Make it a child and put it in the place position
-        PlacedItem.gameObject.transform.SetParent(placeArea.transform);
+        PlacedItem.NetworkSetParent(placeArea.transform);
+
+        PlaceItem_ClientRpc(newItem.NetworkObjectId);
+    }
+
+    [ClientRpc]
+    private void PlaceItem_ClientRpc(ulong newItemNetId)
+    {
+        PickableItemBehaviour newItem = NetHelpers.GetNetComponent<PickableItemBehaviour>(newItemNetId);
+
+        // Store item
+        PlacedItem = newItem;
+
+        // Make it a child and put it in the place position
+        PlacedItem.NetworkSetParent(placeArea.transform);
     }
 
     // Virtual method to be overridden by child classes

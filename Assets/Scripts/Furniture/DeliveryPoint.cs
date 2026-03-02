@@ -14,8 +14,7 @@ public class DeliveryPoint : InteractiveAppliance
             .GetComponent<KitchenOrdersManager>();
     }
 
-    [ServerRpc(InvokePermission = RpcInvokePermission.Everyone)]
-    public void DeliverOrder_ServerRpc(DishType type, IngredientData[] baseIngs, IngredientData[] extraIngs)
+    public void DeliverOrder(DishType type, IngredientData[] baseIngs, IngredientData[] extraIngs)
     {
         Recipe recipe = new(type, baseIngs, extraIngs);
         ordersManager.ServeDish(recipe);

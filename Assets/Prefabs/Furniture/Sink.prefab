@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7388168642710486087
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3732665489958919450}
-  m_Layer: 6
-  m_Name: PlaceArea
-  m_TagString: PlaceArea
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3732665489958919450
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7388168642710486087}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.58, y: 0.83, z: -0.06}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 335821284591042510}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1653852956919992769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sink
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d2691ec89bed1bb40af873cc6c46fe7f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -130,6 +103,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 652057909081677125, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1396357907
+      objectReference: {fileID: 0}
     - target: {fileID: 1783495493793282276, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: m_Size.x
       value: 4
@@ -154,13 +131,17 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.008
       objectReference: {fileID: 0}
-    - target: {fileID: 3571471325885336205, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
-      propertyPath: placeArea
-      value: 
-      objectReference: {fileID: 7388168642710486087}
     - target: {fileID: 4305021953342692540, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: m_Name
       value: Sink
+      objectReference: {fileID: 0}
+    - target: {fileID: 4713713126646793456, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.656
+      objectReference: {fileID: 0}
+    - target: {fileID: 4713713126646793456, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.826
       objectReference: {fileID: 0}
     - target: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: m_LocalPosition.x
@@ -202,10 +183,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7875018348073005786, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
-      propertyPath: placeArea
-      value: 
-      objectReference: {fileID: 7388168642710486087}
+    - target: {fileID: 6854218553840964423, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 171401688
+      objectReference: {fileID: 0}
     - target: {fileID: 7875018348073005786, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: applianceName
       value: Sink
@@ -214,14 +195,10 @@ PrefabInstance:
     - {fileID: 7875018348073005786, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7909902342630956993, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
-    - {fileID: 7596002972758335588, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6116324420863286291}
-    - targetCorrespondingSourceObject: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3732665489958919450}
     - targetCorrespondingSourceObject: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1259059548330620458}
@@ -236,6 +213,11 @@ PrefabInstance:
 --- !u!4 &335821284591042510 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+  m_PrefabInstance: {fileID: 6188841485969158997}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4362091381338280753 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7596002972758335588, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
   m_PrefabInstance: {fileID: 6188841485969158997}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7952701783084347369 stripped
@@ -269,7 +251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2011f3295db1e864a9b51217535423c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SinkBehaviour
-  placeArea: {fileID: 7388168642710486087}
+  ShowTopMostFoldoutHeaderGroup: 1
+  placeArea: {fileID: 4362091381338280753}
   _placedItem: {fileID: 0}
 --- !u!1001 &7037277090066819739
 PrefabInstance:

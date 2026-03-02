@@ -1,3 +1,4 @@
+using Unity.Burst.Intrinsics;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -87,6 +88,7 @@ public class PlayerInteraction : NetworkBehaviour
         // Check Interact
         if (Keyboard.current[interactKey].wasPressedThisFrame && ownNearbyAppliance)
             if (ownPickedItem && ownNearbyAppliance.HasItem())
+                //TODO:
                 TryMerge_ServerRpc(NetworkObjectId);
             else if (!ownPickedItem)
                 //TODO:
@@ -130,7 +132,6 @@ public class PlayerInteraction : NetworkBehaviour
         }
         else return;
 
-        // Both are utensils, at least one is plate
         if (!utensil.TryAddIngredient(ingredient)) return;
 
         if (isIngredientOnAppliance)
@@ -148,53 +149,47 @@ public class PlayerInteraction : NetworkBehaviour
     {
         PlayerInteraction pI = NetHelpers.GetNetComponent<PlayerInteraction>(playerNetId);
 
-        PickableItemBehaviour p_pickedItem = pI.ownPickedItem;
-        PickableItemBehaviour p_nearbyItem = pI.ownNearbyItem;
-        InteractiveAppliance p_nearbyAppliance = pI.ownNearbyAppliance;
-
-        // TODO: TRATAR CADA CASO INDIVIDUAL DE PickOrDrop_ServerRpc
-
         // Deliver dish to delivery point
-        if (CanDeliverDish(p_pickedItem) && NearbyApplianceIsDeilveryPoint(p_nearbyAppliance, out DeliveryPoint deliveryPoint))
+        if (CanDeliverDish(pI.ownPickedItem) && NearbyApplianceIsDeilveryPoint(pI.ownNearbyAppliance, out DeliveryPoint deliveryPoint))
         {
-            Recipe currentRecipe = ((UtensilBehaviour)p_pickedItem).CurrentRecipe;
+            Recipe currentRecipe = ((UtensilBehaviour)pI.ownPickedItem).CurrentRecipe;
 
-            deliveryPoint.DeliverOrder_ServerRpc(
+            deliveryPoint.DeliverOrder(
                 currentRecipe.DishType,
                 currentRecipe.GetBaseIngredients().ToArray(),
                 currentRecipe.GetExtraIngredients().ToArray()
             );
 
-            ((UtensilBehaviour)p_pickedItem).EmptyUtensil();
+            ((UtensilBehaviour)pI.ownPickedItem).EmptyUtensil();
         }
         // Throw to trashcan
-        if (CanThrowToTrash(p_pickedItem, p_nearbyAppliance))
+        if (CanThrowToTrash(pI.ownPickedItem, pI.ownNearbyAppliance))
         {
-            p_nearbyAppliance.PlaceItem(p_pickedItem);
+            pI.ownNearbyAppliance.PlaceItem(pI.ownPickedItem);
         }
         // Place item on appliance
-        else if (CanPlaceItemOntoAppliance(p_pickedItem, p_nearbyAppliance))
+        else if (CanPlaceItemOntoAppliance(pI.ownPickedItem, pI.ownNearbyAppliance))
         {
-            p_nearbyAppliance.PlaceItem(p_pickedItem);
+            pI.ownNearbyAppliance.PlaceItem(pI.ownPickedItem);
             DropItem(pI);
         }
         // Take item from appliance
-        else if (CanTakeItemFromAppliance(p_nearbyAppliance, p_pickedItem))
+        else if (CanTakeItemFromAppliance(pI.ownNearbyAppliance, pI.ownPickedItem))
         {
-            pI.ownPickedItem = p_nearbyAppliance.TakeItem();
-            p_pickedItem.gameObject.transform.SetParent(pI.hand.transform);
+            pI.ownPickedItem = pI.ownNearbyAppliance.TakeItem();
+            pI.ownPickedItem.NetworkSetParent(pI.hand.transform);
         }
         // Take nearby item
-        else if (CanTakeNearbyItem(p_nearbyItem, p_pickedItem))
+        else if (CanTakeNearbyItem(pI.ownNearbyItem, pI.ownPickedItem))
         {
-            p_pickedItem = p_nearbyItem;
+            pI.ownPickedItem = pI.ownNearbyItem;
             pI.ownNearbyItem = null;
-            p_pickedItem.gameObject.transform.SetParent(pI.hand.transform);
+            pI.ownPickedItem.NetworkSetParent(pI.hand.transform);
         }
         // Drop currently held item
-        else if (CanDropHeldItem(p_nearbyAppliance, p_pickedItem))
+        else if (CanDropHeldItem(pI.ownNearbyAppliance, pI.ownPickedItem))
         {
-            p_pickedItem.gameObject.transform.SetParent(null);
+            pI.ownPickedItem.NetworkSetParent(null);
             DropItem(pI);
         }
     }

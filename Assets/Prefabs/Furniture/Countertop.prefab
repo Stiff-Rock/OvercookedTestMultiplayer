@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Countertop
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 32734f22546ebd941815820a53e58685, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -99,6 +103,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 652057909081677125, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1783394397
+      objectReference: {fileID: 0}
     - target: {fileID: 4305021953342692540, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: m_Name
       value: Countertop
@@ -150,6 +158,10 @@ PrefabInstance:
     - target: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6854218553840964423, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3922073822
       objectReference: {fileID: 0}
     - target: {fileID: 7596002972758335588, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: m_Layer

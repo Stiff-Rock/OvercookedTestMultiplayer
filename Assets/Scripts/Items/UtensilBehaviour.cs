@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 //TODO: SYNC UtensilBehaviour
@@ -20,6 +21,14 @@ public class UtensilBehaviour : PickableItemBehaviour
     }
 
     public void EmptyUtensil()
+    {
+        CurrentRecipe = new Recipe();
+        DeleteIngredients();
+        EmptyUtensil_ClientRpc();
+    }
+
+    [ClientRpc]
+    private void EmptyUtensil_ClientRpc()
     {
         CurrentRecipe = new Recipe();
         DeleteIngredients();
@@ -45,7 +54,9 @@ public class UtensilBehaviour : PickableItemBehaviour
         if (added)
         {
             StackIngredients(ingredientItem);
-            var appliance = transform.parent.parent.GetComponent<InteractiveAppliance>();
+
+            InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
+
             if (appliance)
                 appliance.OnPlacedItemChanged();
         }
@@ -62,7 +73,7 @@ public class UtensilBehaviour : PickableItemBehaviour
 
         heldIngredients.RemoveAt(0);
 
-        var appliance = transform.parent.parent.GetComponent<InteractiveAppliance>();
+        InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
         if (appliance)
             appliance.OnPlacedItemChanged();
 
@@ -105,7 +116,7 @@ public class UtensilBehaviour : PickableItemBehaviour
             return;
         }
 
-        ingredientItem.gameObject.transform.SetParent(utensilContentTransform, false);
+        ingredientItem.NetworkSetParent(utensilContentTransform, false);
 
         Renderer meshRenderer = ingredientItem.GetComponentInChildren<Renderer>();
         float itemHeight = meshRenderer.bounds.size.y;
