@@ -1,9 +1,7 @@
 using System.Linq;
 using Unity.Netcode;
-using Unity.Netcode.Components;
 using UnityEngine;
 
-[ExecuteInEditMode]
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NetworkObject))]
@@ -37,6 +35,7 @@ public class PickableItemBehaviour : NetworkBehaviour
         if (pendingParent != null)
         {
             NetworkObject.TrySetParent(pendingParent.transform, pendingWorldPositionStays);
+            UpdateTransform(pendingParent.transform);
             pendingParent = null;
         }
     }
@@ -49,16 +48,19 @@ public class PickableItemBehaviour : NetworkBehaviour
             return;
         }
 
-        NetworkObject newParentNetTransform = newPositionTransform.parent.gameObject.GetComponent<NetworkObject>();
+        NetworkObject newParentNetTransform = newPositionTransform ?
+            newPositionTransform.parent.gameObject.GetComponent<NetworkObject>()
+            : null;
 
         if (IsSpawned)
         {
             NetworkObject.TrySetParent(newParentNetTransform, worlPositionStays);
-            NetworkObject.transform.position = newPositionTransform.position;
+            UpdateTransform(newPositionTransform);
         }
         else
         {
             pendingParent = newParentNetTransform;
+            pendingPosition = newPositionTransform ? newPositionTransform.position : transform.position;
             pendingWorldPositionStays = worlPositionStays;
         }
     }
@@ -66,8 +68,6 @@ public class PickableItemBehaviour : NetworkBehaviour
     [ClientRpc]
     public void ToggleColliders_ClientRpc(bool isEnabled)
     {
-        Debug.Log($"isEnabled: " + isEnabled);
-
         if (triggerCollider) triggerCollider.enabled = isEnabled;
         if (physicsCollider) physicsCollider.enabled = isEnabled;
 
@@ -77,22 +77,21 @@ public class PickableItemBehaviour : NetworkBehaviour
             rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
-
-    private void UpdateTransform()
-    {
-        transform.position = transform.parent.position;
-        transform.localRotation = Quaternion.identity;
-    }
-
-    public void OnTransformParentChanged()
+    private void UpdateTransform(Transform newPositionTransform)
     {
         bool isPlaced = IsPlaced();
+
+        Transform newParent = transform.parent;
+
+        if (isPlaced && currentParent != newParent)
+        {
+            transform.position = newPositionTransform.position;
+            transform.localRotation = Quaternion.identity;
+        }
+
+        currentParent = newParent;
+
         ToggleColliders_ClientRpc(!isPlaced);
-
-        if (isPlaced && currentParent != transform.parent)
-            UpdateTransform();
-
-        currentParent = transform.parent;
     }
 
     #region Helper Methods
