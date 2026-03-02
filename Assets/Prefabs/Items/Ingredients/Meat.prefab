@@ -133,6 +133,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7687745542465041496, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1348463596
+      objectReference: {fileID: 0}
     - target: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -211,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01af765e458782847853de9aaf2c144a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
+  ShowTopMostFoldoutHeaderGroup: 1
   <Type>k__BackingField: 2
   requiredCookingTime: 3
   requiredBurnTime: 4
