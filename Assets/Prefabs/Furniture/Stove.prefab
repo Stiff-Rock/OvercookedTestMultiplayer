@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &425150704759046659
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2302410640758592945}
-  m_Layer: 6
-  m_Name: PlaceArea
-  m_TagString: PlaceArea
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2302410640758592945
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 425150704759046659}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.95, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 3701986111349633900}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &788096339454000203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -264,6 +233,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 652057909081677125, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2585066366
+      objectReference: {fileID: 0}
     - target: {fileID: 3571471325885336205, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: placeArea
       value: 
@@ -271,6 +244,10 @@ PrefabInstance:
     - target: {fileID: 4305021953342692540, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: m_Name
       value: Stove
+      objectReference: {fileID: 0}
+    - target: {fileID: 4713713126646793456, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.926
       objectReference: {fileID: 0}
     - target: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: m_LocalPosition.x
@@ -312,11 +289,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6854218553840964423, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3863131389
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3571471325885336205, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
     - {fileID: 7875018348073005786, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
     m_RemovedGameObjects:
-    - {fileID: 7596002972758335588, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
     - {fileID: 7909902342630956993, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
@@ -324,18 +304,20 @@ PrefabInstance:
       addedObject: {fileID: 650583842557578353}
     - targetCorrespondingSourceObject: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2302410640758592945}
-    - targetCorrespondingSourceObject: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 965274505973701536}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4305021953342692540, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 7608545909556118406}
-    - targetCorrespondingSourceObject: {fileID: 4305021953342692540, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       insertIndex: -1
       addedObject: {fileID: 258701784720675457}
+    - targetCorrespondingSourceObject: {fileID: 4305021953342692540, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7608545909556118406}
   m_SourcePrefab: {fileID: 100100000, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+--- !u!1 &810728829643054995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7596002972758335588, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+  m_PrefabInstance: {fileID: 7073507836190834679}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3701986111349633900 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
@@ -346,21 +328,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4305021953342692540, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
   m_PrefabInstance: {fileID: 7073507836190834679}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7608545909556118406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6454968120236270411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 991795ddca53b4546835ba334ff47d02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StoveBehaviour
-  placeArea: {fileID: 425150704759046659}
-  _placedItem: {fileID: 0}
-  cookingPower: 1
 --- !u!114 &258701784720675457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,3 +342,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProgressSliderBehaviour
   progressBarCanvas: {fileID: 8448030457222190003}
   progressBarSlider: {fileID: 3215893854622688366}
+--- !u!114 &7608545909556118406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6454968120236270411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 991795ddca53b4546835ba334ff47d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StoveBehaviour
+  ShowTopMostFoldoutHeaderGroup: 1
+  placeArea: {fileID: 810728829643054995}
+  _placedItem: {fileID: 0}
+  cookingPower: 1

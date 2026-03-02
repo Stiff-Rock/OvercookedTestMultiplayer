@@ -99,6 +99,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 652057909081677125, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 309381921
+      objectReference: {fileID: 0}
     - target: {fileID: 4305021953342692540, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: m_Name
       value: DeliveryPoint
@@ -159,6 +163,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6854218553840964423, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2647758945
+      objectReference: {fileID: 0}
     - target: {fileID: 7596002972758335588, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -207,5 +215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e064a62a8731c4b89459e45bc6efde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryPoint
+  ShowTopMostFoldoutHeaderGroup: 1
   placeArea: {fileID: 4397685538501338966}
   _placedItem: {fileID: 0}
