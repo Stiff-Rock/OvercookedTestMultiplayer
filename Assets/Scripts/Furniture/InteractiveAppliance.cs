@@ -15,8 +15,6 @@ public class InteractiveAppliance : NetworkBehaviour
         get { return _placedItem; }
         protected set
         {
-            if (_placedItem == value) return;
-
             _placedItem = value;
 
             if (_placedItem)
@@ -42,13 +40,15 @@ public class InteractiveAppliance : NetworkBehaviour
         }
     }
 
-    protected IngredientBehaviour placedIngredient;
-    protected UtensilBehaviour placedUtensil;
+    [SerializeField] protected IngredientBehaviour placedIngredient;
+    [SerializeField] protected UtensilBehaviour placedUtensil;
 
-    // TODO: CHANGE TO OnNetworkSpawn
     protected virtual void Start()
     {
-        PlacedItem = placeArea.GetComponentInChildren<PickableItemBehaviour>();
+        if (!_placedItem)
+            PlacedItem = GetComponentInChildren<PickableItemBehaviour>();
+        else 
+            PlacedItem = _placedItem;
     }
 
     public virtual PickableItemBehaviour TakeItem()

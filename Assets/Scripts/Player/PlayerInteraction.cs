@@ -1,3 +1,4 @@
+using Unity.Burst.Intrinsics;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -87,6 +88,7 @@ public class PlayerInteraction : NetworkBehaviour
         // Check Interact
         if (Keyboard.current[interactKey].wasPressedThisFrame && ownNearbyAppliance)
             if (ownPickedItem && ownNearbyAppliance.HasItem())
+                //TODO:
                 TryMerge_ServerRpc(NetworkObjectId);
             else if (!ownPickedItem)
                 //TODO:
@@ -130,7 +132,6 @@ public class PlayerInteraction : NetworkBehaviour
         }
         else return;
 
-        // Both are utensils, at least one is plate
         if (!utensil.TryAddIngredient(ingredient)) return;
 
         if (isIngredientOnAppliance)
@@ -147,8 +148,6 @@ public class PlayerInteraction : NetworkBehaviour
     private void PickOrDrop_ServerRpc(ulong playerNetId)
     {
         PlayerInteraction pI = NetHelpers.GetNetComponent<PlayerInteraction>(playerNetId);
-
-        // TODO: TRATAR CADA CASO INDIVIDUAL DE PickOrDrop_ServerRpc
 
         // Deliver dish to delivery point
         if (CanDeliverDish(pI.ownPickedItem) && NearbyApplianceIsDeilveryPoint(pI.ownNearbyAppliance, out DeliveryPoint deliveryPoint))

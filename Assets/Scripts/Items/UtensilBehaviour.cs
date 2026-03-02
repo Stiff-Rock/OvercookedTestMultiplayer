@@ -54,7 +54,9 @@ public class UtensilBehaviour : PickableItemBehaviour
         if (added)
         {
             StackIngredients(ingredientItem);
-            var appliance = transform.parent.parent.GetComponent<InteractiveAppliance>();
+
+            InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
+
             if (appliance)
                 appliance.OnPlacedItemChanged();
         }
@@ -71,7 +73,7 @@ public class UtensilBehaviour : PickableItemBehaviour
 
         heldIngredients.RemoveAt(0);
 
-        var appliance = transform.parent.parent.GetComponent<InteractiveAppliance>();
+        InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
         if (appliance)
             appliance.OnPlacedItemChanged();
 
