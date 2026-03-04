@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEditor;
@@ -9,12 +10,16 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(UnityTransport))]
 public class Launcher : MonoBehaviour
 {
+    public static bool WasDisconnected;
+
     [Header("References")]
     [SerializeField] private string gameSceneName;
+
 
     private void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
         NetworkManager.Singleton.OnServerStarted += OnServerStarted;
     }
 
@@ -23,6 +28,7 @@ public class Launcher : MonoBehaviour
         if (NetworkManager.Singleton)
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
             NetworkManager.Singleton.OnServerStarted -= OnServerStarted;
         }
     }
@@ -38,6 +44,7 @@ public class Launcher : MonoBehaviour
             Debug.LogError($"Could not start client: {e.Message}");
             NetworkManager.Singleton.Shutdown();
         }
+
     }
 
     public void StartHost()
@@ -52,6 +59,7 @@ public class Launcher : MonoBehaviour
             NetworkManager.Singleton.Shutdown();
         }
     }
+
 
     public void ExitGame()
     {
@@ -69,11 +77,24 @@ public class Launcher : MonoBehaviour
         Debug.Log($"Cliente conectado con Id {clientId}");
     }
 
+  
     private void OnServerStarted()
     {
         Debug.Log($"Servidor iniciado");
         NetworkManager.Singleton.SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single);
     }
+    private void OnClientDisconnected(ulong clientId)
+    {
+        if (clientId == NetworkManager.Singleton.LocalClientId)
+        {
+            Debug.Log("Se perdió la conexión con el servidor.");
+            WasDisconnected = true;
+            SceneManager.LoadScene("LobbyScene");
+
+        }
+    }
 
     #endregion
+
+
 }
