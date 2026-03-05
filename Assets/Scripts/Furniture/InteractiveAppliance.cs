@@ -47,7 +47,7 @@ public class InteractiveAppliance : NetworkBehaviour
     {
         if (!_placedItem)
             PlacedItem = GetComponentInChildren<PickableItemBehaviour>();
-        else 
+        else
             PlacedItem = _placedItem;
     }
 
@@ -67,10 +67,10 @@ public class InteractiveAppliance : NetworkBehaviour
 
     public virtual void PlaceItem(PickableItemBehaviour newItem)
     {
-        // Store item
+        // SERVER guarda referencia
         PlacedItem = newItem;
 
-        // Make it a child and put it in the place position
+        // SOLO EL SERVER cambia el parent
         PlacedItem.NetworkSetParent(placeArea.transform);
 
         PlaceItem_ClientRpc(newItem.NetworkObjectId);
@@ -81,14 +81,10 @@ public class InteractiveAppliance : NetworkBehaviour
     {
         PickableItemBehaviour newItem = NetHelpers.GetNetComponent<PickableItemBehaviour>(newItemNetId);
 
-        // Store item
+        // SOLO actualizar referencia
         PlacedItem = newItem;
-
-        // Make it a child and put it in the place position
-        PlacedItem.NetworkSetParent(placeArea.transform);
     }
 
-    // Virtual method to be overridden by child classes
     public virtual void OnInteract(PlayerController playerController)
     {
         currentPlayer = playerController;

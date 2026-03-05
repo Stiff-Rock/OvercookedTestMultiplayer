@@ -88,15 +88,19 @@ public class PlayerInteraction : NetworkBehaviour
         // Check Interact
         if (Keyboard.current[interactKey].wasPressedThisFrame && ownNearbyAppliance)
             if (ownPickedItem && ownNearbyAppliance.HasItem())
-                //TODO:
                 TryMerge_ServerRpc(NetworkObjectId);
             else if (!ownPickedItem)
-                //TODO:
                 ownNearbyAppliance.OnInteract(playerController);
 
         // Check Pick/Drop
         if (Keyboard.current[pickDropKey].wasPressedThisFrame)
-            PickOrDrop_ServerRpc(NetworkObjectId);
+        {
+            // Pasamos los IDs de objetos cercanos al servidor
+            ulong nearbyItemId = ownNearbyItem ? ownNearbyItem.NetworkObjectId : 0;
+            ulong nearbyApplianceId = ownNearbyAppliance ? ownNearbyAppliance.NetworkObjectId : 0;
+
+            PickOrDrop_ServerRpc(nearbyItemId, nearbyApplianceId);
+        }
     }
 
     [ServerRpc]
@@ -110,21 +114,19 @@ public class PlayerInteraction : NetworkBehaviour
         UtensilBehaviour utensil;
         IngredientBehaviour ingredient;
         bool isIngredientOnAppliance;
-        // Utensil is held by player
+
         if (held is UtensilBehaviour u1 && placed is IngredientBehaviour i1)
         {
             utensil = u1;
             ingredient = i1;
             isIngredientOnAppliance = true;
         }
-        // Utensil is on appliance 
         else if (held is IngredientBehaviour i2 && placed is UtensilBehaviour u2)
         {
             utensil = u2;
             ingredient = i2;
             isIngredientOnAppliance = false;
         }
-        // Both are utensils
         else if (held is UtensilBehaviour uHeld && placed is UtensilBehaviour uPlaced)
         {
             TryMoveIngredientBetweenUtensils(uHeld, uPlaced);
@@ -145,14 +147,19 @@ public class PlayerInteraction : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void PickOrDrop_ServerRpc(ulong playerNetId)
+    private void PickOrDrop_ServerRpc(ulong nearbyItemId, ulong nearbyApplianceId)
     {
-        PlayerInteraction pI = NetHelpers.GetNetComponent<PlayerInteraction>(playerNetId);
+        PlayerInteraction pI = this;
+
+        PickableItemBehaviour nearbyItem = nearbyItemId != 0 ? NetHelpers.GetNetComponent<PickableItemBehaviour>(nearbyItemId) : null;
+        InteractiveAppliance nearbyAppliance = nearbyApplianceId != 0 ? NetHelpers.GetNetComponent<InteractiveAppliance>(nearbyApplianceId) : null;
+
+        PickableItemBehaviour pickedItem = pI.ownPickedItem;
 
         // Deliver dish to delivery point
-        if (CanDeliverDish(pI.ownPickedItem) && NearbyApplianceIsDeilveryPoint(pI.ownNearbyAppliance, out DeliveryPoint deliveryPoint))
+        if (CanDeliverDish(pickedItem) && NearbyApplianceIsDeilveryPoint(nearbyAppliance, out DeliveryPoint deliveryPoint))
         {
-            Recipe currentRecipe = ((UtensilBehaviour)pI.ownPickedItem).CurrentRecipe;
+            Recipe currentRecipe = ((UtensilBehaviour)pickedItem).CurrentRecipe;
 
             deliveryPoint.DeliverOrder(
                 currentRecipe.DishType,
@@ -160,37 +167,48 @@ public class PlayerInteraction : NetworkBehaviour
                 currentRecipe.GetExtraIngredients().ToArray()
             );
 
-            ((UtensilBehaviour)pI.ownPickedItem).EmptyUtensil();
+            ((UtensilBehaviour)pickedItem).EmptyUtensil();
+            return;
         }
+
         // Throw to trashcan
-        if (CanThrowToTrash(pI.ownPickedItem, pI.ownNearbyAppliance))
+        if (CanThrowToTrash(pickedItem, nearbyAppliance))
         {
-            pI.ownNearbyAppliance.PlaceItem(pI.ownPickedItem);
+            nearbyAppliance.PlaceItem(pickedItem);
+            pI.ownPickedItem = null;
+            return;
         }
+
         // Place item on appliance
-        else if (CanPlaceItemOntoAppliance(pI.ownPickedItem, pI.ownNearbyAppliance))
+        if (CanPlaceItemOntoAppliance(pickedItem, nearbyAppliance))
         {
-            pI.ownNearbyAppliance.PlaceItem(pI.ownPickedItem);
-            DropItem(pI);
+            nearbyAppliance.PlaceItem(pickedItem);
+            pI.ownPickedItem = null;
+            return;
         }
+
         // Take item from appliance
-        else if (CanTakeItemFromAppliance(pI.ownNearbyAppliance, pI.ownPickedItem))
+        if (CanTakeItemFromAppliance(nearbyAppliance, pickedItem))
         {
-            pI.ownPickedItem = pI.ownNearbyAppliance.TakeItem();
+            pI.ownPickedItem = nearbyAppliance.TakeItem();
             pI.ownPickedItem.NetworkSetParent(pI.hand.transform);
+            return;
         }
+
         // Take nearby item
-        else if (CanTakeNearbyItem(pI.ownNearbyItem, pI.ownPickedItem))
+        if (CanTakeNearbyItem(nearbyItem, pickedItem))
         {
-            pI.ownPickedItem = pI.ownNearbyItem;
-            pI.ownNearbyItem = null;
+            pI.ownPickedItem = nearbyItem;
             pI.ownPickedItem.NetworkSetParent(pI.hand.transform);
+            return;
         }
+
         // Drop currently held item
-        else if (CanDropHeldItem(pI.ownNearbyAppliance, pI.ownPickedItem))
+        if (CanDropHeldItem(nearbyAppliance, pickedItem))
         {
             pI.ownPickedItem.NetworkSetParent(null);
-            DropItem(pI);
+            pI.ownPickedItem = null;
+            return;
         }
     }
 
@@ -238,7 +256,7 @@ public class PlayerInteraction : NetworkBehaviour
 
     private bool NearbyApplianceIsDeilveryPoint(InteractiveAppliance nearbyAppliance, out DeliveryPoint deliveryPoint)
     {
-        deliveryPoint = nearbyAppliance.gameObject.GetComponent<DeliveryPoint>();
+        deliveryPoint = nearbyAppliance?.gameObject.GetComponent<DeliveryPoint>();
         return deliveryPoint;
     }
 
@@ -259,14 +277,11 @@ public class PlayerInteraction : NetworkBehaviour
         }
         else return;
 
-        // TODO: SYNCH TryMoveIngredientBetweenUtensils
         IngredientBehaviour ingB = other.PeekIngredient();
         if (other.CanTakeIngredient() && plate.TryAddIngredient(ingB))
         {
             other.RemoveIngredient();
         }
-
-        else return;
     }
 
     #endregion
