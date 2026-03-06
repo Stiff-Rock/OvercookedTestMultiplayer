@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 // TODO: Modelar ingredientes, ingredientes cortados, platos y hacer algo para mejorar el aspecto cocinado
 public class IngredientBehaviour : PickableItemBehaviour
@@ -24,64 +25,122 @@ public class IngredientBehaviour : PickableItemBehaviour
     [SerializeField] private Color burntColor;
     [SerializeField] private Color cutColor;
 
+    // Network synced flags
+    private NetworkVariable<bool> isCooked = new NetworkVariable<bool>(false);
+    private NetworkVariable<bool> isBurnt = new NetworkVariable<bool>(false);
+    private NetworkVariable<bool> isCut = new NetworkVariable<bool>(false);
+
+    // Network synced progress
+    private NetworkVariable<float> networkCookTime = new NetworkVariable<float>(0f);
+    private NetworkVariable<float> networkCutTime = new NetworkVariable<float>(0f);
+
     // Flags
-    public bool IsCooked { get; private set; }
-    public bool IsBurnt { get; private set; }
-    public bool IsCut { get; private set; }
+    public bool IsCooked => isCooked.Value;
+    public bool IsBurnt => isBurnt.Value;
+    public bool IsCut => isCut.Value;
 
     protected override void Awake()
     {
         base.Awake();
-
-        IsCooked = false;
-        IsBurnt = false;
-        IsCut = false;
-
         objRenderer = GetComponentInChildren<Renderer>();
     }
 
+    public override void OnNetworkSpawn()
+    {
+        isCooked.OnValueChanged += OnCookedChanged;
+        isBurnt.OnValueChanged += OnBurntChanged;
+        isCut.OnValueChanged += OnCutChanged;
+    }
+
+    private void OnCookedChanged(bool prev, bool value)
+    {
+        if (value)
+            objRenderer.material.color = cookedColor;
+    }
+
+    private void OnBurntChanged(bool prev, bool value)
+    {
+        if (value)
+            objRenderer.material.color = burntColor;
+    }
+
+    private void OnCutChanged(bool prev, bool value)
+    {
+        if (value)
+            objRenderer.material.color = cutColor;
+    }
+
+    // --- Cooking ---
     public void Cook(float cookTime)
     {
+        if (!IsServer)
+        {
+            CookRpc(cookTime);
+            return;
+        }
+
         if (IsBurnt) return;
 
         cookedTime += cookTime;
+        networkCookTime.Value = cookedTime; // sincroniza con clientes
 
         if (!IsCooked && cookedTime >= requiredCookingTime && cookedTime < requiredBurnTime)
         {
-            IsCooked = true;
-            objRenderer.material.color = cookedColor;
+            isCooked.Value = true;
             cookedTime = 0;
         }
         else if (IsCooked && cookedTime >= requiredBurnTime)
         {
-            IsBurnt = true;
-            objRenderer.material.color = burntColor;
+            isBurnt.Value = true;
         }
     }
 
+    [Rpc(SendTo.Server)]
+    private void CookRpc(float cookTime)
+    {
+        Cook(cookTime);
+    }
+
+    // --- Cutting ---
     public void Cut(float cuttingTime)
     {
+        if (!IsServer)
+        {
+            CutRpc(cuttingTime);
+            return;
+        }
+
         if (IsCut) return;
 
         cutTime += cuttingTime;
+        networkCutTime.Value = cutTime; // sincroniza con clientes
 
         if (cutTime >= requiredCutTime)
         {
-            IsCut = true;
-            objRenderer.material.color = cutColor;
+            isCut.Value = true;
         }
+    }
+
+    [Rpc(SendTo.Server)]
+    private void CutRpc(float cuttingTime)
+    {
+        Cut(cuttingTime);
     }
 
     #region Getters
 
     public float GetCookProgress()
     {
-        return cookedTime / (IsCooked ? requiredBurnTime : requiredCookingTime);
+        // usa NetworkVariable si no es servidor
+        float currentTime = IsServer ? cookedTime : networkCookTime.Value;
+        return currentTime / (IsCooked ? requiredBurnTime : requiredCookingTime);
     }
 
     public float GetCutProgress()
     {
-        return cutTime / requiredCutTime;
+        // usa NetworkVariable si no es servidor
+        float currentTime = IsServer ? cutTime : networkCutTime.Value;
+        return currentTime / requiredCutTime;
     }
 
     #endregion
@@ -95,10 +154,10 @@ public class IngredientBehaviour : PickableItemBehaviour
         }
 
         IngredientState state;
-        if (IsCooked)
-            state = IngredientState.Cooked;
-        else if (IsBurnt)
+        if (IsBurnt)
             state = IngredientState.Burnt;
+        else if (IsCooked)
+            state = IngredientState.Cooked;
         else
             state = IngredientState.Raw;
 
