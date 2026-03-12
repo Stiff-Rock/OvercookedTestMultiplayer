@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class IngredientCrate : InteractiveAppliance
 {
@@ -13,10 +14,17 @@ public class IngredientCrate : InteractiveAppliance
 
     public override PickableItemBehaviour TakeItem()
     {
-        anim.Play();
+        PlayAnimationClientRpc();
+
         PickableItemBehaviour pib = Instantiate(ingredient.gameObject).GetComponent<PickableItemBehaviour>();
         pib.NetworkObject.Spawn();
         return pib;
+    }
+
+    [ClientRpc]
+    private void PlayAnimationClientRpc()
+    {
+        anim.Play();
     }
 
     public override bool HasItem()

@@ -84,6 +84,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4305021953342692540, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5595936696041917255}
+    - targetCorrespondingSourceObject: {fileID: 4305021953342692540, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7562234290746675338}
   m_SourcePrefab: {fileID: 100100000, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}
 --- !u!1 &4233611584310807855 stripped
 GameObject:
@@ -105,6 +108,30 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   placeArea: {fileID: 7499656195410407927}
   _placedItem: {fileID: 0}
+  placedIngredient: {fileID: 0}
+  placedUtensil: {fileID: 0}
+--- !u!114 &-7562234290746675338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4233611584310807855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkAnimator
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 2081823275
+    DestinationState: -6941248
+    TransitionDuration: 0
+    TriggerNameHash: -1392735573
+    TransitionIndex: 0
+  m_Animator: {fileID: 452977937456672891}
 --- !u!4 &5779368196299087112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5857561505183304859, guid: 05025a60f4fb98e4e9ba35be46c40274, type: 3}

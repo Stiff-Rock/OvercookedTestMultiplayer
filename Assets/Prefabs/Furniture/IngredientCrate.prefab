@@ -220,6 +220,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   placeArea: {fileID: 5142556370466638739}
   _placedItem: {fileID: 0}
+  placedIngredient: {fileID: 0}
+  placedUtensil: {fileID: 0}
   ingredient: {fileID: 4592298258785157965, guid: c26821cffe1cfd64fb42adfca1167edb, type: 3}
 --- !u!1 &5142556370466638739 stripped
 GameObject:

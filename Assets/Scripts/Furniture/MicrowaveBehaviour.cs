@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using Unity.Netcode;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(ProgressSliderBehaviour))]
 public class MicrowaveBehaviour : InteractiveAppliance
 {
-    // References
     private Animator animator;
     private ProgressSliderBehaviour progressBar;
 
@@ -44,11 +44,16 @@ public class MicrowaveBehaviour : InteractiveAppliance
         {
             ToggleCookAnimation(true);
 
+            SetSliderActiveClientRpc(true);
+
             if (!placedIngredient.IsCooked)
             {
                 while (!placedIngredient.IsCooked)
                 {
                     placedIngredient.Cook(Time.deltaTime);
+
+                    UpdateProgressClientRpc(placedIngredient.GetCookProgress());
+
                     yield return null;
                 }
             }
@@ -57,11 +62,16 @@ public class MicrowaveBehaviour : InteractiveAppliance
                 while (!placedIngredient.IsBurnt)
                 {
                     placedIngredient.Cook(Time.deltaTime);
+
+                    UpdateProgressClientRpc(placedIngredient.GetCookProgress());
+
                     yield return null;
                 }
             }
 
             ToggleCookAnimation(false);
+
+            SetSliderActiveClientRpc(false);
         }
     }
 
@@ -72,6 +82,7 @@ public class MicrowaveBehaviour : InteractiveAppliance
 
         progressBar.SetActive(isCooking);
         animator.SetBool("isCooking", isCooking);
+
         if (audioSource.isPlaying) audioSource.Stop();
         audioSource.PlayOneShot(isCooking ? oven : ding);
     }
@@ -80,7 +91,32 @@ public class MicrowaveBehaviour : InteractiveAppliance
     {
         base.OnInteract(playerController);
 
+        if (!IsServer)
+        {
+            InteractServerRpc(playerController.NetworkObjectId);
+            return;
+        }
+
         if (!isCooking && placedIngredient && !placedIngredient.IsBurnt)
             StartCoroutine(Cook());
+    }
+
+    [Rpc(SendTo.Server)]
+    private void InteractServerRpc(ulong playerId)
+    {
+        PlayerController player = NetHelpers.GetNetComponent<PlayerController>(playerId);
+        OnInteract(player);
+    }
+
+    [ClientRpc]
+    private void SetSliderActiveClientRpc(bool active)
+    {
+        progressBar.SetActive(active);
+    }
+
+    [ClientRpc]
+    private void UpdateProgressClientRpc(float progress)
+    {
+        progressBar.UpdateProgressBar(progress);
     }
 }

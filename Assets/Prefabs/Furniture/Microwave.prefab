@@ -124,6 +124,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   placeArea: {fileID: 3234735041826596134}
   _placedItem: {fileID: 0}
+  placedIngredient: {fileID: 0}
+  placedUtensil: {fileID: 0}
   oven: {fileID: 8300000, guid: 9b28322a63490624fb33343377df1708, type: 3}
   ding: {fileID: 8300000, guid: 1269a20f80a37d04db7ea9647973aba1, type: 3}
   isCooking: 0
