@@ -206,9 +206,10 @@ MonoBehaviour:
   cookedTime: 0
   requiredCutTime: 3
   cutTime: 0
-  cookedColor: {r: 0.3301887, g: 0.126157, b: 0.126157, a: 0}
-  burntColor: {r: 0.1792453, g: 0.13781595, b: 0.13781595, a: 0}
-  cutColor: {r: 0, g: 0, b: 0, a: 0}
+  cookedColor: {r: 1, g: 0.88339704, b: 0.435849, a: 0}
+  burntColor: {r: 0, g: 0, b: 0, a: 0}
+  cutPrefab: {fileID: 7403686125299718410, guid: 0b2a9b901432128498dfb645cf3c5665, type: 3}
+  isAlreadyCut: 0
 --- !u!114 &7939588393909403500
 MonoBehaviour:
   m_ObjectHideFlags: 0

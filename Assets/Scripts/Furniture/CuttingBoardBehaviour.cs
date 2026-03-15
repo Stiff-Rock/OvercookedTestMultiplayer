@@ -16,23 +16,28 @@ public class CuttingBoardBehaviour : InteractiveAppliance
 
     private void Update()
     {
-        if (placedIngredient && isCutting)
+        if (!IsServer)
+            return;
+
+        if (!placedIngredient || isCutting == false)
+            return;
+
+        progressBar.UpdateProgressBar(placedIngredient.GetCutProgress());
+        placedIngredient.Cut(Time.deltaTime);
+
+        UpdateProgressClientRpc(placedIngredient.GetCutProgress());
+
+        if (placedIngredient.GetCutProgress() >= 1f)
         {
-            progressBar.UpdateProgressBar(placedIngredient.GetCutProgress());
-            placedIngredient.Cut(Time.deltaTime);
+            isCutting = false;
 
-            UpdateProgressClientRpc(placedIngredient.GetCutProgress());
+            SpawnCutIngredient();
 
-            if (placedIngredient.IsCut)
-            {
-                isCutting = false;
+            SetSliderActiveClientRpc(false);
 
-                SetSliderActiveClientRpc(false);
+            enabled = false;
 
-                enabled = false;
-
-                currentPlayer.ToggleActive(true);
-            }
+            currentPlayer.ToggleActive(true);
         }
     }
 
@@ -45,6 +50,10 @@ public class CuttingBoardBehaviour : InteractiveAppliance
             InteractServerRpc(playerController.NetworkObjectId);
             return;
         }
+
+        
+        if (placedIngredient && placedIngredient.IsAlreadyCut)
+            return;
 
         if (placedIngredient)
         {
@@ -64,6 +73,46 @@ public class CuttingBoardBehaviour : InteractiveAppliance
     {
         PlayerController player = NetHelpers.GetNetComponent<PlayerController>(playerId);
         OnInteract(player);
+    }
+
+    private void SpawnCutIngredient()
+    {
+        if (!IsServer) return;
+
+        GameObject prefab = placedIngredient.GetCutPrefab();
+
+        if (prefab == null)
+        {
+            Debug.LogError("Cut prefab missing");
+            return;
+        }
+
+       
+        GameObject newObj = Instantiate(prefab, placeArea.transform);
+        newObj.transform.localPosition = Vector3.zero;
+        newObj.transform.localRotation = Quaternion.identity;
+
+       
+        IngredientBehaviour newIngredient = newObj.GetComponent<IngredientBehaviour>();
+        if (newIngredient != null)
+        {
+            
+            typeof(IngredientBehaviour)
+                .GetField("isAlreadyCut", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                ?.SetValue(newIngredient, true);
+        }
+
+        NetworkObject netObj = newObj.GetComponent<NetworkObject>();
+        netObj.Spawn();
+
+        PickableItemBehaviour newItem = newObj.GetComponent<PickableItemBehaviour>();
+
+        
+        newItem.NetworkSetParent(placeArea.transform, false);
+
+        placedIngredient.NetworkObject.Despawn(true);
+
+        PlacedItem = newItem;
     }
 
     [ClientRpc]

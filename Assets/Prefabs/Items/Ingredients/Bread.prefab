@@ -115,6 +115,14 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 3136375435
       objectReference: {fileID: 0}
+    - target: {fileID: 7687745542465041496, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687745542465041496, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3136375435
+      objectReference: {fileID: 0}
     - target: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -223,8 +231,9 @@ MonoBehaviour:
   requiredCutTime: 3
   cutTime: 0
   cookedColor: {r: 0.3301887, g: 0.126157, b: 0.126157, a: 0}
-  burntColor: {r: 0.1792453, g: 0.13781595, b: 0.13781595, a: 0}
-  cutColor: {r: 0, g: 0, b: 0, a: 0}
+  burntColor: {r: 0, g: 0, b: 0, a: 0}
+  cutPrefab: {fileID: 8054758539034758675, guid: 62cd5a158c7a2794d806e1329ebea5ad, type: 3}
+  isAlreadyCut: 0
 --- !u!114 &6136939267706817293
 MonoBehaviour:
   m_ObjectHideFlags: 0
