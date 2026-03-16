@@ -10,8 +10,9 @@ using UnityEngine.InputSystem;
 public class PlayerController : NetworkBehaviour
 {
     // References
-    private CharacterController characterController;
-    private Animator animator;
+    [SerializeField] private CharacterController characterController;
+    [SerializeField] private Animator animator;
+
     private static readonly int isWalkingHash = Animator.StringToHash("IsWalking");
 
     // Values
@@ -35,9 +36,6 @@ public class PlayerController : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
-
-        characterController = GetComponent<CharacterController>();
-        animator = GetComponentInChildren<Animator>();
         active = true;
     }
 

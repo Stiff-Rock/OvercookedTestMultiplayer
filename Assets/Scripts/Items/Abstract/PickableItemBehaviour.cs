@@ -12,12 +12,10 @@ public class PickableItemBehaviour : NetworkBehaviour
     private Rigidbody rb;
 
     private NetworkObject pendingParent;
-    private Vector3 pendingPosition;
     private bool pendingWorldPositionStays;
 
     private Transform currentParent;
 
-    // TODO: CHANGE TO OnNetworkSpawn
     protected virtual void Awake()
     {
         triggerCollider = GetComponent<Collider>();
@@ -43,10 +41,7 @@ public class PickableItemBehaviour : NetworkBehaviour
     public void NetworkSetParent(Transform newPositionTransform, bool worlPositionStays = true)
     {
         if (!IsServer)
-        {
-            Debug.LogWarning("Parenting can only be initiated by the Server. \n" + System.Environment.StackTrace);
             return;
-        }
 
         NetworkObject newParentNetTransform = newPositionTransform ?
             newPositionTransform.parent.gameObject.GetComponent<NetworkObject>()
@@ -60,9 +55,44 @@ public class PickableItemBehaviour : NetworkBehaviour
         else
         {
             pendingParent = newParentNetTransform;
-            pendingPosition = newPositionTransform ? newPositionTransform.position : transform.position;
             pendingWorldPositionStays = worlPositionStays;
         }
+    }
+
+    private void UpdateTransform(Transform newPositionTransform)
+    {
+        bool isPlaced = IsPlaced();
+
+        Transform newParent = transform.parent;
+        //Debug.Log($"UpdateTransform: {newPositionTransform.position} || parent: {transform.parent.name}");
+        if (isPlaced && currentParent != newParent)
+        {
+            transform.position = newPositionTransform.position;
+            transform.localRotation = Quaternion.identity;
+        }
+
+        currentParent = newParent;
+
+        Vector3 newPos = newPositionTransform ? newPositionTransform.position : transform.position;
+        //Debug.Log($"SENDING newPos: {newPos}");
+        UpdateTransform_ClientRpc(isPlaced, newPos);
+    }
+
+    [ClientRpc]
+    private void UpdateTransform_ClientRpc(bool isPlaced, Vector3 newPos)
+    {
+        //Debug.Log($"UpdateTransform_ClientRpc: {newPos} || parent: {transform.parent.name}");
+        Transform newParent = transform.parent;
+
+        if (isPlaced && currentParent != newParent)
+        {
+            transform.position = newPos;
+            transform.localRotation = Quaternion.identity;
+        }
+
+        currentParent = newParent;
+
+        ToggleColliders_ClientRpc(!isPlaced);
     }
 
     [ClientRpc]
@@ -75,23 +105,6 @@ public class PickableItemBehaviour : NetworkBehaviour
             rb.constraints = RigidbodyConstraints.None;
         else
             rb.constraints = RigidbodyConstraints.FreezeAll;
-    }
-
-    private void UpdateTransform(Transform newPositionTransform)
-    {
-        bool isPlaced = IsPlaced();
-
-        Transform newParent = transform.parent;
-
-        if (isPlaced && currentParent != newParent)
-        {
-            transform.position = newPositionTransform.position;
-            transform.localRotation = Quaternion.identity;
-        }
-
-        currentParent = newParent;
-
-        ToggleColliders_ClientRpc(!isPlaced);
     }
 
     #region Helper Methods

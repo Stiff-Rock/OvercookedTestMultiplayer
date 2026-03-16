@@ -88,6 +88,7 @@ public class Recipe
         }
         else if (uType == UtensilType.Pot)
         {
+
             compatibleIngredients = RecipesManager.Instance.PotAcceptedIngredients;
         }
         else
@@ -99,8 +100,9 @@ public class Recipe
         bool ingredientAccepted = compatibleIngredients.Contains(newIngredient);
 
         if (ingredientAccepted)
+        {
             baseIngredients.Add(newIngredient);
-
+        }
 
         return ingredientAccepted;
     }

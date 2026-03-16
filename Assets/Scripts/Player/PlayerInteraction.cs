@@ -1,5 +1,5 @@
-using Unity.Burst.Intrinsics;
 using Unity.Netcode;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -88,28 +88,33 @@ public class PlayerInteraction : NetworkBehaviour
         // Check Interact
         if (Keyboard.current[interactKey].wasPressedThisFrame && ownNearbyAppliance)
             if (ownPickedItem && ownNearbyAppliance.HasItem())
-                TryMerge_ServerRpc(NetworkObjectId);
+            {
+                ulong ownPickedItemId = ownPickedItem ? ownPickedItem.NetworkObjectId : 0;
+                ulong nearbyApplianceId = ownNearbyAppliance ? ownNearbyAppliance.NetworkObjectId : 0;
+
+                TryMerge_ServerRpc(NetworkObjectId, ownPickedItemId, nearbyApplianceId);
+            }
             else if (!ownPickedItem)
                 ownNearbyAppliance.OnInteract(playerController);
 
         // Check Pick/Drop
         if (Keyboard.current[pickDropKey].wasPressedThisFrame)
         {
-            // Pasamos los IDs de objetos cercanos al servidor
             ulong nearbyItemId = ownNearbyItem ? ownNearbyItem.NetworkObjectId : 0;
             ulong nearbyApplianceId = ownNearbyAppliance ? ownNearbyAppliance.NetworkObjectId : 0;
 
-            PickOrDrop_ServerRpc(nearbyItemId, nearbyApplianceId);
+            PickOrDrop_ServerRpc(NetworkObjectId, nearbyItemId, nearbyApplianceId);
         }
     }
 
     [ServerRpc]
-    private void TryMerge_ServerRpc(ulong playerNetId)
+    private void TryMerge_ServerRpc(ulong playerNetId, ulong ownPickedItemId, ulong nearbyApplianceId)
     {
         PlayerInteraction pI = NetHelpers.GetNetComponent<PlayerInteraction>(playerNetId);
+        InteractiveAppliance nearbyAppliance = nearbyApplianceId != 0 ? NetHelpers.GetNetComponent<InteractiveAppliance>(nearbyApplianceId) : null;
 
-        PickableItemBehaviour held = pI.ownPickedItem;
-        PickableItemBehaviour placed = pI.ownNearbyAppliance.PlacedItem;
+        PickableItemBehaviour held = ownPickedItemId != 0 ? NetHelpers.GetNetComponent<PickableItemBehaviour>(ownPickedItemId) : null;
+        PickableItemBehaviour placed = nearbyAppliance.PlacedItem;
 
         UtensilBehaviour utensil;
         IngredientBehaviour ingredient;
@@ -129,6 +134,7 @@ public class PlayerInteraction : NetworkBehaviour
         }
         else if (held is UtensilBehaviour uHeld && placed is UtensilBehaviour uPlaced)
         {
+            Debug.Log("TryMoveIngredientBetweenUtensils");
             TryMoveIngredientBetweenUtensils(uHeld, uPlaced);
             return;
         }
@@ -137,19 +143,15 @@ public class PlayerInteraction : NetworkBehaviour
         if (!utensil.TryAddIngredient(ingredient)) return;
 
         if (isIngredientOnAppliance)
-        {
-            pI.ownNearbyAppliance.TakeItem();
-        }
+            nearbyAppliance.TakeItem();
         else
-        {
             DropItem(pI);
-        }
     }
 
     [ServerRpc]
-    private void PickOrDrop_ServerRpc(ulong nearbyItemId, ulong nearbyApplianceId)
+    private void PickOrDrop_ServerRpc(ulong playerNetId, ulong nearbyItemId, ulong nearbyApplianceId)
     {
-        PlayerInteraction pI = this;
+        PlayerInteraction pI = NetHelpers.GetNetComponent<PlayerInteraction>(playerNetId);
 
         PickableItemBehaviour nearbyItem = nearbyItemId != 0 ? NetHelpers.GetNetComponent<PickableItemBehaviour>(nearbyItemId) : null;
         InteractiveAppliance nearbyAppliance = nearbyApplianceId != 0 ? NetHelpers.GetNetComponent<InteractiveAppliance>(nearbyApplianceId) : null;
@@ -175,7 +177,7 @@ public class PlayerInteraction : NetworkBehaviour
         if (CanThrowToTrash(pickedItem, nearbyAppliance))
         {
             nearbyAppliance.PlaceItem(pickedItem);
-            pI.ownPickedItem = null;
+            DropItem(pI);
             return;
         }
 
@@ -183,14 +185,14 @@ public class PlayerInteraction : NetworkBehaviour
         if (CanPlaceItemOntoAppliance(pickedItem, nearbyAppliance))
         {
             nearbyAppliance.PlaceItem(pickedItem);
-            pI.ownPickedItem = null;
+            DropItem(pI);
             return;
         }
 
         // Take item from appliance
         if (CanTakeItemFromAppliance(nearbyAppliance, pickedItem))
         {
-            pI.ownPickedItem = nearbyAppliance.TakeItem();
+            SetItem(pI, nearbyAppliance.TakeItem());
             pI.ownPickedItem.NetworkSetParent(pI.hand.transform);
             return;
         }
@@ -198,7 +200,7 @@ public class PlayerInteraction : NetworkBehaviour
         // Take nearby item
         if (CanTakeNearbyItem(nearbyItem, pickedItem))
         {
-            pI.ownPickedItem = nearbyItem;
+            SetItem(pI, nearbyItem);
             pI.ownPickedItem.NetworkSetParent(pI.hand.transform);
             return;
         }
@@ -207,7 +209,7 @@ public class PlayerInteraction : NetworkBehaviour
         if (CanDropHeldItem(nearbyAppliance, pickedItem))
         {
             pI.ownPickedItem.NetworkSetParent(null);
-            pI.ownPickedItem = null;
+            DropItem(pI);
             return;
         }
     }
@@ -218,7 +220,29 @@ public class PlayerInteraction : NetworkBehaviour
     {
         PickableItemBehaviour droppedItem = pI.ownPickedItem;
         pI.ownPickedItem = null;
+        DropItem_ClientRpc(pI.NetworkObjectId);
         return droppedItem;
+    }
+
+    [ClientRpc]
+    private void DropItem_ClientRpc(ulong playerNetId)
+    {
+        PlayerInteraction pI = NetHelpers.GetNetComponent<PlayerInteraction>(playerNetId);
+        pI.ownPickedItem = null;
+    }
+
+    private void SetItem(PlayerInteraction pI, PickableItemBehaviour item)
+    {
+        pI.ownPickedItem = item;
+        SetItem_ClientRpc(pI.NetworkObjectId, item.NetworkObjectId);
+    }
+
+    [ClientRpc]
+    private void SetItem_ClientRpc(ulong playerNetId, ulong itemId)
+    {
+        PlayerInteraction pI = NetHelpers.GetNetComponent<PlayerInteraction>(playerNetId);
+        PickableItemBehaviour item = NetHelpers.GetNetComponent<PickableItemBehaviour>(itemId);
+        pI.ownPickedItem = item;
     }
 
     private bool CanThrowToTrash(PickableItemBehaviour pickedItem, InteractiveAppliance nearbyAppliance)
@@ -256,7 +280,7 @@ public class PlayerInteraction : NetworkBehaviour
 
     private bool NearbyApplianceIsDeilveryPoint(InteractiveAppliance nearbyAppliance, out DeliveryPoint deliveryPoint)
     {
-        deliveryPoint = nearbyAppliance?.gameObject.GetComponent<DeliveryPoint>();
+        deliveryPoint = nearbyAppliance ? nearbyAppliance.gameObject.GetComponent<DeliveryPoint>() : null;
         return deliveryPoint;
     }
 
@@ -280,6 +304,7 @@ public class PlayerInteraction : NetworkBehaviour
         IngredientBehaviour ingB = other.PeekIngredient();
         if (other.CanTakeIngredient() && plate.TryAddIngredient(ingB))
         {
+            Debug.Log("FINISHED YEAH!!");
             other.RemoveIngredient();
         }
     }

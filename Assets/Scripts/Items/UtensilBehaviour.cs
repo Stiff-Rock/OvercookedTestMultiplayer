@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
-//TODO: SYNC UtensilBehaviour
 public class UtensilBehaviour : PickableItemBehaviour
 {
     [field: SerializeField] public UtensilType UtensilType { get; private set; }
@@ -51,17 +51,52 @@ public class UtensilBehaviour : PickableItemBehaviour
             added = false;
         }
 
-        if (added)
-        {
-            StackIngredients(ingredientItem);
+        if (added) AddIngredientToUtensil(ingredientItem);
 
-            InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
-
-            if (appliance)
-                appliance.OnPlacedItemChanged();
-        }
+        TryAddIngredient_ClientRpc(ingredientItem.NetworkObjectId);
 
         return added;
+    }
+
+    [ClientRpc]
+    private void TryAddIngredient_ClientRpc(ulong ingredientItemId)
+    {
+        Debug.Log("TryAddIngredient_ClientRpc");
+
+        IngredientBehaviour ingredientItem =
+            NetHelpers.GetNetComponent<IngredientBehaviour>(ingredientItemId);
+
+        bool added;
+        if (UtensilType == UtensilType.Plate)
+        {
+            added = CurrentRecipe.TryMergeIngredient(ingredientItem.ToIngredientData());
+        }
+        else if (UtensilType == UtensilType.Pan || UtensilType == UtensilType.Pot)
+        {
+            added = CurrentRecipe.TryAddIngredient(ingredientItem.ToIngredientData(), UtensilType);
+        }
+        else
+        {
+            Debug.LogError($"Utensil '{gameObject.name}' has no valid UtensilType (found {UtensilType})");
+            added = false;
+        }
+
+        Debug.Log($"added¿¿: {added}");
+
+
+        if (added) AddIngredientToUtensil(ingredientItem);
+    }
+
+    private void AddIngredientToUtensil(IngredientBehaviour ingredientItem)
+    {
+        if (IsServer)
+            StackIngredients(ingredientItem);
+
+        InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
+        Debug.Log($"AddIngredientToUtensil -- appliance: {appliance}");
+
+        if (appliance)
+            appliance.OnPlacedItemChanged();
     }
 
     public IngredientBehaviour RemoveIngredient()
@@ -77,7 +112,22 @@ public class UtensilBehaviour : PickableItemBehaviour
         if (appliance)
             appliance.OnPlacedItemChanged();
 
+        RemoveIngredient_ClientRpc();
+
         return ingB;
+    }
+
+    [ClientRpc]
+    private void RemoveIngredient_ClientRpc()
+    {
+        List<IngredientData> ingredients = CurrentRecipe.GetBaseIngredients();
+        ingredients.RemoveAt(0);
+
+        heldIngredients.RemoveAt(0);
+
+        InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
+        if (appliance)
+            appliance.OnPlacedItemChanged();
     }
 
     public bool CanTakeIngredient()

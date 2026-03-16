@@ -59,7 +59,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7258276735824804332, guid: 8c3291405fb206444864daec2571a572, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1671363735841392700}
   m_SourcePrefab: {fileID: 100100000, guid: 8c3291405fb206444864daec2571a572, type: 3}
 --- !u!4 &7074830511996089428 stripped
 Transform:
@@ -71,6 +74,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7258276735824804332, guid: 8c3291405fb206444864daec2571a572, type: 3}
   m_PrefabInstance: {fileID: 999689498897864450}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1671363735841392700
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7594485629181718254}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.45207423, y: 0.017930716, z: 0.45349067}
+  m_Center: {x: -0.053268157, y: 0.008694323, z: 0.0035848543}
 --- !u!1001 &4541681337413625289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -149,7 +173,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -248,43 +272,16 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4592298258785157965}
-    - targetCorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7939588393909403500}
     - targetCorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5981953077470388258}
+      addedObject: {fileID: 4592298258785157965}
   m_SourcePrefab: {fileID: 100100000, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
 --- !u!1 &3497514120743026303 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
   m_PrefabInstance: {fileID: 5187796790749789846}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4592298258785157965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3497514120743026303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01af765e458782847853de9aaf2c144a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
-  ShowTopMostFoldoutHeaderGroup: 1
-  normalModel: {fileID: 3730707604842895512}
-  cutModel: {fileID: 7594485629181718254}
-  <Type>k__BackingField: 6
-  requiredCookingTime: 3
-  requiredBurnTime: 4
-  cookedTime: 0
-  requiredCutTime: 3
-  cutTime: 0
-  cookedColor: {r: 1, g: 0.88339704, b: 0.435849, a: 0}
-  burntColor: {r: 0, g: 0, b: 0, a: 0}
-  isCut: 0
 --- !u!114 &7939588393909403500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,7 +328,7 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &5981953077470388258
+--- !u!114 &4592298258785157965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -340,14 +337,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 3497514120743026303}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Script: {fileID: 11500000, guid: 01af765e458782847853de9aaf2c144a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkRigidbody
+  m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
-  NetworkRigidbodyBaseExpanded: 0
-  UseRigidBodyForMotion: 0
-  AutoUpdateKinematicState: 1
-  AutoSetKinematicOnDespawn: 1
+  normalModel: {fileID: 3730707604842895512}
+  cutModel: {fileID: 7594485629181718254}
+  <Type>k__BackingField: 6
+  requiredCookingTime: 3
+  requiredBurnTime: 4
+  cookedTime: 0
+  requiredCutTime: 3
+  cutTime: 0
+  cookedColor: {r: 1, g: 0.88339704, b: 0.435849, a: 0}
+  burntColor: {r: 0, g: 0, b: 0, a: 0}
+  canBeCut: 1
+  isCut: 0
 --- !u!4 &3652328421329860625 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}

@@ -27,6 +27,7 @@ public class IngredientBehaviour : PickableItemBehaviour
     [Header("State")]
     private readonly NetworkVariable<bool> isCooked = new(false);
     private readonly NetworkVariable<bool> isBurnt = new(false);
+    [SerializeField] private bool canBeCut = true;
     [SerializeField] private bool isCut = false;
 
     private readonly NetworkVariable<float> networkCookTime = new(0f);
@@ -34,6 +35,7 @@ public class IngredientBehaviour : PickableItemBehaviour
 
     public bool IsCooked => isCooked.Value;
     public bool IsBurnt => isBurnt.Value;
+    public bool CanBeCut => canBeCut;
     public bool IsCut => isCut;
 
     protected override void Awake()
@@ -132,6 +134,9 @@ public class IngredientBehaviour : PickableItemBehaviour
             state = IngredientState.Cooked;
         else
             state = IngredientState.Raw;
+
+        if(isCut)
+            state |= IngredientState.Cut;
 
         return new IngredientData(Type, state);
     }

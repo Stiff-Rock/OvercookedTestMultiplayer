@@ -12,4 +12,10 @@ public class RecipeScriptableObject : ScriptableObject
 
     [Header("Visual")]
     [field: SerializeField] public GameObject ResultPrefab { get; private set; }
+
+    public override string ToString()
+    {
+        return $"RequiredIngredients: {string.Join(",", RequiredIngredients)} " +
+            $"|| ExtraIngredients: {string.Join(",", ExtraIngredients)}";
+    }
 }

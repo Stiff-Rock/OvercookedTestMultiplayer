@@ -83,7 +83,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -99,6 +99,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3652328421329860625}
     m_Modifications:
+    - target: {fileID: 566460206496428868, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -272,43 +276,16 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4592298258785157965}
-    - targetCorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6136939267706817293}
     - targetCorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4444844010618585308}
+      addedObject: {fileID: 4592298258785157965}
   m_SourcePrefab: {fileID: 100100000, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
 --- !u!1 &3497514120743026303 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
   m_PrefabInstance: {fileID: 5187796790749789846}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4592298258785157965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3497514120743026303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01af765e458782847853de9aaf2c144a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
-  ShowTopMostFoldoutHeaderGroup: 1
-  normalModel: {fileID: 1872624233452310038}
-  cutModel: {fileID: 8060612875095688532}
-  <Type>k__BackingField: 7
-  requiredCookingTime: 3
-  requiredBurnTime: 4
-  cookedTime: 0
-  requiredCutTime: 3
-  cutTime: 0
-  cookedColor: {r: 0.3301887, g: 0.126157, b: 0.126157, a: 0}
-  burntColor: {r: 0, g: 0, b: 0, a: 0}
-  isCut: 0
 --- !u!114 &6136939267706817293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +332,7 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &4444844010618585308
+--- !u!114 &4592298258785157965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -364,14 +341,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 3497514120743026303}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Script: {fileID: 11500000, guid: 01af765e458782847853de9aaf2c144a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkRigidbody
+  m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
-  NetworkRigidbodyBaseExpanded: 0
-  UseRigidBodyForMotion: 0
-  AutoUpdateKinematicState: 1
-  AutoSetKinematicOnDespawn: 1
+  normalModel: {fileID: 1872624233452310038}
+  cutModel: {fileID: 8060612875095688532}
+  <Type>k__BackingField: 7
+  requiredCookingTime: 3
+  requiredBurnTime: 4
+  cookedTime: 0
+  requiredCutTime: 3
+  cutTime: 0
+  cookedColor: {r: 0.3301887, g: 0.126157, b: 0.126157, a: 0}
+  burntColor: {r: 0, g: 0, b: 0, a: 0}
+  canBeCut: 1
+  isCut: 0
 --- !u!4 &3652328421329860625 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}

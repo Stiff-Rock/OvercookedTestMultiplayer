@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEditor;
@@ -14,7 +13,10 @@ public class Launcher : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private string gameSceneName;
+    [SerializeField] private GameObject inGameDebugConsole;
 
+    [Header("Settings")]
+    [SerializeField] private bool allowDebugConsole;
 
     private void Start()
     {
@@ -77,11 +79,13 @@ public class Launcher : MonoBehaviour
         Debug.Log($"Cliente conectado con Id {clientId}");
     }
 
-  
     private void OnServerStarted()
     {
         Debug.Log($"Servidor iniciado");
         NetworkManager.Singleton.SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single);
+
+        if (allowDebugConsole)
+            Instantiate(inGameDebugConsole, Vector3.zero, Quaternion.identity);
     }
     private void OnClientDisconnected(ulong clientId)
     {
@@ -95,6 +99,4 @@ public class Launcher : MonoBehaviour
     }
 
     #endregion
-
-
 }

@@ -37,13 +37,15 @@ public class CuttingBoardBehaviour : InteractiveAppliance
 
             enabled = false;
 
-            currentPlayer.ToggleActive(true);
+            TogglePlayerController(true);
         }
     }
 
-    // TODO: NO SE TIENE QUE PODER PONER CUALQUIER INGREDIENTE
     public override void OnInteract(PlayerController playerController)
     {
+        if (placedIngredient && !placedIngredient.CanBeCut)
+            return;
+
         base.OnInteract(playerController);
 
         if (!IsServer)
@@ -65,7 +67,7 @@ public class CuttingBoardBehaviour : InteractiveAppliance
 
             enabled = true;
 
-            currentPlayer.ToggleActive(false);
+            TogglePlayerController(false);
         }
     }
 
@@ -87,5 +89,21 @@ public class CuttingBoardBehaviour : InteractiveAppliance
     private void UpdateProgressClientRpc(float progress)
     {
         progressBar.UpdateProgressBar(progress);
+    }
+
+    private void TogglePlayerController(bool active)
+    {
+        if (currentPlayer)
+        {
+            currentPlayer.ToggleActive(active);
+            TogglePlayerController_ClientRpc(currentPlayer.NetworkObjectId, active);
+        }
+    }
+
+    [ClientRpc]
+    private void TogglePlayerController_ClientRpc(ulong playerNetId, bool active)
+    {
+        PlayerController pC = NetHelpers.GetNetComponent<PlayerController>(playerNetId);
+        pC.ToggleActive(active);
     }
 }

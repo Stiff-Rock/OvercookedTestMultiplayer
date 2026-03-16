@@ -1,17 +1,19 @@
-using Unity.Netcode;
 using UnityEngine;
 
 public class DeliveryPoint : InteractiveAppliance
 {
     private KitchenOrdersManager ordersManager;
 
-    protected override void Start()
+    public override void OnNetworkSpawn()
     {
-        base.Start();
+        base.OnNetworkSpawn();
 
         ordersManager = GameObject
-            .FindWithTag("KitchenOrdersManager")
+            .FindGameObjectWithTag("KitchenOrdersManager")
             .GetComponent<KitchenOrdersManager>();
+
+        if (!ordersManager)
+            Debug.LogError("Cannot find 'KitchenOrdersManager' GameObject");
     }
 
     public void DeliverOrder(DishType type, IngredientData[] baseIngs, IngredientData[] extraIngs)
