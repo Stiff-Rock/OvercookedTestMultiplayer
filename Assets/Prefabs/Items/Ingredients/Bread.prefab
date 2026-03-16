@@ -91,6 +91,77 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4, y: 0.6, z: 0.4}
   m_Center: {x: 0, y: -0.0012555871, z: 0.18684196}
+--- !u!1001 &4780142291039802011
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3652328421329860625}
+    m_Modifications:
+    - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281847207014897615, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_Name
+      value: BreadCutModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281847207014897615, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+--- !u!4 &7248222677858820078 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2792414326815411573, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+  m_PrefabInstance: {fileID: 4780142291039802011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8060612875095688532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3281847207014897615, guid: 3d9961953d0af6d45992421f432f135e, type: 3}
+  m_PrefabInstance: {fileID: 4780142291039802011}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5187796790749789846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -195,6 +266,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1348605424441939116}
+    - targetCorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7248222677858820078}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
@@ -224,6 +298,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  normalModel: {fileID: 1872624233452310038}
+  cutModel: {fileID: 8060612875095688532}
   <Type>k__BackingField: 7
   requiredCookingTime: 3
   requiredBurnTime: 4
@@ -232,8 +308,7 @@ MonoBehaviour:
   cutTime: 0
   cookedColor: {r: 0.3301887, g: 0.126157, b: 0.126157, a: 0}
   burntColor: {r: 0, g: 0, b: 0, a: 0}
-  cutPrefab: {fileID: 8054758539034758675, guid: 62cd5a158c7a2794d806e1329ebea5ad, type: 3}
-  isAlreadyCut: 0
+  isCut: 0
 --- !u!114 &6136939267706817293
 MonoBehaviour:
   m_ObjectHideFlags: 0

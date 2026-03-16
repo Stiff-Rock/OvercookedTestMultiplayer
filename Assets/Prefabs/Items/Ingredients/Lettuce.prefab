@@ -1,5 +1,76 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &759301502630966385
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3652328421329860625}
+    m_Modifications:
+    - target: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.018
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.006
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9122372
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.39819995
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.0412012
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.08696267
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6752049531352996123, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_Name
+      value: LettuceCutModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6752049531352996123, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+--- !u!1 &6286336750291676522 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6752049531352996123, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+  m_PrefabInstance: {fileID: 759301502630966385}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6662615345526618064 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6268951216480519073, guid: 8b19e9d20e472e743909ff1f8f01b4aa, type: 3}
+  m_PrefabInstance: {fileID: 759301502630966385}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5187796790749789846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80,6 +151,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8187839655653566038}
+    - targetCorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6662615345526618064}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
@@ -109,6 +183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  normalModel: {fileID: 8857133946541325548}
+  cutModel: {fileID: 6286336750291676522}
   <Type>k__BackingField: 4
   requiredCookingTime: 3
   requiredBurnTime: 4
@@ -117,8 +193,7 @@ MonoBehaviour:
   cutTime: 0
   cookedColor: {r: 0.08217167, g: 0.6075471, b: 0, a: 0}
   burntColor: {r: 0.036660675, g: 0.07169801, b: 0.03873345, a: 0}
-  cutPrefab: {fileID: 2938333827803619560, guid: 1a52b93754f0c2c408e189a34f7dd196, type: 3}
-  isAlreadyCut: 0
+  isCut: 0
 --- !u!114 &-3221670922601528883
 MonoBehaviour:
   m_ObjectHideFlags: 0

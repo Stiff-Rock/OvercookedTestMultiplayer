@@ -1,9 +1,11 @@
-using UnityEngine;
 using Unity.Netcode;
+using UnityEngine;
 
 public class IngredientBehaviour : PickableItemBehaviour
 {
-    private Renderer objRenderer;
+    [Header("References")]
+    [SerializeField] private GameObject normalModel;
+    [SerializeField] private GameObject cutModel;
 
     [field: Header("Type")]
     [field: SerializeField] public IngredientType Type { get; private set; }
@@ -21,47 +23,17 @@ public class IngredientBehaviour : PickableItemBehaviour
     [SerializeField] private Color cookedColor;
     [SerializeField] private Color burntColor;
 
-    [Header("Cut Result")]
-    [SerializeField] private GameObject cutPrefab;
+    [Header("State")]
+    private readonly NetworkVariable<bool> isCooked = new(false);
+    private readonly NetworkVariable<bool> isBurnt = new(false);
+    [SerializeField] private bool isCut = false;
 
-    // NUEVO: marcar si el ingrediente ya está cortado
-    [SerializeField] private bool isAlreadyCut = false;
-
-    private NetworkVariable<bool> isCooked = new NetworkVariable<bool>(false);
-    private NetworkVariable<bool> isBurnt = new NetworkVariable<bool>(false);
-
-    private NetworkVariable<float> networkCookTime = new NetworkVariable<float>(0f);
-    private NetworkVariable<float> networkCutTime = new NetworkVariable<float>(0f);
+    private readonly NetworkVariable<float> networkCookTime = new(0f);
+    private readonly NetworkVariable<float> networkCutTime = new(0f);
 
     public bool IsCooked => isCooked.Value;
     public bool IsBurnt => isBurnt.Value;
-
-    // NUEVO: getter para saber si es cortado
-    public bool IsAlreadyCut => isAlreadyCut;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        objRenderer = GetComponentInChildren<Renderer>();
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        isCooked.OnValueChanged += OnCookedChanged;
-        isBurnt.OnValueChanged += OnBurntChanged;
-    }
-
-    private void OnCookedChanged(bool prev, bool value)
-    {
-        if (value)
-            objRenderer.material.color = cookedColor;
-    }
-
-    private void OnBurntChanged(bool prev, bool value)
-    {
-        if (value)
-            objRenderer.material.color = burntColor;
-    }
+    public bool IsCut => isCut;
 
     public void Cook(float cookTime)
     {
@@ -123,11 +95,6 @@ public class IngredientBehaviour : PickableItemBehaviour
         return currentTime / requiredCutTime;
     }
 
-    public GameObject GetCutPrefab()
-    {
-        return cutPrefab;
-    }
-
     public IngredientData ToIngredientData()
     {
         if (Type == IngredientType.None)
@@ -146,5 +113,21 @@ public class IngredientBehaviour : PickableItemBehaviour
             state = IngredientState.Raw;
 
         return new IngredientData(Type, state);
+    }
+
+    public void SetIsCut()
+    {
+        isCut = true;
+        normalModel.SetActive(false);
+        cutModel.SetActive(true);
+        SetIsCut_ClientRpc();
+    }
+
+    [ClientRpc]
+    private void SetIsCut_ClientRpc()
+    {
+        isCut = true;
+        normalModel.SetActive(false);
+        cutModel.SetActive(true);
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6420014811998031613}
   - component: {fileID: 1157654470088542139}
   m_Layer: 0
-  m_Name: Model
+  m_Name: TomatoModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,6 +112,77 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.18
   m_Center: {x: 0, y: 0.15307295, z: 0}
+--- !u!1001 &3441317061453955187
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3832820868975225533}
+    m_Modifications:
+    - target: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990492362961645870, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_Name
+      value: TomatoCutModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990492362961645870, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+--- !u!1 &4693293788292493661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7990492362961645870, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+  m_PrefabInstance: {fileID: 3441317061453955187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5362165896490576871 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7325173905855654804, guid: fceab00ecb513014ea996236ffa67c72, type: 3}
+  m_PrefabInstance: {fileID: 3441317061453955187}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4639137169512361018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -192,6 +263,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2432664796356646805}
+    - targetCorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5362165896490576871}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
@@ -226,6 +300,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  normalModel: {fileID: 756333730221416711}
+  cutModel: {fileID: 4693293788292493661}
   <Type>k__BackingField: 1
   requiredCookingTime: 2
   requiredBurnTime: 3
@@ -234,8 +310,7 @@ MonoBehaviour:
   cutTime: 0
   cookedColor: {r: 0.4113207, g: 0, b: 0, a: 0}
   burntColor: {r: 0, g: 0, b: 0, a: 0}
-  cutPrefab: {fileID: 8933883829535600854, guid: 042f2438544d46b4ca4b0e7b53bd8b57, type: 3}
-  isAlreadyCut: 0
+  isCut: 0
 --- !u!114 &3997799593358224109
 MonoBehaviour:
   m_ObjectHideFlags: 0

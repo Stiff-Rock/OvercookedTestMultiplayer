@@ -31,8 +31,8 @@ public class CuttingBoardBehaviour : InteractiveAppliance
         {
             isCutting = false;
 
-            SpawnCutIngredient();
-
+            placedIngredient.SetIsCut();
+            placedIngredient.NetworkSetParent(placeArea.transform, false);
             SetSliderActiveClientRpc(false);
 
             enabled = false;
@@ -41,6 +41,7 @@ public class CuttingBoardBehaviour : InteractiveAppliance
         }
     }
 
+    // TODO: NO SE TIENE QUE PODER PONER CUALQUIER INGREDIENTE
     public override void OnInteract(PlayerController playerController)
     {
         base.OnInteract(playerController);
@@ -51,8 +52,8 @@ public class CuttingBoardBehaviour : InteractiveAppliance
             return;
         }
 
-        
-        if (placedIngredient && placedIngredient.IsAlreadyCut)
+
+        if (placedIngredient && placedIngredient.IsCut)
             return;
 
         if (placedIngredient)
@@ -75,45 +76,6 @@ public class CuttingBoardBehaviour : InteractiveAppliance
         OnInteract(player);
     }
 
-    private void SpawnCutIngredient()
-    {
-        if (!IsServer) return;
-
-        GameObject prefab = placedIngredient.GetCutPrefab();
-
-        if (prefab == null)
-        {
-            Debug.LogError("Cut prefab missing");
-            return;
-        }
-
-       
-        GameObject newObj = Instantiate(prefab, placeArea.transform);
-        newObj.transform.localPosition = Vector3.zero;
-        newObj.transform.localRotation = Quaternion.identity;
-
-       
-        IngredientBehaviour newIngredient = newObj.GetComponent<IngredientBehaviour>();
-        if (newIngredient != null)
-        {
-            
-            typeof(IngredientBehaviour)
-                .GetField("isAlreadyCut", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                ?.SetValue(newIngredient, true);
-        }
-
-        NetworkObject netObj = newObj.GetComponent<NetworkObject>();
-        netObj.Spawn();
-
-        PickableItemBehaviour newItem = newObj.GetComponent<PickableItemBehaviour>();
-
-        
-        newItem.NetworkSetParent(placeArea.transform, false);
-
-        placedIngredient.NetworkObject.Despawn(true);
-
-        PlacedItem = newItem;
-    }
 
     [ClientRpc]
     private void SetSliderActiveClientRpc(bool active)

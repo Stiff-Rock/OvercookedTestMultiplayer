@@ -80,6 +80,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6195632074911188663}
+    - targetCorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6233425245249413767}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8608467126845538537, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       insertIndex: -1
@@ -109,6 +112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  normalModel: {fileID: 6823127326925609997}
+  cutModel: {fileID: 6758288479257065533}
   <Type>k__BackingField: 5
   requiredCookingTime: 3
   requiredBurnTime: 4
@@ -117,8 +122,7 @@ MonoBehaviour:
   cutTime: 0
   cookedColor: {r: 0.85660374, g: 0.85660374, b: 0.85660374, a: 0}
   burntColor: {r: 0, g: 0, b: 0, a: 0}
-  cutPrefab: {fileID: 7047846465398062278, guid: ee67216535c3d204b9b3c4e25ced92ef, type: 3}
-  isAlreadyCut: 0
+  isCut: 0
 --- !u!114 &2440747422829859328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,3 +282,74 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.33
   m_Center: {x: 0.000000007450581, y: 0.13542573, z: 0.011863306}
+--- !u!1001 &7237829408813933108
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3652328421329860625}
+    m_Modifications:
+    - target: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.174
+      objectReference: {fileID: 0}
+    - target: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160108825292151305, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_Name
+      value: OnionCutModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160108825292151305, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+--- !u!4 &6233425245249413767 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3670570327474290867, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+  m_PrefabInstance: {fileID: 7237829408813933108}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6758288479257065533 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4160108825292151305, guid: 67621234a82307a4a87e0a0b948ba2eb, type: 3}
+  m_PrefabInstance: {fileID: 7237829408813933108}
+  m_PrefabAsset: {fileID: 0}
