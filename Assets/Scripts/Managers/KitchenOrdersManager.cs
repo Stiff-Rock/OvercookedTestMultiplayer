@@ -9,7 +9,7 @@ public class KitchenOrdersManager : NetworkBehaviour
     [Header("References")]
     [SerializeField] private Transform orderRowTransform;
     [SerializeField] private GameObject kitchenOrderPanelPrefab;
-    [field: SerializeField] public IngredientVisuals IngredientVisualsSO { get; private set; }
+    [field: SerializeField] public RecipesVisuals IngredientVisualsSO { get; private set; }
 
     [Header("Settings")]
     [SerializeField] private int maxOrders = 5;
@@ -66,7 +66,7 @@ public class KitchenOrdersManager : NetworkBehaviour
         serverOrder.Initialize(newOrderRecipe, orderLifespan, IngredientVisualsSO);
         kitchenOrders.Add(serverOrder);
 
-        CreateyOrder_ClientRpc(
+        CreateOrder_ClientRpc(
             newOrderRecipe.DishType,
             newOrderRecipe.GetBaseIngredients().ToArray(),
             newOrderRecipe.GetExtraIngredients().ToArray()
@@ -74,7 +74,7 @@ public class KitchenOrdersManager : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void CreateyOrder_ClientRpc(DishType dishType, IngredientData[] baseTypes, IngredientData[] extraTypes)
+    private void CreateOrder_ClientRpc(DishType dishType, IngredientData[] baseTypes, IngredientData[] extraTypes)
     {
         Recipe newOrderRecipe = new(dishType, baseTypes, extraTypes);
         GameObject newOrderPanel = Instantiate(kitchenOrderPanelPrefab, orderRowTransform);

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05002f7b72974e54ea70db5fc4eb1a44, type: 3}
-  m_Name: IngredientVisuals
+  m_Name: RecipeVisuals
   m_EditorClassIdentifier: Assembly-CSharp::IngredientVisuals
-  lookupTable:
+  ingredientTable:
   - type: 1
     sprite: {fileID: 21300000, guid: 5929ad6f3deb1e64fa4668ac141593e9, type: 3}
   - type: 2
@@ -29,3 +29,16 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: a73f8513b940fd34f808eb09e55315e5, type: 3}
   - type: 8
     sprite: {fileID: 21300000, guid: 3cf881d04d0478240a4d83e4653d4a37, type: 3}
+  dishTable:
+  - type: 1
+    sprite: {fileID: 21300000, guid: c36677a7d67d78340bc33ee16f93cd87, type: 3}
+  - type: 2
+    sprite: {fileID: 21300000, guid: 744f7bb859d712b449d37eae53ff9287, type: 3}
+  - type: 3
+    sprite: {fileID: 21300000, guid: afec1ac310d8d4d4cb28232fe4669a49, type: 3}
+  - type: 4
+    sprite: {fileID: 21300000, guid: fc0027608793b3c4882071604ecc20a5, type: 3}
+  - type: 5
+    sprite: {fileID: 21300000, guid: 9cb17b1cdc468cb41878e19e319a49e3, type: 3}
+  - type: 6
+    sprite: {fileID: 21300000, guid: 8accfa7c10dcc524da59c721f7b5f1df, type: 3}

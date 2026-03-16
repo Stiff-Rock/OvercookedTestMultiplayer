@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -36,7 +35,7 @@ public class KitchenOrder : MonoBehaviour
         enabled = false;
     }
 
-    public void Initialize(Recipe recipe, float lifespan, IngredientVisuals ingredientVisualsSO)
+    public void Initialize(Recipe recipe, float lifespan, RecipesVisuals ingredientVisualsSO)
     {
         Recipe = recipe;
         maxLifespan = lifespan;
@@ -44,11 +43,12 @@ public class KitchenOrder : MonoBehaviour
 
         if (hasUI)
         {
+            recipeImage.sprite = ingredientVisualsSO.GetSprite(recipe.DishType);
             dishNameText.SetText(recipe.DishType.ToString());
 
-            foreach (IngredientType i in recipe.GetAllIngredients())
+            foreach (IngredientType ingredientType in recipe.GetAllIngredients())
             {
-                Sprite ingredientSprite = ingredientVisualsSO.GetSprite(i);
+                Sprite ingredientSprite = ingredientVisualsSO.GetSprite(ingredientType);
 
                 Image tagImg = Instantiate(tagPrefab, ingredientsRow).GetComponent<Image>();
 

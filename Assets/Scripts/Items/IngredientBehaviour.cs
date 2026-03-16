@@ -5,7 +5,8 @@ public class IngredientBehaviour : PickableItemBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject normalModel;
-    [SerializeField] private GameObject cutModel;
+    [SerializeField] private GameObject cutModel; 
+    private MeshRenderer meshRenderer;
 
     [field: Header("Type")]
     [field: SerializeField] public IngredientType Type { get; private set; }
@@ -34,6 +35,26 @@ public class IngredientBehaviour : PickableItemBehaviour
     public bool IsCooked => isCooked.Value;
     public bool IsBurnt => isBurnt.Value;
     public bool IsCut => isCut;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        GameObject rendererOrigin = isCut ? cutModel : normalModel;
+        meshRenderer = rendererOrigin.GetComponent<MeshRenderer>();
+
+        if (isBurnt.Value) meshRenderer.materials[0].color = burntColor;
+        else if (isCooked.Value) meshRenderer.materials[0].color = cookedColor;
+
+        isCooked.OnValueChanged += (_, _) =>
+        {
+            meshRenderer.materials[0].color = cookedColor;
+        };
+
+        isBurnt.OnValueChanged += (_, _) =>
+        {
+            meshRenderer.materials[0].color = burntColor;
+        };
+    }
 
     public void Cook(float cookTime)
     {
@@ -120,6 +141,7 @@ public class IngredientBehaviour : PickableItemBehaviour
         isCut = true;
         normalModel.SetActive(false);
         cutModel.SetActive(true);
+        meshRenderer = cutModel.GetComponent<MeshRenderer>();
         SetIsCut_ClientRpc();
     }
 
@@ -129,5 +151,6 @@ public class IngredientBehaviour : PickableItemBehaviour
         isCut = true;
         normalModel.SetActive(false);
         cutModel.SetActive(true);
+        meshRenderer = cutModel.GetComponent<MeshRenderer>();
     }
 }

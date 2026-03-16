@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7687745542465041496, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 1524646136
+      value: 329329838
       objectReference: {fileID: 0}
     - target: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -120,7 +120,7 @@ MonoBehaviour:
   cookedTime: 0
   requiredCutTime: 3
   cutTime: 0
-  cookedColor: {r: 0.85660374, g: 0.85660374, b: 0.85660374, a: 0}
+  cookedColor: {r: 0.8962264, g: 0.86085266, b: 0.5707102, a: 0}
   burntColor: {r: 0, g: 0, b: 0, a: 0}
   isCut: 0
 --- !u!114 &2440747422829859328
