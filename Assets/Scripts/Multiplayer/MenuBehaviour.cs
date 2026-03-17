@@ -23,7 +23,7 @@ public class MenuBehaviour : MonoBehaviour
     public void returnLobby()
     {
         SceneManager.LoadScene("LobbyScene");
-        Launcher.WasDisconnected = true;
+        Launcher.wasDisconnected = true;
         NetworkManager.Singleton.Shutdown();
     }
     public void closeCanvas()

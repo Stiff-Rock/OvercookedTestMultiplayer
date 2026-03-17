@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+    [Header("UI Elements")]
+    [field: SerializeField] public TMP_InputField HostPlayerNameIF { get; private set; }
+    [field: SerializeField] public TextMeshProUGUI LobbySubtitle { get; private set; }
+    [field: SerializeField] public TextMeshProUGUI[] PlayerNameTexts { get; private set; }
+
     [SerializeField] private TMP_InputField hostIpIF;
     [SerializeField] private TMP_InputField hostPortIF;
 
@@ -13,6 +18,20 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TMP_InputField clientPortIF;
 
     private UnityTransport transport;
+
+    public static MenuManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4775318218762211768}
   - component: {fileID: 7058857121944484266}
   - component: {fileID: 4694417284427790888}
-  - component: {fileID: 4083560993229518400}
+  - component: {fileID: 2904047210167819844}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: NetworkManager
@@ -56,7 +56,7 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 6dbd1be32d2517740b972705db321401, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
+    ConnectionApproval: 1
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30
@@ -105,7 +105,7 @@ MonoBehaviour:
     PacketDelayMS: 0
     PacketJitterMS: 0
     PacketDropRate: 0
---- !u!114 &4083560993229518400
+--- !u!114 &2904047210167819844
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,5 +118,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Launcher
   gameSceneName: MainScene
-  inGameDebugConsole: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
-  allowDebugConsole: 1
+  lobbySceneName: LobbyScene
+  lobbyManagerPrefab: {fileID: 8422645895151847694, guid: 6c3f604ad75aec5459bd8d551be328cf, type: 3}
+  inGameDebugConsolePrefab: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+  clientPlayerNameIF: {fileID: 0}
+  loadingTextObj: {fileID: 0}
+  mainMenuObj: {fileID: 0}
+  lobbyMenuObj: {fileID: 0}
+  allowDebugConsole: 0

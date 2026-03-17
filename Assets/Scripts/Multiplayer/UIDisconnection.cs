@@ -6,10 +6,10 @@ public class UIDisconnection : MonoBehaviour
 
         private void Start()
         {
-            if (Launcher.WasDisconnected)
+            if (Launcher.wasDisconnected)
             {
             desconnectionLostCanvas.gameObject.SetActive(true);
-            Launcher.WasDisconnected = false;
+            Launcher.wasDisconnected = false;
             }
         }
     public void closeCanvas()
