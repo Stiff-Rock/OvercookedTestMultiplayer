@@ -111,6 +111,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7040309307198761272}
   m_SourcePrefab: {fileID: 100100000, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
+--- !u!114 &3420068741172548840 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2521718641797853557, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
+  m_PrefabInstance: {fileID: 975161089506846109}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8862834366503921012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkTransform
 --- !u!4 &8708021251248366362 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8453657722525615751, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
@@ -134,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UtensilBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  networkTransform: {fileID: 3420068741172548840}
   <UtensilType>k__BackingField: 2
   <CurrentRecipe>k__BackingField:
     baseIngredients: []

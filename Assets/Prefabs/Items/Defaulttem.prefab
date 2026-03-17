@@ -235,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickableItemBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  networkTransform: {fileID: 2521718641797853557}
 --- !u!114 &2521718641797853557
 MonoBehaviour:
   m_ObjectHideFlags: 0

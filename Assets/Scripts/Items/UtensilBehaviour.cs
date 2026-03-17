@@ -39,8 +39,6 @@ public class UtensilBehaviour : PickableItemBehaviour
         bool added;
         if (UtensilType == UtensilType.Plate)
         {
-            Debug.Log("TryMergeIngredient");
-
             added = CurrentRecipe.TryMergeIngredient(ingredientItem.ToIngredientData());
         }
         else if (UtensilType == UtensilType.Pan || UtensilType == UtensilType.Pot)
@@ -53,8 +51,6 @@ public class UtensilBehaviour : PickableItemBehaviour
             added = false;
         }
 
-        Debug.Log($"added: {added}");
-
         if (added) AddIngredientToUtensil(ingredientItem);
 
         TryAddIngredient_ClientRpc(ingredientItem.NetworkObjectId);
@@ -65,6 +61,8 @@ public class UtensilBehaviour : PickableItemBehaviour
     [ClientRpc]
     private void TryAddIngredient_ClientRpc(ulong ingredientItemId)
     {
+        if (IsServer) return;
+
         IngredientBehaviour ingredientItem =
             NetHelpers.GetNetComponent<IngredientBehaviour>(ingredientItemId);
 

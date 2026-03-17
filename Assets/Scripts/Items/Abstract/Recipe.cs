@@ -41,14 +41,9 @@ public class Recipe
     // For merging ingredients on a plate
     public bool TryMergeIngredient(IngredientData newIngredient)
     {
-        Debug.Log($"newIngredient: {newIngredient}");
-
         if (newIngredient.Type == IngredientType.None) return false;
 
-        Debug.Log($"1");
-
         if (AlreadyContainsIngredient(newIngredient)) return false;
-        Debug.Log($"2");
 
         // If the recipe is already matched and finished, check for the extra ingredients
         if (RecipeIsFinished())
@@ -75,9 +70,6 @@ public class Recipe
             baseIngredients.Add(newIngredient);
             FilterPossibleRecipes();
         }
-
-        Debug.Log($"ingredientAccepted: {ingredientAccepted}");
-
 
         return ingredientAccepted;
     }
@@ -142,9 +134,6 @@ public class Recipe
 
     private bool AlreadyContainsIngredient(IngredientData newIngredient)
     {
-        Debug.Log($"baseIngredients.Contains(newIngredient): {baseIngredients.Contains(newIngredient)}" +
-            $"extraIngredients.Contains(newIngredient): {extraIngredients.Contains(newIngredient)}");
-
         return baseIngredients.Contains(newIngredient) || extraIngredients.Contains(newIngredient);
     }
 

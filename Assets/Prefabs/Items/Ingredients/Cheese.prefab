@@ -341,6 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  networkTransform: {fileID: 7939588393909403500}
   normalModel: {fileID: 3730707604842895512}
   cutModel: {fileID: 7594485629181718254}
   <Type>k__BackingField: 6
