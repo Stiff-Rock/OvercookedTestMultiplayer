@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UtensilBehaviour : PickableItemBehaviour
@@ -51,7 +50,7 @@ public class UtensilBehaviour : PickableItemBehaviour
             added = false;
         }
 
-        if (added) AddIngredientToUtensil(ingredientItem);
+        if (added) PlaceIngredientIntoUtensil(ingredientItem);
 
         TryAddIngredient_ClientRpc(ingredientItem.NetworkObjectId);
 
@@ -81,14 +80,12 @@ public class UtensilBehaviour : PickableItemBehaviour
             added = false;
         }
 
-
-        if (added) AddIngredientToUtensil(ingredientItem);
+        if (added) PlaceIngredientIntoUtensil(ingredientItem);
     }
 
-    private void AddIngredientToUtensil(IngredientBehaviour ingredientItem)
+    private void PlaceIngredientIntoUtensil(IngredientBehaviour ingredientItem)
     {
-        if (IsServer)
-            StackIngredients(ingredientItem);
+        StackIngredients(ingredientItem);
 
         InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
 
@@ -156,7 +153,6 @@ public class UtensilBehaviour : PickableItemBehaviour
         heldIngredients.Clear();
     }
 
-    // TODO: En vez de esto, haz que tengan un transform que sea "TOP" para stackear mas fácil
     private void StackIngredients(IngredientBehaviour ingredientItem)
     {
         if (!utensilContentTransform)
@@ -165,7 +161,8 @@ public class UtensilBehaviour : PickableItemBehaviour
             return;
         }
 
-        ingredientItem.NetworkSetParent(utensilContentTransform, false);
+        if (IsServer)
+            ingredientItem.NetworkSetParent(utensilContentTransform, false);
 
         Renderer meshRenderer = ingredientItem.GetComponentInChildren<Renderer>();
         float itemHeight = meshRenderer.bounds.size.y;

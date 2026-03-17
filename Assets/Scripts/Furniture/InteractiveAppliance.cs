@@ -77,6 +77,8 @@ public class InteractiveAppliance : NetworkBehaviour
     [ClientRpc]
     private void PlaceItem_ClientRpc(ulong newItemNetId)
     {
+        if (IsServer) return;
+
         PickableItemBehaviour newItem = NetHelpers.GetNetComponent<PickableItemBehaviour>(newItemNetId);
         PlacedItem = newItem;
     }

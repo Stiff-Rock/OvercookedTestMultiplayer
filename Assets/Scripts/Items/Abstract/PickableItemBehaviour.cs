@@ -52,7 +52,6 @@ public class PickableItemBehaviour : NetworkBehaviour
         if (newPositionTransform)
         {
             pendingPos = newPositionTransform.position;
-            Debug.Log("newPositionTransform: " + newPositionTransform);
             UpdateTargetPos_ClientRpc(pendingPos);
         }
 
@@ -84,13 +83,6 @@ public class PickableItemBehaviour : NetworkBehaviour
         {
             transform.position = pendingPos;
             transform.localRotation = Quaternion.identity;
-
-
-            Debug.Log($"parentNetworkObject: {parentNetworkObject}\n" +
-                          $"pendingPos: {pendingPos}\n" +
-                          $"transform.position: {transform.position}\n" +
-                          $"transform.localPosition: {transform.localPosition}\n" +
-                          $"PARENT: {transform.parent?.name ?? "No Parent"}");
         }
     }
 
