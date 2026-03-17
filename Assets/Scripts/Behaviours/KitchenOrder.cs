@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -35,7 +36,7 @@ public class KitchenOrder : MonoBehaviour
         enabled = false;
     }
 
-    public void Initialize(Recipe recipe, float lifespan, RecipesVisuals ingredientVisualsSO)
+    public void Initialize(Recipe recipe, float lifespan, RecipesVisuals recipeVisualsSO)
     {
         Recipe = recipe;
         maxLifespan = lifespan;
@@ -43,16 +44,44 @@ public class KitchenOrder : MonoBehaviour
 
         if (hasUI)
         {
-            recipeImage.sprite = ingredientVisualsSO.GetSprite(recipe.DishType);
+            recipeImage.sprite = recipeVisualsSO.GetSprite(recipe.DishType);
             dishNameText.SetText(recipe.DishType.ToString());
 
-            foreach (IngredientType ingredientType in recipe.GetAllIngredients())
+            foreach (IngredientData ingredientData in recipe.GetAllIngredientData())
             {
-                Sprite ingredientSprite = ingredientVisualsSO.GetSprite(ingredientType);
-
+                Sprite ingredientSprite = recipeVisualsSO.GetSprite(ingredientData.Type);
                 Image tagImg = Instantiate(tagPrefab, ingredientsRow).GetComponent<Image>();
-
                 tagImg.sprite = ingredientSprite;
+
+                if (ingredientData.State.HasFlag(IngredientState.Cut))
+                {
+                    Sprite cutSprite = recipeVisualsSO.GetSprite(UtensilType.Knife);
+
+                    Image cutImg = Instantiate(tagPrefab, ingredientsRow).GetComponent<Image>();
+                    cutImg.sprite = cutSprite;
+                }
+
+                if (ingredientData.State.HasFlag(IngredientState.Cooked))
+                {
+                    UtensilType uType;
+                    if (RecipesManager.Instance.PanAcceptedIngredients.Contains(ingredientData))
+                    {
+                        uType = UtensilType.Pan;
+                    }
+                    else if (RecipesManager.Instance.PotAcceptedIngredients.Contains(ingredientData))
+                    {
+                        uType = UtensilType.Pot;
+                    }
+                    else
+                    {
+                        Debug.LogError($"Ingredient {ingredientData} is not accepted by any utensil");
+                        return;
+                    }
+
+                    Sprite cookSprite = recipeVisualsSO.GetSprite(uType);
+                    Image utensilImg = Instantiate(tagPrefab, ingredientsRow).GetComponent<Image>();
+                    utensilImg.sprite = cookSprite;
+                }
             }
         }
 

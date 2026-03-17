@@ -87,6 +87,11 @@ public class MicrowaveBehaviour : InteractiveAppliance
         audioSource.PlayOneShot(isCooking ? oven : ding);
     }
 
+    public override PickableItemBehaviour TakeItem()
+    {
+        return isCooking ? null : base.TakeItem();
+    }
+
     public override void OnInteract(PlayerController playerController)
     {
         base.OnInteract(playerController);

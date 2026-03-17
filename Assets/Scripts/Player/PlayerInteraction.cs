@@ -134,7 +134,6 @@ public class PlayerInteraction : NetworkBehaviour
         }
         else if (held is UtensilBehaviour uHeld && placed is UtensilBehaviour uPlaced)
         {
-            Debug.Log("TryMoveIngredientBetweenUtensils");
             TryMoveIngredientBetweenUtensils(uHeld, uPlaced);
             return;
         }
@@ -192,8 +191,12 @@ public class PlayerInteraction : NetworkBehaviour
         // Take item from appliance
         if (CanTakeItemFromAppliance(nearbyAppliance, pickedItem))
         {
-            SetItem(pI, nearbyAppliance.TakeItem());
-            pI.ownPickedItem.NetworkSetParent(pI.hand.transform);
+            PickableItemBehaviour item = nearbyAppliance.TakeItem();
+            if (item)
+            {
+                SetItem(pI, item);
+                pI.ownPickedItem.NetworkSetParent(pI.hand.transform);
+            }
             return;
         }
 
@@ -304,7 +307,6 @@ public class PlayerInteraction : NetworkBehaviour
         IngredientBehaviour ingB = other.PeekIngredient();
         if (other.CanTakeIngredient() && plate.TryAddIngredient(ingB))
         {
-            Debug.Log("FINISHED YEAH!!");
             other.RemoveIngredient();
         }
     }

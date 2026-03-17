@@ -63,7 +63,5 @@ MonoBehaviour:
   <PotAcceptedIngredients>k__BackingField:
   - Type: 1
     State: 1
-  - Type: 2
-    State: 5
   - Type: 3
     State: 1

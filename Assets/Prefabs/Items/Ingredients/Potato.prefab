@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1117503342546564239, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7687745542465041496, guid: 62b952825bfde9c409e1d3fbd765d3b8, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2511098013
@@ -160,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  networkTransform: {fileID: 6773986907226601156}
   normalModel: {fileID: 3752085933261532330}
   cutModel: {fileID: 1982295274201359470}
   <Type>k__BackingField: 8
