@@ -67,10 +67,8 @@ public class InteractiveAppliance : NetworkBehaviour
 
     public virtual void PlaceItem(PickableItemBehaviour newItem)
     {
-        // SERVER guarda referencia
         PlacedItem = newItem;
 
-        // SOLO EL SERVER cambia el parent
         PlacedItem.NetworkSetParent(placeArea.transform);
 
         PlaceItem_ClientRpc(newItem.NetworkObjectId);
@@ -80,8 +78,6 @@ public class InteractiveAppliance : NetworkBehaviour
     private void PlaceItem_ClientRpc(ulong newItemNetId)
     {
         PickableItemBehaviour newItem = NetHelpers.GetNetComponent<PickableItemBehaviour>(newItemNetId);
-
-        // SOLO actualizar referencia
         PlacedItem = newItem;
     }
 

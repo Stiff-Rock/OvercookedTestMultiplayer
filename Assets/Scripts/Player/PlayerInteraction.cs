@@ -92,6 +92,7 @@ public class PlayerInteraction : NetworkBehaviour
                 ulong ownPickedItemId = ownPickedItem ? ownPickedItem.NetworkObjectId : 0;
                 ulong nearbyApplianceId = ownNearbyAppliance ? ownNearbyAppliance.NetworkObjectId : 0;
 
+                Debug.Log("TryMerge_ServerRpc");
                 TryMerge_ServerRpc(NetworkObjectId, ownPickedItemId, nearbyApplianceId);
             }
             else if (!ownPickedItem)
@@ -131,10 +132,10 @@ public class PlayerInteraction : NetworkBehaviour
             utensil = u2;
             ingredient = i2;
             isIngredientOnAppliance = false;
+            Debug.Log("isIngredientOnAppliance");
         }
         else if (held is UtensilBehaviour uHeld && placed is UtensilBehaviour uPlaced)
         {
-            Debug.Log("TryMoveIngredientBetweenUtensils");
             TryMoveIngredientBetweenUtensils(uHeld, uPlaced);
             return;
         }
@@ -192,8 +193,12 @@ public class PlayerInteraction : NetworkBehaviour
         // Take item from appliance
         if (CanTakeItemFromAppliance(nearbyAppliance, pickedItem))
         {
-            SetItem(pI, nearbyAppliance.TakeItem());
-            pI.ownPickedItem.NetworkSetParent(pI.hand.transform);
+            PickableItemBehaviour item = nearbyAppliance.TakeItem();
+            if (item)
+            {
+                SetItem(pI, item);
+                pI.ownPickedItem.NetworkSetParent(pI.hand.transform);
+            }
             return;
         }
 
@@ -304,7 +309,6 @@ public class PlayerInteraction : NetworkBehaviour
         IngredientBehaviour ingB = other.PeekIngredient();
         if (other.CanTakeIngredient() && plate.TryAddIngredient(ingB))
         {
-            Debug.Log("FINISHED YEAH!!");
             other.RemoveIngredient();
         }
     }

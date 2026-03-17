@@ -39,6 +39,8 @@ public class UtensilBehaviour : PickableItemBehaviour
         bool added;
         if (UtensilType == UtensilType.Plate)
         {
+            Debug.Log("TryMergeIngredient");
+
             added = CurrentRecipe.TryMergeIngredient(ingredientItem.ToIngredientData());
         }
         else if (UtensilType == UtensilType.Pan || UtensilType == UtensilType.Pot)
@@ -51,6 +53,8 @@ public class UtensilBehaviour : PickableItemBehaviour
             added = false;
         }
 
+        Debug.Log($"added: {added}");
+
         if (added) AddIngredientToUtensil(ingredientItem);
 
         TryAddIngredient_ClientRpc(ingredientItem.NetworkObjectId);
@@ -61,8 +65,6 @@ public class UtensilBehaviour : PickableItemBehaviour
     [ClientRpc]
     private void TryAddIngredient_ClientRpc(ulong ingredientItemId)
     {
-        Debug.Log("TryAddIngredient_ClientRpc");
-
         IngredientBehaviour ingredientItem =
             NetHelpers.GetNetComponent<IngredientBehaviour>(ingredientItemId);
 
@@ -81,8 +83,6 @@ public class UtensilBehaviour : PickableItemBehaviour
             added = false;
         }
 
-        Debug.Log($"added¿¿: {added}");
-
 
         if (added) AddIngredientToUtensil(ingredientItem);
     }
@@ -93,7 +93,6 @@ public class UtensilBehaviour : PickableItemBehaviour
             StackIngredients(ingredientItem);
 
         InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
-        Debug.Log($"AddIngredientToUtensil -- appliance: {appliance}");
 
         if (appliance)
             appliance.OnPlacedItemChanged();
@@ -120,6 +119,8 @@ public class UtensilBehaviour : PickableItemBehaviour
     [ClientRpc]
     private void RemoveIngredient_ClientRpc()
     {
+        if (IsServer) return;
+
         List<IngredientData> ingredients = CurrentRecipe.GetBaseIngredients();
         ingredients.RemoveAt(0);
 

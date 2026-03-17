@@ -12,6 +12,7 @@ public class PickableItemBehaviour : NetworkBehaviour
     private Rigidbody rb;
 
     private NetworkObject pendingParent;
+    private NetworkVariable<Vector3> pendingPos = new();
     private bool pendingWorldPositionStays;
 
     private Transform currentParent;
@@ -25,7 +26,7 @@ public class PickableItemBehaviour : NetworkBehaviour
 
     protected virtual void Start()
     {
-        ToggleColliders_ClientRpc(!IsPlaced());
+        ToggleColliders(!IsPlaced());
     }
 
     public override void OnNetworkSpawn()
@@ -33,7 +34,7 @@ public class PickableItemBehaviour : NetworkBehaviour
         if (pendingParent != null)
         {
             NetworkObject.TrySetParent(pendingParent.transform, pendingWorldPositionStays);
-            UpdateTransform(pendingParent.transform);
+            pendingPos.Value = pendingParent.transform.position;
             pendingParent = null;
         }
     }
@@ -43,6 +44,9 @@ public class PickableItemBehaviour : NetworkBehaviour
         if (!IsServer)
             return;
 
+        if (newPositionTransform)
+            pendingPos.Value = newPositionTransform.position;
+
         NetworkObject newParentNetTransform = newPositionTransform ?
             newPositionTransform.parent.gameObject.GetComponent<NetworkObject>()
             : null;
@@ -50,7 +54,6 @@ public class PickableItemBehaviour : NetworkBehaviour
         if (IsSpawned)
         {
             NetworkObject.TrySetParent(newParentNetTransform, worlPositionStays);
-            UpdateTransform(newPositionTransform);
         }
         else
         {
@@ -59,44 +62,28 @@ public class PickableItemBehaviour : NetworkBehaviour
         }
     }
 
-    private void UpdateTransform(Transform newPositionTransform)
+    public override void OnNetworkObjectParentChanged(NetworkObject parentNetworkObject)
     {
+        base.OnNetworkObjectParentChanged(parentNetworkObject);
+
         bool isPlaced = IsPlaced();
 
         Transform newParent = transform.parent;
-        //Debug.Log($"UpdateTransform: {newPositionTransform.position} || parent: {transform.parent.name}");
         if (isPlaced && currentParent != newParent)
         {
-            transform.position = newPositionTransform.position;
+            transform.position = pendingPos.Value;
             transform.localRotation = Quaternion.identity;
+            Debug.Log($"transform.position: {transform.position}");
+            Debug.Log($"transform.localRotation: {transform.position}");
+            Debug.Log($"transform.position: {transform.position}");
         }
 
         currentParent = newParent;
 
-        Vector3 newPos = newPositionTransform ? newPositionTransform.position : transform.position;
-        //Debug.Log($"SENDING newPos: {newPos}");
-        UpdateTransform_ClientRpc(isPlaced, newPos);
+        ToggleColliders(!isPlaced);
     }
 
-    [ClientRpc]
-    private void UpdateTransform_ClientRpc(bool isPlaced, Vector3 newPos)
-    {
-        //Debug.Log($"UpdateTransform_ClientRpc: {newPos} || parent: {transform.parent.name}");
-        Transform newParent = transform.parent;
-
-        if (isPlaced && currentParent != newParent)
-        {
-            transform.position = newPos;
-            transform.localRotation = Quaternion.identity;
-        }
-
-        currentParent = newParent;
-
-        ToggleColliders_ClientRpc(!isPlaced);
-    }
-
-    [ClientRpc]
-    public void ToggleColliders_ClientRpc(bool isEnabled)
+    public void ToggleColliders(bool isEnabled)
     {
         if (triggerCollider) triggerCollider.enabled = isEnabled;
         if (physicsCollider) physicsCollider.enabled = isEnabled;
