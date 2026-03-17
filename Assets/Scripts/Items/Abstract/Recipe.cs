@@ -183,10 +183,10 @@ public class Recipe
         return baseIngredients.Count + extraIngredients.Count;
     }
 
-    public IngredientType[] GetAllIngredients()
+    public IngredientData[] GetAllIngredientData()
     {
         return baseIngredients.Concat(extraIngredients)
-            .Select(data => data.Type)
+            .Select(data => data)
             .ToArray();
     }
 

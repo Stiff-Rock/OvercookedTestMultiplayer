@@ -7,6 +7,7 @@ public class RecipesVisuals : ScriptableObject
 {
     [SerializeField] private List<IngredientUIInfo> ingredientTable;
     [SerializeField] private List<DishUIInfo> dishTable;
+    [SerializeField] private List<StateUIInfo> stateTable;
 
     public Sprite GetSprite(IngredientType type)
     {
@@ -16,6 +17,11 @@ public class RecipesVisuals : ScriptableObject
     public Sprite GetSprite(DishType type)
     {
         return dishTable.Find(x => x.type == type).sprite;
+    }
+
+    public Sprite GetSprite(UtensilType state)
+    {
+        return stateTable.Find(x => x.state == state).sprite;
     }
 }
 
@@ -30,5 +36,12 @@ public struct IngredientUIInfo
 public struct DishUIInfo
 {
     public DishType type;
+    public Sprite sprite;
+}
+
+[Serializable]
+public struct StateUIInfo
+{
+    public UtensilType state;
     public Sprite sprite;
 }
