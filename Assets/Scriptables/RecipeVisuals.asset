@@ -43,9 +43,9 @@ MonoBehaviour:
   - type: 6
     sprite: {fileID: 21300000, guid: 8accfa7c10dcc524da59c721f7b5f1df, type: 3}
   stateTable:
-  - state: 2
-    sprite: {fileID: 0}
-  - state: 4
-    sprite: {fileID: 0}
+  - state: 3
+    sprite: {fileID: 21300000, guid: 78d08693525be6647966278b910a10ab, type: 3}
   - state: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: 88b2435d2415c6d429dcb66af8f7be80, type: 3}
+  - state: 2
+    sprite: {fileID: 21300000, guid: 68362164cee996a43bc89a38d8bf6670, type: 3}

@@ -1,5 +1,6 @@
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class KitchenOrder : MonoBehaviour
     [SerializeField] private Image lifetimeProgressBar;
     private Color initialBarColor;
 
+    [SerializeField] private GameObject ingredientTagPrefab;
     [SerializeField] private GameObject tagPrefab;
     [SerializeField] private Transform ingredientsRow;
 
@@ -50,36 +52,42 @@ public class KitchenOrder : MonoBehaviour
             foreach (IngredientData ingredientData in recipe.GetAllIngredientData())
             {
                 Sprite ingredientSprite = recipeVisualsSO.GetSprite(ingredientData.Type);
-                Image tagImg = Instantiate(tagPrefab, ingredientsRow).GetComponent<Image>();
-                tagImg.sprite = ingredientSprite;
+                GameObject ingredientTagObj = Instantiate(ingredientTagPrefab, ingredientsRow);
+                ingredientTagObj.GetComponentInChildren<Image>().sprite = ingredientSprite;
+
+                Transform utensilTransform = ingredientTagObj.transform.GetChild(1);
 
                 if (ingredientData.State.HasFlag(IngredientState.Cut))
                 {
                     Sprite cutSprite = recipeVisualsSO.GetSprite(UtensilType.Knife);
 
-                    Image cutImg = Instantiate(tagPrefab, ingredientsRow).GetComponent<Image>();
+                    Image cutImg = Instantiate(tagPrefab, utensilTransform).GetComponent<Image>();
                     cutImg.sprite = cutSprite;
                 }
 
                 if (ingredientData.State.HasFlag(IngredientState.Cooked))
                 {
+                    IngredientData rawIngredient = ingredientData;
+                    rawIngredient.State &= ~IngredientState.Cooked;
+                    rawIngredient.State |= IngredientState.Raw;
+
                     UtensilType uType;
-                    if (RecipesManager.Instance.PanAcceptedIngredients.Contains(ingredientData))
+                    if (RecipesManager.Instance.PanAcceptedIngredients.Contains(rawIngredient))
                     {
                         uType = UtensilType.Pan;
                     }
-                    else if (RecipesManager.Instance.PotAcceptedIngredients.Contains(ingredientData))
+                    else if (RecipesManager.Instance.PotAcceptedIngredients.Contains(rawIngredient))
                     {
                         uType = UtensilType.Pot;
                     }
                     else
                     {
-                        Debug.LogError($"Ingredient {ingredientData} is not accepted by any utensil");
+                        Debug.LogError($"Ingredient {rawIngredient} is not accepted by any utensil");
                         return;
                     }
 
                     Sprite cookSprite = recipeVisualsSO.GetSprite(uType);
-                    Image utensilImg = Instantiate(tagPrefab, ingredientsRow).GetComponent<Image>();
+                    Image utensilImg = Instantiate(tagPrefab, utensilTransform).GetComponent<Image>();
                     utensilImg.sprite = cookSprite;
                 }
             }
