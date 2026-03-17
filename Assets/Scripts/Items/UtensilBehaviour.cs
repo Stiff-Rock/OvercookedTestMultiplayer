@@ -30,6 +30,8 @@ public class UtensilBehaviour : PickableItemBehaviour
     [ClientRpc]
     private void EmptyUtensil_ClientRpc()
     {
+        if (IsServer) return;
+
         CurrentRecipe = new Recipe();
         DeleteIngredients();
     }
@@ -61,6 +63,8 @@ public class UtensilBehaviour : PickableItemBehaviour
     [ClientRpc]
     private void TryAddIngredient_ClientRpc(ulong ingredientItemId)
     {
+        if (IsServer) return;
+
         Debug.Log("TryAddIngredient_ClientRpc");
 
         IngredientBehaviour ingredientItem =
@@ -83,7 +87,6 @@ public class UtensilBehaviour : PickableItemBehaviour
 
         Debug.Log($"added¿¿: {added}");
 
-
         if (added) AddIngredientToUtensil(ingredientItem);
     }
 
@@ -101,10 +104,14 @@ public class UtensilBehaviour : PickableItemBehaviour
 
     public IngredientBehaviour RemoveIngredient()
     {
+        if (heldIngredients.Count == 0)
+            return null;
+
         IngredientBehaviour ingB = heldIngredients[0];
 
         List<IngredientData> ingredients = CurrentRecipe.GetBaseIngredients();
-        ingredients.RemoveAt(0);
+        if (ingredients.Count > 0)
+            ingredients.RemoveAt(0);
 
         heldIngredients.RemoveAt(0);
 
@@ -120,10 +127,14 @@ public class UtensilBehaviour : PickableItemBehaviour
     [ClientRpc]
     private void RemoveIngredient_ClientRpc()
     {
-        List<IngredientData> ingredients = CurrentRecipe.GetBaseIngredients();
-        ingredients.RemoveAt(0);
+        if (IsServer) return;
 
-        heldIngredients.RemoveAt(0);
+        List<IngredientData> ingredients = CurrentRecipe.GetBaseIngredients();
+        if (ingredients.Count > 0)
+            ingredients.RemoveAt(0);
+
+        if (heldIngredients.Count > 0)
+            heldIngredients.RemoveAt(0);
 
         InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
         if (appliance)
@@ -132,11 +143,14 @@ public class UtensilBehaviour : PickableItemBehaviour
 
     public bool CanTakeIngredient()
     {
+        if (heldIngredients.Count == 0) return false;
+
+        var ingredient = heldIngredients[0];
+
         return (UtensilType == UtensilType.Pan || UtensilType == UtensilType.Pot)
-            && heldIngredients.Count > 0
-            && heldIngredients[0]
-            && heldIngredients[0].IsCooked
-            || (!heldIngredients[0].IsBurnt && heldIngredients[0].GetCookProgress() <= 0);
+            && ingredient
+            && ingredient.IsCooked
+            || (!ingredient.IsBurnt && ingredient.GetCookProgress() <= 0);
     }
 
     public IngredientBehaviour PeekIngredient()
