@@ -40,6 +40,7 @@ public class LobbyManager : NetworkBehaviour
     }
 
     #endregion
+
     // BUG: ON CLIENT IT SHOWS AS IF IT JOINED TWICE
     private void OnClientDisconnected(ulong clientId)
     {
@@ -53,10 +54,10 @@ public class LobbyManager : NetworkBehaviour
         }
     }
 
-    #region Helper Methods
-
     private void AddHostToList()
     {
+        if (!NetworkManager.Singleton.IsServer) return;
+
         ulong hostId = NetworkManager.Singleton.LocalClientId;
 
         if (connectedClientIds.Contains(hostId)) return;
@@ -71,6 +72,8 @@ public class LobbyManager : NetworkBehaviour
 
     public void AddClientToList(ulong clientId, string playerName)
     {
+        if (!NetworkManager.Singleton.IsServer) return;
+
         if (connectedClientIds.Contains(clientId)) return;
 
         connectedClientIds.Add(clientId);
@@ -95,6 +98,4 @@ public class LobbyManager : NetworkBehaviour
             }
         }
     }
-
-    #endregion
 }
