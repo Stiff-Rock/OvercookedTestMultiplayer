@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 
 public class LobbyManager : NetworkBehaviour
 {
     // State
+    private Dictionary<ulong, string> connectedClients;
     private NetworkList<ulong> connectedClientIds;
     private NetworkList<FixedString32Bytes> connectedClientNames;
 
@@ -18,12 +20,23 @@ public class LobbyManager : NetworkBehaviour
 
     private void Start()
     {
+        NetworkManager.Singleton.OnClientConnectedCallback += AddClientToList;
         NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
     }
 
     public override void OnNetworkSpawn()
     {
-        connectedClientNames.OnListChanged += _ => UpdateLobbyInfo();
+        connectedClientNames.OnListChanged += _ =>
+        {
+            string print = "connectedClientNames.OnListChanged: ";
+            foreach (var client in connectedClientNames)
+            {
+                print += client.ToString();
+            }
+            UnityEngine.Debug.Log($"{print}");
+
+            UpdateLobbyInfo();
+        };
 
         if (IsServer) AddHostToList();
 
@@ -41,7 +54,6 @@ public class LobbyManager : NetworkBehaviour
 
     #endregion
 
-    // BUG: ON CLIENT IT SHOWS AS IF IT JOINED TWICE
     private void OnClientDisconnected(ulong clientId)
     {
         if (!NetworkManager.Singleton.IsServer) return;
@@ -70,14 +82,25 @@ public class LobbyManager : NetworkBehaviour
         connectedClientNames.Add(hostName);
     }
 
-    public void AddClientToList(ulong clientId, string playerName)
+    private void AddClientToList(ulong clientId)
     {
         if (!NetworkManager.Singleton.IsServer) return;
 
         if (connectedClientIds.Contains(clientId)) return;
 
-        connectedClientIds.Add(clientId);
-        connectedClientNames.Add(playerName);
+        if (connectedClients.TryGetValue(clientId, out string playerName))
+        {
+            connectedClientIds.Add(clientId);
+            connectedClientNames.Add(playerName);
+        }
+    }
+
+    public void AddClientToDict(ulong clientId, string playerName)
+    {
+        if (!NetworkManager.Singleton.IsServer) return;
+        if (connectedClientIds.Contains(clientId)) return;
+        connectedClients ??= new();
+        connectedClients.Add(clientId, playerName);
     }
 
     private void UpdateLobbyInfo()

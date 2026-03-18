@@ -26,6 +26,7 @@ public class Launcher : MonoBehaviour
     [SerializeField] private GameObject loadingTextObj;
     [SerializeField] private GameObject mainMenuObj;
     [SerializeField] private GameObject lobbyMenuObj;
+    [SerializeField] private GameObject lobbyMenuStartButton;
 
     private LobbyManager lobbyManager;
 
@@ -137,8 +138,13 @@ public class Launcher : MonoBehaviour
 
         if (!NetworkManager.Singleton.IsServer)
         {
+            lobbyMenuStartButton.SetActive(false);
             loadingTextObj.SetActive(false);
             lobbyMenuObj.SetActive(true);
+        }
+        else
+        {
+            lobbyMenuStartButton.SetActive(true);
         }
     }
 
@@ -152,7 +158,7 @@ public class Launcher : MonoBehaviour
             return;
         }
     }
-    // BUG: ON CLIENT IT SHOWS AS IF IT JOINED TWICE
+
     private void OnApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
     {
         bool approved = NetworkManager.Singleton.ConnectedClients.Count < 4;
@@ -166,7 +172,7 @@ public class Launcher : MonoBehaviour
                 playerName = $"Unknown {request.ClientNetworkId}";
 
             if (lobbyManager && request.ClientNetworkId != NetworkManager.Singleton.LocalClientId)
-                lobbyManager.AddClientToList(request.ClientNetworkId, playerName);
+                lobbyManager.AddClientToDict(request.ClientNetworkId, playerName);
         }
         response.Pending = false;
     }
