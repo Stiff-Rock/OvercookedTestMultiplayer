@@ -11,11 +11,19 @@ public class MenuManager : MonoBehaviour
     [field: SerializeField] public TextMeshProUGUI LobbySubtitle { get; private set; }
     [field: SerializeField] public TextMeshProUGUI[] PlayerNameTexts { get; private set; }
 
+    // IP and Port
     [SerializeField] private TMP_InputField hostIpIF;
     [SerializeField] private TMP_InputField hostPortIF;
 
     [SerializeField] private TMP_InputField clientIpIF;
     [SerializeField] private TMP_InputField clientPortIF;
+
+    // Others
+    [field: SerializeField] public TMP_InputField ClientPlayerNameIF { get; private set; }
+    [field: SerializeField] public GameObject LoadingTextObj { get; private set; }
+    [field: SerializeField] public GameObject MainMenuObj { get; private set; }
+    [field: SerializeField] public GameObject LobbyMenuObj { get; private set; }
+    [field: SerializeField] public GameObject LobbyMenuStartButton { get; private set; }
 
     private UnityTransport transport;
 

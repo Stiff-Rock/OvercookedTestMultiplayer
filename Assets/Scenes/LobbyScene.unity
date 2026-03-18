@@ -1306,17 +1306,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 66793440}
     - target: {fileID: 7368421666835072338, guid: 6c25c3154a1f1ba47b06b45a0284d967, type: 3}
+      propertyPath: <MainMenuObj>k__BackingField
+      value: 
+      objectReference: {fileID: 1873642189122203192}
+    - target: {fileID: 7368421666835072338, guid: 6c25c3154a1f1ba47b06b45a0284d967, type: 3}
+      propertyPath: <LobbyMenuObj>k__BackingField
+      value: 
+      objectReference: {fileID: 1226206680}
+    - target: {fileID: 7368421666835072338, guid: 6c25c3154a1f1ba47b06b45a0284d967, type: 3}
       propertyPath: <LobbySubtitle>k__BackingField
       value: 
       objectReference: {fileID: 1444295960}
+    - target: {fileID: 7368421666835072338, guid: 6c25c3154a1f1ba47b06b45a0284d967, type: 3}
+      propertyPath: <LoadingTextObj>k__BackingField
+      value: 
+      objectReference: {fileID: 1276619986}
     - target: {fileID: 7368421666835072338, guid: 6c25c3154a1f1ba47b06b45a0284d967, type: 3}
       propertyPath: <HostPlayerNameIF>k__BackingField
       value: 
       objectReference: {fileID: 2111791190}
     - target: {fileID: 7368421666835072338, guid: 6c25c3154a1f1ba47b06b45a0284d967, type: 3}
-      propertyPath: <PlayerNameTexts>k__BackingField.Array.size
-      value: 4
-      objectReference: {fileID: 0}
+      propertyPath: <ClientPlayerNameIF>k__BackingField
+      value: 
+      objectReference: {fileID: 1054089035}
+    - target: {fileID: 7368421666835072338, guid: 6c25c3154a1f1ba47b06b45a0284d967, type: 3}
+      propertyPath: <LobbyMenuStartButton>k__BackingField
+      value: 
+      objectReference: {fileID: 476721596}
     - target: {fileID: 7368421666835072338, guid: 6c25c3154a1f1ba47b06b45a0284d967, type: 3}
       propertyPath: '<PlayerNameTexts>k__BackingField.Array.data[0]'
       value: 

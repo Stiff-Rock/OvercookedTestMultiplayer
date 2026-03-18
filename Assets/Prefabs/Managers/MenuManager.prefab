@@ -44,7 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f835e2a54c6d7409d5e9a827e71003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  <HostPlayerNameIF>k__BackingField: {fileID: 0}
+  <LobbySubtitle>k__BackingField: {fileID: 0}
+  <PlayerNameTexts>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   hostIpIF: {fileID: 0}
   hostPortIF: {fileID: 0}
   clientIpIF: {fileID: 0}
   clientPortIF: {fileID: 0}
+  <ClientPlayerNameIF>k__BackingField: {fileID: 0}
+  <LoadingTextObj>k__BackingField: {fileID: 0}
+  <MainMenuObj>k__BackingField: {fileID: 0}
+  <LobbyMenuObj>k__BackingField: {fileID: 0}
+  <LobbyMenuStartButton>k__BackingField: {fileID: 0}

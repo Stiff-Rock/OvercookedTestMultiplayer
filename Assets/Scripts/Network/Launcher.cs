@@ -1,6 +1,5 @@
 using System;
 using System.Text;
-using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEditor;
@@ -20,14 +19,6 @@ public class Launcher : MonoBehaviour
     [SerializeField] private GameObject inGameDebugConsolePrefab;
 
     private GameObject debugConsole;
-
-    [SerializeField] private TMP_InputField clientPlayerNameIF;
-
-    [SerializeField] private GameObject loadingTextObj;
-    [SerializeField] private GameObject mainMenuObj;
-    [SerializeField] private GameObject lobbyMenuObj;
-    [SerializeField] private GameObject lobbyMenuStartButton;
-
     private LobbyManager lobbyManager;
 
     [Header("Debug")]
@@ -53,6 +44,9 @@ public class Launcher : MonoBehaviour
             NetworkManager.Singleton.ConnectionApprovalCallback = null;
             NetworkManager.Singleton.OnServerStarted -= OnServerStarted;
             NetworkManager.Singleton.OnServerStopped -= OnServerStopped;
+
+            if (NetworkManager.Singleton.SceneManager != null)
+                NetworkManager.Singleton.SceneManager.OnSceneEvent -= OnSceneEvent;
         }
     }
 
@@ -64,19 +58,19 @@ public class Launcher : MonoBehaviour
     {
         try
         {
-            string playername = string.IsNullOrWhiteSpace(clientPlayerNameIF.text)
+            string playername = string.IsNullOrWhiteSpace(MenuManager.Instance.ClientPlayerNameIF.text)
                 ? Environment.UserName
-                : clientPlayerNameIF.text;
+                : MenuManager.Instance.ClientPlayerNameIF.text;
 
-            byte[] payload = System.Text.Encoding.ASCII.GetBytes(playername);
+            byte[] payload = Encoding.ASCII.GetBytes(playername);
             NetworkManager.Singleton.NetworkConfig.ConnectionData = payload;
-            loadingTextObj.SetActive(true);
+            MenuManager.Instance.LoadingTextObj.SetActive(true);
             NetworkManager.Singleton.StartClient();
         }
         catch (Exception e)
         {
-            loadingTextObj.SetActive(false);
-            mainMenuObj.SetActive(true);
+            MenuManager.Instance.LoadingTextObj.SetActive(false);
+            MenuManager.Instance.MainMenuObj.SetActive(true);
             Debug.LogError($"Could not start client: {e.Message}");
             NetworkManager.Singleton.Shutdown();
         }
@@ -91,7 +85,7 @@ public class Launcher : MonoBehaviour
         }
         catch (Exception e)
         {
-            mainMenuObj.SetActive(true);
+            MenuManager.Instance.MainMenuObj.SetActive(true);
             Debug.LogError($"Could not start host: {e.Message}");
             NetworkManager.Singleton.Shutdown();
         }
@@ -138,14 +132,16 @@ public class Launcher : MonoBehaviour
 
         if (!NetworkManager.Singleton.IsServer)
         {
-            lobbyMenuStartButton.SetActive(false);
-            loadingTextObj.SetActive(false);
-            lobbyMenuObj.SetActive(true);
+            MenuManager.Instance.LobbyMenuStartButton.SetActive(false);
+            MenuManager.Instance.LoadingTextObj.SetActive(false);
+            MenuManager.Instance.LobbyMenuObj.SetActive(true);
         }
         else
         {
-            lobbyMenuStartButton.SetActive(true);
+            MenuManager.Instance.LobbyMenuStartButton.SetActive(true);
         }
+
+        NetworkManager.Singleton.SceneManager.OnSceneEvent += OnSceneEvent;
     }
 
     private void OnClientDisconnected(ulong clientId)
@@ -186,12 +182,14 @@ public class Launcher : MonoBehaviour
         lobbyManager = lobbyManagerObj.GetComponent<LobbyManager>();
         lobbyManagerObj.GetComponent<NetworkObject>().Spawn(true);
 
-        lobbyMenuObj.SetActive(true);
+        MenuManager.Instance.LobbyMenuObj.SetActive(true);
 
         if (allowDebugConsole && !debugConsole)
             debugConsole = Instantiate(inGameDebugConsolePrefab, Vector3.zero, Quaternion.identity);
         else if (allowDebugConsole && debugConsole)
             debugConsole.SetActive(true);
+
+        NetworkManager.Singleton.SceneManager.OnSceneEvent += OnSceneEvent;
     }
 
     private void OnServerStopped(bool closedCorrectly)
@@ -199,6 +197,18 @@ public class Launcher : MonoBehaviour
         Debug.Log("Servidor parado");
 
         if (debugConsole) debugConsole.SetActive(false);
+    }
+
+    private void OnSceneEvent(SceneEvent sceneEvent)
+    {
+        if (sceneEvent.SceneEventType == SceneEventType.Load)
+        {
+            if (MenuManager.Instance != null)
+            {
+                MenuManager.Instance.LobbyMenuObj.SetActive(false);
+                MenuManager.Instance.LoadingTextObj.SetActive(true);
+            }
+        }
     }
 
     #endregion

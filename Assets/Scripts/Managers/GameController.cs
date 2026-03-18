@@ -47,11 +47,11 @@ public class GameController : NetworkBehaviour
 
             GameObject playerInstance = Instantiate(playerPrefab, spawnPosition.position, Quaternion.identity, spawnPosition);
 
-            string playerName = LobbyManager.Instance.GetClientPlayerName(clientId);
-            playerInstance.GetComponentInChildren<PlayerNameTag>().SetPlayerTag(playerName);
-
             NetworkObject playerNetworkObject = playerInstance.GetComponent<NetworkObject>();
             playerNetworkObject.SpawnAsPlayerObject(clientId);
+
+            string playerName = LobbyManager.Instance.GetClientPlayerName(clientId);
+            playerInstance.GetComponentInChildren<PlayerNameTag>().SetPlayerTag(playerName);
         }
     }
 

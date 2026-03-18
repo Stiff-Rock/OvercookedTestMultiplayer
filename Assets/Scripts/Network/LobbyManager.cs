@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
-using UnityEditor.PackageManager;
-using UnityEngine;
 
 public class LobbyManager : NetworkBehaviour
 {
     public static LobbyManager Instance { get; private set; }
 
     // State
-    private Dictionary<ulong, string> connectedClientsDict;
-    private NetworkList<ulong> connectedClientIds;
-    private NetworkList<FixedString32Bytes> connectedClientNames;
+    private Dictionary<ulong, string> connectedClientsDict = new();
+    private NetworkList<ulong> connectedClientIds = new();
+    private NetworkList<FixedString32Bytes> connectedClientNames = new();
 
     #region Set-Up
 
@@ -24,10 +21,6 @@ public class LobbyManager : NetworkBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this);
-
-            connectedClientsDict = new();
-            connectedClientIds = new();
-            connectedClientNames = new();
         }
         else
         {
