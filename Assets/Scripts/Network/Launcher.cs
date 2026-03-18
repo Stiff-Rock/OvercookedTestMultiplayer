@@ -16,13 +16,9 @@ public class Launcher : MonoBehaviour
     [SerializeField] private string gameSceneName;
     [SerializeField] private string lobbySceneName;
     [SerializeField] private GameObject lobbyManagerPrefab;
-    [SerializeField] private GameObject inGameDebugConsolePrefab;
 
     private GameObject debugConsole;
     private LobbyManager lobbyManager;
-
-    [Header("Debug")]
-    [SerializeField] private bool allowDebugConsole;
 
     #region Set-Up
 
@@ -183,12 +179,6 @@ public class Launcher : MonoBehaviour
         lobbyManagerObj.GetComponent<NetworkObject>().Spawn(true);
 
         MenuManager.Instance.LobbyMenuObj.SetActive(true);
-
-        if (allowDebugConsole && !debugConsole)
-            debugConsole = Instantiate(inGameDebugConsolePrefab, Vector3.zero, Quaternion.identity);
-        else if (allowDebugConsole && debugConsole)
-            debugConsole.SetActive(true);
-
         NetworkManager.Singleton.SceneManager.OnSceneEvent += OnSceneEvent;
     }
 

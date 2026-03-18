@@ -100,7 +100,7 @@ MonoBehaviour:
   ConnectionData:
     Address: 127.0.0.1
     Port: 7777
-    ServerListenAddress: 127.0.0.1
+    ServerListenAddress: 0.0.0.0
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0
@@ -121,8 +121,4 @@ MonoBehaviour:
   lobbySceneName: LobbyScene
   lobbyManagerPrefab: {fileID: 8422645895151847694, guid: 6c3f604ad75aec5459bd8d551be328cf, type: 3}
   inGameDebugConsolePrefab: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
-  clientPlayerNameIF: {fileID: 0}
-  loadingTextObj: {fileID: 0}
-  mainMenuObj: {fileID: 0}
-  lobbyMenuObj: {fileID: 0}
-  allowDebugConsole: 0
+  allowDebugConsole: 1
