@@ -1753,7 +1753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6222436872147291182, guid: 4cab1655ffd47ed4bb84507e38f8e34c, type: 3}
       propertyPath: m_Spacing
-      value: 60
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 6280129342529502144, guid: 4cab1655ffd47ed4bb84507e38f8e34c, type: 3}
       propertyPath: m_IsActive
@@ -3308,17 +3308,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7183e8578469e1540b68e5333db709d1, type: 3}
---- !u!114 &1039038647 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3170180928896402363, guid: 7183e8578469e1540b68e5333db709d1, type: 3}
-  m_PrefabInstance: {fileID: 1039038646}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87cbec383ebb55547a7543380efeb8c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!1 &1224248453
 GameObject:
   m_ObjectHideFlags: 0
@@ -3972,9 +3961,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1439921128}
     - target: {fileID: 5865309798402769715, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
-      propertyPath: onGameOver.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: 'spawnPositions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1483498073}
+    - target: {fileID: 5865309798402769715, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
+      propertyPath: 'spawnPositions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1979659407}
+    - target: {fileID: 5865309798402769715, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
+      propertyPath: 'spawnPositions.Array.data[2]'
+      value: 
+      objectReference: {fileID: 280429272}
+    - target: {fileID: 5865309798402769715, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
+      propertyPath: 'spawnPositions.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1606864293}
     - target: {fileID: 5865309798402769715, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
       propertyPath: onGameOver.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3983,10 +3984,6 @@ PrefabInstance:
       propertyPath: onGameOver.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 400806735}
-    - target: {fileID: 5865309798402769715, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
-      propertyPath: onGameOver.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 1039038647}
     - target: {fileID: 5865309798402769715, guid: 18ed56afc6beabe4b8e56ed670d3de95, type: 3}
       propertyPath: onCreateOrder.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

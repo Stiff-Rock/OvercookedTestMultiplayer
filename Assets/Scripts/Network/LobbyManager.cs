@@ -1,12 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
+using UnityEditor.PackageManager;
+using UnityEngine;
 
 public class LobbyManager : NetworkBehaviour
 {
+    public static LobbyManager Instance { get; private set; }
+
     // State
-    private Dictionary<ulong, string> connectedClients;
+    private Dictionary<ulong, string> connectedClientsDict;
     private NetworkList<ulong> connectedClientIds;
     private NetworkList<FixedString32Bytes> connectedClientNames;
 
@@ -14,8 +20,19 @@ public class LobbyManager : NetworkBehaviour
 
     private void Awake()
     {
-        connectedClientIds = new();
-        connectedClientNames = new();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+
+            connectedClientsDict = new();
+            connectedClientIds = new();
+            connectedClientNames = new();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -26,17 +43,7 @@ public class LobbyManager : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        connectedClientNames.OnListChanged += _ =>
-        {
-            string print = "connectedClientNames.OnListChanged: ";
-            foreach (var client in connectedClientNames)
-            {
-                print += client.ToString();
-            }
-            UnityEngine.Debug.Log($"{print}");
-
-            UpdateLobbyInfo();
-        };
+        connectedClientNames.OnListChanged += _ => UpdateLobbyInfo();
 
         if (IsServer) AddHostToList();
 
@@ -78,6 +85,7 @@ public class LobbyManager : NetworkBehaviour
             ? Environment.UserName
             : MenuManager.Instance.HostPlayerNameIF.text;
 
+        connectedClientsDict.Add(hostId, hostName);
         connectedClientIds.Add(hostId);
         connectedClientNames.Add(hostName);
     }
@@ -88,7 +96,7 @@ public class LobbyManager : NetworkBehaviour
 
         if (connectedClientIds.Contains(clientId)) return;
 
-        if (connectedClients.TryGetValue(clientId, out string playerName))
+        if (connectedClientsDict.TryGetValue(clientId, out string playerName))
         {
             connectedClientIds.Add(clientId);
             connectedClientNames.Add(playerName);
@@ -99,8 +107,7 @@ public class LobbyManager : NetworkBehaviour
     {
         if (!NetworkManager.Singleton.IsServer) return;
         if (connectedClientIds.Contains(clientId)) return;
-        connectedClients ??= new();
-        connectedClients.Add(clientId, playerName);
+        connectedClientsDict.Add(clientId, playerName);
     }
 
     private void UpdateLobbyInfo()
@@ -109,16 +116,24 @@ public class LobbyManager : NetworkBehaviour
 
         for (int i = 0; i < MenuManager.Instance.PlayerNameTexts.Length; i++)
         {
+            TextMeshProUGUI playerNameText = MenuManager.Instance.PlayerNameTexts[i];
+            if (!playerNameText) return;
+
             if (i < connectedClientNames.Count)
             {
-
-                MenuManager.Instance.PlayerNameTexts[i].text = connectedClientNames[i].ToString();
-                MenuManager.Instance.PlayerNameTexts[i].gameObject.SetActive(true);
+                playerNameText.text = connectedClientNames[i].ToString();
+                playerNameText.gameObject.SetActive(true);
             }
             else
             {
-                MenuManager.Instance.PlayerNameTexts[i].gameObject.SetActive(false);
+                playerNameText.gameObject.SetActive(false);
             }
         }
+    }
+
+    public string GetClientPlayerName(ulong clientId)
+    {
+        if (connectedClientsDict.TryGetValue(clientId, out string playerName)) return playerName;
+        else return $"Unkown {clientId}";
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.Netcode;
@@ -8,7 +9,9 @@ using UnityEngine.Events;
 public class GameController : NetworkBehaviour
 {
     [Header("References")]
+    [SerializeField] private GameObject playerPrefab;
     [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private Transform[] spawnPositions;
     private PlayerController[] players;
 
     [Header("Game Settings")]
@@ -30,6 +33,26 @@ public class GameController : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         enabled = IsServer;
+
+        if (IsServer) SpawnPlayers();
+    }
+
+    private void SpawnPlayers()
+    {
+        IReadOnlyList<ulong> connectedClientsIds = NetworkManager.Singleton.ConnectedClientsIds;
+        for (int i = 0; i < connectedClientsIds.Count; i++)
+        {
+            ulong clientId = connectedClientsIds[i];
+            Transform spawnPosition = spawnPositions[i];
+
+            GameObject playerInstance = Instantiate(playerPrefab, spawnPosition.position, Quaternion.identity, spawnPosition);
+
+            string playerName = LobbyManager.Instance.GetClientPlayerName(clientId);
+            playerInstance.GetComponentInChildren<PlayerNameTag>().SetPlayerTag(playerName);
+
+            NetworkObject playerNetworkObject = playerInstance.GetComponent<NetworkObject>();
+            playerNetworkObject.SpawnAsPlayerObject(clientId);
+        }
     }
 
     private void Start()
