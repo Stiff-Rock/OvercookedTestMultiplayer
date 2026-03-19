@@ -1,13 +1,10 @@
 using System;
 using System.Text;
 using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(NetworkManager))]
-[RequireComponent(typeof(UnityTransport))]
 public class Launcher : MonoBehaviour
 {
     public static bool wasDisconnected;
@@ -17,7 +14,6 @@ public class Launcher : MonoBehaviour
     [SerializeField] private string lobbySceneName;
     [SerializeField] private GameObject lobbyManagerPrefab;
 
-    private GameObject debugConsole;
     private LobbyManager lobbyManager;
 
     #region Set-Up
@@ -147,7 +143,6 @@ public class Launcher : MonoBehaviour
             Debug.Log("Se perdió la conexión con el servidor.");
             wasDisconnected = true;
             SceneManager.LoadScene(lobbySceneName);
-            return;
         }
     }
 
@@ -185,8 +180,6 @@ public class Launcher : MonoBehaviour
     private void OnServerStopped(bool closedCorrectly)
     {
         Debug.Log("Servidor parado");
-
-        if (debugConsole) debugConsole.SetActive(false);
     }
 
     private void OnSceneEvent(SceneEvent sceneEvent)

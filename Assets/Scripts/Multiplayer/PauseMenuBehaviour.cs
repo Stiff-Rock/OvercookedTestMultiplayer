@@ -3,32 +3,31 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class MenuBehaviour : MonoBehaviour
+public class PauseMenuBehaviour : MonoBehaviour
 {
-    [SerializeField] Canvas Menu;
+    [SerializeField] private CanvasGroup canvasGroup;
 
     private void Update()
     {
-        tabMenu();
+        CheckTabMenu();
     }
 
-    private void tabMenu()
+    private void CheckTabMenu()
     {
         if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
-            Menu.gameObject.SetActive(true);
+            canvasGroup.alpha = canvasGroup.alpha == 1 ? 0 : 1;
         }
     }
 
-    public void returnLobby()
+    public void ReturnToLobby()
     {
         SceneManager.LoadScene("LobbyScene");
         Launcher.wasDisconnected = true;
         NetworkManager.Singleton.Shutdown();
     }
-    public void closeCanvas()
+    public void CloseCanvas()
     {
-        Menu.gameObject.SetActive(false);
+        canvasGroup.alpha = 0;
     }
-
 }

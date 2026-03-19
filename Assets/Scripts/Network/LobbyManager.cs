@@ -9,9 +9,9 @@ public class LobbyManager : NetworkBehaviour
     public static LobbyManager Instance { get; private set; }
 
     // State
-    private Dictionary<ulong, string> connectedClientsDict = new();
-    private NetworkList<ulong> connectedClientIds = new();
-    private NetworkList<FixedString32Bytes> connectedClientNames = new();
+    private readonly Dictionary<ulong, string> connectedClientsDict = new();
+    private readonly NetworkList<ulong> connectedClientIds = new();
+    private readonly NetworkList<FixedString32Bytes> connectedClientNames = new();
 
     #region Set-Up
 
@@ -47,6 +47,7 @@ public class LobbyManager : NetworkBehaviour
     {
         if (NetworkManager.Singleton)
         {
+            NetworkManager.Singleton.OnClientConnectedCallback -= AddClientToList;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
         }
         base.OnDestroy();
