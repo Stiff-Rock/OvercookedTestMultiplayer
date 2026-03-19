@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(NetworkObject))]
 public class InteractiveAppliance : NetworkBehaviour
 {
-    [SerializeField] protected GameObject placeArea;
+    public GameObject placeArea;
     protected PlayerController currentPlayer;
 
     [Header("Readonly Values (Do not assing in editor)")]

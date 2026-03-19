@@ -34,5 +34,6 @@ public class DebugConsoleToggle : MonoBehaviour
     {
         isActive = !isActive;
         cg.alpha = isActive ? 1 : 0;
+        cg.interactable = isActive;
     }
 }

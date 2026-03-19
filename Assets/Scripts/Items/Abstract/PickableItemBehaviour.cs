@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using Unity.Netcode;
 using Unity.Netcode.Components;
@@ -14,8 +15,7 @@ public class PickableItemBehaviour : NetworkBehaviour
     private Rigidbody rb;
     [SerializeField] private NetworkTransform networkTransform;
 
-    private NetworkObject pendingParent;
-    private Vector3 pendingPos;
+    private Transform pendingParentTransform;
     private bool pendingWorldPositionStays;
 
     protected virtual void Awake()
@@ -32,58 +32,83 @@ public class PickableItemBehaviour : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (pendingParent != null)
+        if (pendingParentTransform != null)
         {
-            NetworkObject.TrySetParent(pendingParent.transform, pendingWorldPositionStays);
-            pendingPos = pendingParent.transform.position;
-            pendingParent = null;
+            UpdateTransform(pendingParentTransform, pendingWorldPositionStays);
+            pendingParentTransform = null;
         }
     }
 
-    public void NetworkSetParent(Transform newPositionTransform, bool worlPositionStays = true)
+    public void NetworkSetParent(Transform newTransform, bool worlPositionStays = true)
     {
-        if (!IsServer)
-            return;
-
-        NetworkObject newParentNetTransform = newPositionTransform ?
-            newPositionTransform.parent.gameObject.GetComponent<NetworkObject>()
-            : null;
-
-        if (newPositionTransform)
-        {
-            pendingPos = newPositionTransform.position;
-            UpdateTargetPos_ClientRpc(pendingPos);
-        }
+        if (!IsServer) return;
 
         if (IsSpawned)
         {
-            NetworkObject.TrySetParent(newParentNetTransform, worlPositionStays);
+            UpdateTransform(newTransform, worlPositionStays);
         }
         else
         {
-            pendingParent = newParentNetTransform;
+            pendingParentTransform = newTransform;
             pendingWorldPositionStays = worlPositionStays;
         }
     }
 
-    [ClientRpc]
-    private void UpdateTargetPos_ClientRpc(Vector3 pendingPos)
+    private void UpdateTransform(Transform newTransformSocket, bool worlPositionStays)
     {
-        this.pendingPos = pendingPos;
+        Transform newParent = newTransformSocket ? newTransformSocket.parent : null;
+        transform.SetParent(newParent, worlPositionStays);
+
+        ulong networkObjectId;
+        Vector3 newPos;
+        if (newParent)
+        {
+            transform.SetPositionAndRotation(newTransformSocket.position, Quaternion.identity);
+
+            newPos = newTransformSocket.position;
+            networkObjectId = newParent.GetComponent<NetworkObject>().NetworkObjectId;
+        }
+        else
+        {
+            newPos = default;
+            networkObjectId = ulong.MaxValue;
+        }
+
+        UpdateTransform_ClientRpc(networkObjectId, newPos, worlPositionStays);
     }
 
-    public override void OnNetworkObjectParentChanged(NetworkObject parentNetworkObject)
+    [ClientRpc]
+    private void UpdateTransform_ClientRpc(ulong parentTransformId, Vector3 newPos, bool worlPositionStays)
     {
-        base.OnNetworkObjectParentChanged(parentNetworkObject);
+        StopAllCoroutines();
+        if (networkTransform) networkTransform.enabled = false;
 
+        Transform newParent = parentTransformId != ulong.MaxValue ?
+            NetHelpers.GetNetObject(parentTransformId).transform
+            : null;
+
+        transform.SetParent(newParent, worlPositionStays);
+
+        if (newParent)
+        {
+            transform.SetPositionAndRotation(newPos, Quaternion.identity);
+        }
+
+        StartCoroutine(ReenableNetworkTransform());
+    }
+
+    private IEnumerator ReenableNetworkTransform()
+    {
+        yield return new WaitForFixedUpdate();
+        if (networkTransform) {
+            networkTransform.enabled = true; 
+        }
+    }
+
+    private void OnTransformParentChanged()
+    {
         bool isPlaced = IsPlaced();
         ToggleColliders(!isPlaced);
-
-        if (isPlaced)
-        {
-            transform.position = pendingPos;
-            transform.localRotation = Quaternion.identity;
-        }
     }
 
     public void ToggleColliders(bool isEnabled)
