@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Linq;
 using Unity.Netcode;
-using Unity.Netcode.Components;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -13,7 +11,6 @@ public class PickableItemBehaviour : NetworkBehaviour
     private Collider triggerCollider;
     private Collider physicsCollider;
     private Rigidbody rb;
-    [SerializeField] private NetworkTransform networkTransform;
 
     private Transform pendingParentTransform;
     private bool pendingWorldPositionStays;
@@ -27,7 +24,7 @@ public class PickableItemBehaviour : NetworkBehaviour
 
     protected virtual void Start()
     {
-        ToggleColliders(!IsPlaced());
+        ToggleColliders(!IsPlaced(out var _));
     }
 
     public override void OnNetworkSpawn()
@@ -57,65 +54,26 @@ public class PickableItemBehaviour : NetworkBehaviour
     private void UpdateTransform(Transform newTransformSocket, bool worlPositionStays)
     {
         Transform newParent = newTransformSocket ? newTransformSocket.parent : null;
-        transform.SetParent(newParent, worlPositionStays);
-
-        ulong networkObjectId;
-        Vector3 newPos;
-        if (newParent)
-        {
-            transform.SetPositionAndRotation(newTransformSocket.position, Quaternion.identity);
-
-            newPos = newTransformSocket.position;
-            networkObjectId = newParent.GetComponent<NetworkObject>().NetworkObjectId;
-        }
-        else
-        {
-            newPos = default;
-            networkObjectId = ulong.MaxValue;
-        }
-
-        UpdateTransform_ClientRpc(networkObjectId, newPos, worlPositionStays);
+        NetworkObject.TrySetParent(newParent, worlPositionStays);
     }
 
-    [ClientRpc]
-    private void UpdateTransform_ClientRpc(ulong parentTransformId, Vector3 newPos, bool worlPositionStays)
+
+    public override void OnNetworkObjectParentChanged(NetworkObject parentNetworkObject)
     {
-        StopAllCoroutines();
-        if (networkTransform) networkTransform.enabled = false;
-
-        Transform newParent = parentTransformId != ulong.MaxValue ?
-            NetHelpers.GetNetObject(parentTransformId).transform
-            : null;
-
-        transform.SetParent(newParent, worlPositionStays);
-
-        if (newParent)
-        {
-            transform.SetPositionAndRotation(newPos, Quaternion.identity);
-        }
-
-        StartCoroutine(ReenableNetworkTransform());
-    }
-
-    private IEnumerator ReenableNetworkTransform()
-    {
-        yield return new WaitForFixedUpdate();
-        if (networkTransform) {
-            networkTransform.enabled = true; 
-        }
-    }
-
-    private void OnTransformParentChanged()
-    {
-        bool isPlaced = IsPlaced();
+        bool isPlaced = IsPlaced(out Transform placeArea);
         ToggleColliders(!isPlaced);
+
+        if (isPlaced)
+        {
+
+            transform.SetPositionAndRotation(placeArea.position, Quaternion.identity);
+        }
     }
 
     public void ToggleColliders(bool isEnabled)
     {
         if (triggerCollider) triggerCollider.enabled = isEnabled;
         if (physicsCollider) physicsCollider.enabled = isEnabled;
-        if (networkTransform) networkTransform.enabled = isEnabled;
 
         if (isEnabled)
             rb.constraints = RigidbodyConstraints.None;
@@ -125,14 +83,20 @@ public class PickableItemBehaviour : NetworkBehaviour
 
     #region Helper Methods
 
-    private bool IsPlaced()
+    private bool IsPlaced(out Transform placeAreaTransform)
     {
+        placeAreaTransform = null;
+
         if (transform.parent == null) return false;
 
-        Transform isInPlaceArea = transform.parent.Cast<Transform>()
-            .FirstOrDefault(c => c.CompareTag("PlaceArea"));
+        placeAreaTransform = transform.parent.Cast<Transform>()
+            .FirstOrDefault(t =>
+            {
+                bool isPlaceArea = t.CompareTag("PlaceArea");
+                return isPlaceArea;
+            });
 
-        return isInPlaceArea;
+        return placeAreaTransform;
     }
 
     public bool IsIngredient()
