@@ -57,7 +57,6 @@ public class PickableItemBehaviour : NetworkBehaviour
         NetworkObject.TrySetParent(newParent, worlPositionStays);
     }
 
-
     public override void OnNetworkObjectParentChanged(NetworkObject parentNetworkObject)
     {
         bool isPlaced = IsPlaced(out Transform placeArea);
@@ -65,7 +64,6 @@ public class PickableItemBehaviour : NetworkBehaviour
 
         if (isPlaced)
         {
-
             transform.SetPositionAndRotation(placeArea.position, Quaternion.identity);
         }
     }
