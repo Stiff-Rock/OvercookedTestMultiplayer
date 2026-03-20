@@ -106,6 +106,8 @@ public class UtensilBehaviour : PickableItemBehaviour
         if (appliance)
             appliance.OnPlacedItemChanged();
 
+        stackHeightPos = 0;
+
         RemoveIngredient_ClientRpc();
 
         return ingB;
@@ -121,6 +123,8 @@ public class UtensilBehaviour : PickableItemBehaviour
 
         heldIngredients.RemoveAt(0);
 
+        stackHeightPos = 0;
+
         InteractiveAppliance appliance = transform.parent.GetComponent<InteractiveAppliance>();
         if (appliance)
             appliance.OnPlacedItemChanged();
@@ -129,10 +133,8 @@ public class UtensilBehaviour : PickableItemBehaviour
     public bool CanTakeIngredient()
     {
         return (UtensilType == UtensilType.Pan || UtensilType == UtensilType.Pot)
-            && heldIngredients.Count > 0
-            && heldIngredients[0]
-            && heldIngredients[0].IsCooked
-            || (!heldIngredients[0].IsBurnt && heldIngredients[0].GetCookProgress() <= 0);
+            && heldIngredients.Count > 0 && (heldIngredients[0] && heldIngredients[0].IsCooked
+            || (!heldIngredients[0].IsBurnt && heldIngredients[0].GetCookProgress() <= 0));
     }
 
     public IngredientBehaviour PeekIngredient()
@@ -151,6 +153,7 @@ public class UtensilBehaviour : PickableItemBehaviour
         }
 
         heldIngredients.Clear();
+        stackHeightPos = 0;
     }
 
     private void StackIngredients(IngredientBehaviour ingredientItem)

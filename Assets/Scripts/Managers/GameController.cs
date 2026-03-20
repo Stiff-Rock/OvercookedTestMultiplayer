@@ -76,6 +76,8 @@ public class GameController : NetworkBehaviour
 
     private void UpdateGameTime()
     {
+        if (!IsSpawned) return;
+
         gameDuration -= Time.deltaTime;
 
         if (Time.time >= nextSyncTime)
@@ -89,6 +91,8 @@ public class GameController : NetworkBehaviour
             gameDuration = 0;
             DisablePlayers();
             ScoreManager.Instance.ShowFinalScore();
+            onGameOver.Invoke();
+            UpdateGameTime_ClientRpc(gameDuration);
             enabled = false;
         }
     }

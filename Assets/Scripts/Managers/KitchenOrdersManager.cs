@@ -110,9 +110,13 @@ public class KitchenOrdersManager : NetworkBehaviour
         if (!IsServer) return;
 
         int orderToDeleteIndex = kitchenOrders.IndexOf(orderToDelete);
-        kitchenOrders.RemoveAt(orderToDeleteIndex);
 
-        RemoveOrderPanel_ClientRpc(orderToDeleteIndex);
+        if (orderToDeleteIndex != -1)
+        {
+            kitchenOrders.RemoveAt(orderToDeleteIndex);
+            RemoveOrderPanel_ClientRpc(orderToDeleteIndex);
+            Destroy(orderToDelete.gameObject);
+        }
     }
 
     [ClientRpc]

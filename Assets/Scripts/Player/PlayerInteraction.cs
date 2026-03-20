@@ -1,5 +1,4 @@
 using Unity.Netcode;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -176,7 +175,7 @@ public class PlayerInteraction : NetworkBehaviour
         if (CanThrowToTrash(pickedItem, nearbyAppliance))
         {
             nearbyAppliance.PlaceItem(pickedItem);
-            DropItem(pI);
+            if (pickedItem.IsIngredient()) DropItem(pI);
             return;
         }
 
